@@ -6,6 +6,7 @@ import 'package:dressr/screens/cart/index.dart';
 import 'package:dressr/screens/chat/index.dart';
 import 'package:dressr/screens/profile/index.dart';
 import 'package:dressr/utils/my_profile_button.dart';
+import 'package:dressr/utils/subscripe.dart';
 import 'package:dressr/utils/utils_functions.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 // import 'package:dressr/screens/store/add_item.dart';
@@ -15,6 +16,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hidable/hidable.dart';
 import 'package:http/http.dart' as http;
@@ -44,19 +46,6 @@ class StoreScreenState extends State<StoreScreen>
   List<Post> listOfPost = [];
   int cartCount = 3;
   String profilePicture = '';
-  Widget loadMoreWidget(context) {
-    return CircleAvatar(
-      backgroundColor: Colors.grey[200],
-      child: CircularProgressIndicator(),
-    );
-  }
-
-  setProfilePicture() async {
-    var data = getUserDetails(FirebaseAuth.instance.currentUser!.uid);
-    setState(() {
-      profilePicture = data['profilePicture'];
-    });
-  }
 
   List<String> listOfFriends = [];
 
@@ -84,8 +73,9 @@ class StoreScreenState extends State<StoreScreen>
 
   initState() {
     super.initState();
-    setProfilePicture();
     getListOfFriends();
+    Future.delayed(Duration(minutes: 20));
+    callSubScription(context);
   }
 
   button(context) {
@@ -129,11 +119,14 @@ class StoreScreenState extends State<StoreScreen>
                 children: [
                   // Image.asset('assets/icon.png', height: 30),
                   // SizedBox(width: 10),
-                  Text(
-                    "dress`r",
-                    style: GoogleFonts.pacifico(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
+                  GestureDetector(
+                    onTap: callSubScription(context),
+                    child: Text(
+                      "dressmate",
+                      style: GoogleFonts.pacifico(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ],
@@ -151,11 +144,11 @@ class StoreScreenState extends State<StoreScreen>
                     icon: Icon(
                       Ionicons.chatbox_ellipses_outline,
                       color: Colors.black,
+                      size: 32,
                     )),
+                SizedBox(width: 7),
                 MyProfileButton(),
-                SizedBox(
-                  width: 7,
-                )
+                SizedBox(width: 7)
               ],
             ),
             backgroundColor: Colors.white,

@@ -50,13 +50,8 @@ class ItemState extends State<Item> {
                     postId: snap['postId'],
                     ancestorId: snap['ancestorId'],
                     creatorUid: snap['creatorUid'],
-                  ),
-                  ItemCaption(
                     caption: snap['caption'],
                     isPictureAvailable: isPictureAvailable,
-                    postId: snap['postId'],
-                    ancestorId: snap['ancestorId'],
-                    creatorUid: snap['creatorUid'],
                   ),
                   ItemPicture(
                     creatorUid: snap['creatorUid'],

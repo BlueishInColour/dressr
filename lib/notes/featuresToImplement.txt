@@ -128,3 +128,12 @@ done - find better design for the blog page and remove appbar
 > chat section most be veru good, request messaged should be grouped
 > login section is to be refined
 > switch everything to dressr
+
+5th feb 2024
+> implement download feature and share immidiately
+> implement download only
+> those who can upload on main dcreen should be subscrped ussers
+> ads promotion should be added for ussers
+> edit post for subscrinbers
+> enable delete of post
+> 

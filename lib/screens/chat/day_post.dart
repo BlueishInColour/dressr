@@ -6,7 +6,7 @@ import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
 
 class DayPost extends StatefulWidget {
-  const DayPost({super.key, required this.listOfFreinds});
+  const DayPost({super.key, this.listOfFreinds = const [' ']});
   final List<String> listOfFreinds;
 
   @override

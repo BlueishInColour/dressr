@@ -34,21 +34,18 @@ class ItemCaptionState extends State<ItemCaption> {
         }));
       },
       child: Container(
-        decoration: BoxDecoration(
-            color: widget.backgroundColor,
-            borderRadius: widget.isPictureAvailable
-                ? BorderRadius.only(
-                    bottomLeft: Radius.circular(15),
-                    bottomRight: Radius.circular(15))
-                : null),
+        color: Colors.transparent,
         child: widget.isPictureAvailable
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(080),
                     child: Text(widget.caption,
-                        style: TextStyle(color: Colors.white60)),
+                        maxLines: 20,
+                        style: TextStyle(
+                            overflow: TextOverflow.ellipsis,
+                            color: Colors.white60)),
                   ),
                 ],
               )

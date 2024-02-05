@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dressr/utils/subscripe.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:imagekit_io/imagekit_io.dart';
@@ -128,32 +130,6 @@ Future<String> addSingleImage(ImageSource source) async {
   return url;
 }
 
-uploadStories(context, {required Stories stories}) async {
-  var url = Uri.parse(
-    'https://73ssrmtdna.us-east-1.awsapprunner.com/stories',
-  );
-  var res = await http.post(url,
-      body: json.encode(stories.toJson()),
-      headers: {"Content-Type": "application/json"});
-
-  if (res.statusCode == 200) {
-    () {
-      showSnackBar(
-          context,
-          const Icon(
-            Icons.airplane_ticket,
-            color: Colors.green,
-          ),
-          'done');
-    };
-  } else {
-    () {
-      showSnackBar(context, const Icon(Icons.error, color: Colors.red),
-          'no internet connection');
-    };
-  }
-}
-
 getUserDetails(String uid) async {
   QuerySnapshot documentSnapshot = await FirebaseFirestore.instance
       .collection('users')
@@ -198,5 +174,26 @@ updateFirebaseDocument(context,
 
     debugPrint('done');
     Navigator.pop(context);
+  }
+}
+
+//call to subscribe
+callSubScription(context) async {
+  if (!kIsWeb) {
+    var res = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    String currentSubscription = res['currentSubscription'];
+    bool isBlack = currentSubscription == 'black';
+    if (isBlack) {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Subscripe();
+          });
+    }
+  } else {
+    //
   }
 }
