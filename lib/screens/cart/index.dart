@@ -1,6 +1,7 @@
 import 'package:dressr/middle.dart';
 import 'package:dressr/screens/store/item/item.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dressr/utils/utils_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,10 @@ class LikeScreenState extends State<LikeScreen> {
               .doc(FirebaseAuth.instance.currentUser!.uid)
               .collection('posts'),
           itemBuilder: (context, document, snapshot) {
+            if (snapshot > 100) {
+              callSubScription(context,
+                  warning: 'you have suppass your limit of 100 total saves');
+            }
             return Item(
               postId: document['postId'],
             );

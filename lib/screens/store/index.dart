@@ -49,6 +49,9 @@ class StoreScreenState extends State<StoreScreen>
 
   List<String> listOfFriends = [];
 
+  // initialize bucket globally
+  final pageBucket = PageStorageBucket();
+
   getListOfFriends() async {
     var res = await FirebaseFirestore.instance
         .collection('chat')
@@ -152,22 +155,26 @@ class StoreScreenState extends State<StoreScreen>
               ],
             ),
             backgroundColor: Colors.white,
-            body: FirestorePagination(
-                isLive: true,
-                limit: 20,
-                onEmpty: Text('thats all for now'),
-                query: db
-                    .collection('posts')
-                    .orderBy('timestamp', descending: true),
-                itemBuilder: (context, document, snapshot) {
-                  //if we have data, get all dic
+            body: PageStorage(
+              bucket: pageBucket,
+              child: FirestorePagination(
+                  isLive: true,
+                  key: PageStorageKey<String>('pageOne'),
+                  limit: 20,
+                  onEmpty: Text('thats all for now'),
+                  query: db
+                      .collection('posts')
+                      .orderBy('timestamp', descending: true),
+                  itemBuilder: (context, document, snapshot) {
+                    //if we have data, get all dic
 
-                  return Item(
-                    postId: document['postId'],
-                  );
-                }
-                //
+                    return Item(
+                      postId: document['postId'],
+                    );
+                  }
+                  //
 
-                )));
+                  ),
+            )));
   }
 }

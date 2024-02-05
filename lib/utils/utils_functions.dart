@@ -178,7 +178,7 @@ updateFirebaseDocument(context,
 }
 
 //call to subscribe
-callSubScription(context) async {
+callSubScription(context, {String warning = ''}) async {
   if (!kIsWeb) {
     var res = await FirebaseFirestore.instance
         .collection('users')

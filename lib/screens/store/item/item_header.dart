@@ -35,8 +35,7 @@ class ItemHeaderState extends State<ItemHeader> {
           .doc(widget.creatorUid)
           .get(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.active ||
-            snapshot.connectionState == ConnectionState.waiting) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return Container(
             height: 45,
             decoration: BoxDecoration(
@@ -51,93 +50,108 @@ class ItemHeaderState extends State<ItemHeader> {
             ]),
           );
         }
-
-        DocumentSnapshot snap = snapshot.data!;
-        return Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15),
-                topRight: Radius.circular(15),
-                bottomLeft: widget.isPictureAvailable
-                    ? Radius.circular(15)
-                    : Radius.circular(0),
-                bottomRight: widget.isPictureAvailable
-                    ? Radius.circular(15)
-                    : Radius.circular(0),
-              ),
-              color: snap['currentSubscription'] == 'black'
-                  ? Colors.black
-                  : Colors.blue),
-          child: Column(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                textDirection: TextDirection.rtl,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(context,
-                          PageRouteBuilder(pageBuilder: (context, _, __) {
-                        return ProfileScreen(userUid: snap['uid']);
-                      }));
-                    },
-                    child: SizedBox(
-                      width: 220,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 6.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          textDirection: TextDirection.rtl,
-                          children: [
-                            CircleAvatar(
-                                radius: 17,
-                                backgroundImage: CachedNetworkImageProvider(
-                                    snap['profilePicture'])),
-                            SizedBox(width: 5),
-                            SizedBox(
-                              width: 180,
-                              child: Text(
-                                '${snap['displayName']}'
-                                ' | '
-                                '@'
-                                '${snap['userName']}',
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.white70,
-                                    overflow: TextOverflow.ellipsis),
-                              ),
-                            )
-                          ],
+        if (snapshot.hasData) {
+          DocumentSnapshot snap = snapshot.data!;
+          return Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(15),
+                  bottomLeft: widget.isPictureAvailable
+                      ? Radius.circular(15)
+                      : Radius.circular(0),
+                  bottomRight: widget.isPictureAvailable
+                      ? Radius.circular(15)
+                      : Radius.circular(0),
+                ),
+                color: snap['currentSubscription'] == 'black'
+                    ? Colors.black
+                    : Colors.blue),
+            child: Column(
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  textDirection: TextDirection.rtl,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            PageRouteBuilder(pageBuilder: (context, _, __) {
+                          return ProfileScreen(userUid: snap['uid']);
+                        }));
+                      },
+                      child: SizedBox(
+                        width: 220,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 6.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            textDirection: TextDirection.rtl,
+                            children: [
+                              CircleAvatar(
+                                  radius: 17,
+                                  backgroundImage: CachedNetworkImageProvider(
+                                      snap['profilePicture'])),
+                              SizedBox(width: 5),
+                              SizedBox(
+                                width: 180,
+                                child: Text(
+                                  '${snap['displayName']}'
+                                  ' | '
+                                  '@'
+                                  '${snap['userName']}',
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.white70,
+                                      overflow: TextOverflow.ellipsis),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Expanded(child: SizedBox()),
-                  RepostButton(
-                    ancestorId: widget.ancestorId,
-                    postId: widget.postId,
-                  ),
-                  LikeButton(
-                      typeOfShowlist: '',
-                      idType: 'postId',
+                    Expanded(child: SizedBox()),
+                    RepostButton(
+                      ancestorId: widget.ancestorId,
                       postId: widget.postId,
-                      collection: 'posts'),
-                  SizedBox(width: 10)
-                ],
-              ),
+                    ),
+                    LikeButton(
+                        typeOfShowlist: '',
+                        idType: 'postId',
+                        postId: widget.postId,
+                        collection: 'posts'),
+                    SizedBox(width: 10)
+                  ],
+                ),
 
-              //item captionn
-              ItemCaption(
-                caption: widget.caption,
-                isPictureAvailable: widget.isPictureAvailable,
-                postId: widget.postId,
-                ancestorId: widget.ancestorId,
-                creatorUid: widget.creatorUid,
-              ),
-            ],
-          ),
-        );
+                //item captionn
+                ItemCaption(
+                  caption: widget.caption,
+                  isPictureAvailable: widget.isPictureAvailable,
+                  postId: widget.postId,
+                  ancestorId: widget.ancestorId,
+                  creatorUid: widget.creatorUid,
+                ),
+              ],
+            ),
+          );
+        } else {
+          return Container(
+            height: 45,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+              color: Colors.black,
+            ),
+            child: Row(children: [
+              Expanded(child: SizedBox()),
+              CircleAvatar(radius: 17),
+              SizedBox(width: 2),
+            ]),
+          );
+        }
       },
     );
   }
