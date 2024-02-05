@@ -176,12 +176,16 @@ class CreateScreenState extends State<CreateScreen> {
     }
 
     uploadPost() async {
+      String firstCaption = listOfCreatingPost.first['caption'];
+      List<String> firstCaptionTags = firstCaption.split(' ');
       listOfCreatingPost.forEach((element) {
         String picture = element['picture'];
         String caption = element['caption'];
         if (picture.isEmpty && caption.isEmpty) {
+          List<String> tags = element['tags'];
           setState(() {
             canTheUploadBeDone = false;
+            tags.addAll(firstCaptionTags);
           });
         }
       });

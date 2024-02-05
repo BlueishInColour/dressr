@@ -24,7 +24,7 @@ class DayPostState extends State<DayPost> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('latest from friends'),
+        Text('    latest from friends'),
         SizedBox(height: 5),
         SizedBox(
             height: 80,
@@ -32,6 +32,15 @@ class DayPostState extends State<DayPost> {
                 scrollDirection: Axis.horizontal,
                 limit: 20,
                 isLive: true,
+                onEmpty: Row(
+                  children: [CircleAvatar()],
+                ),
+                bottomLoader: Row(
+                  children: [CircleAvatar()],
+                ),
+                initialLoader: Row(
+                  children: [CircleAvatar()],
+                ),
                 query: FirebaseFirestore.instance
                     .collection('posts')
                     .where('creatorUid', whereIn: widget.listOfFreinds)

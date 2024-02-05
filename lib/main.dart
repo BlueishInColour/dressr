@@ -137,9 +137,9 @@ class SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset('assets/icon.png', height: 100),
-            SizedBox(height: 100),
-            Text('dressr', style: GoogleFonts.pacifico(color: Colors.black))
+            // Image.asset('assets/icon.png', height: 100),
+            // SizedBox(height: 100),
+            Text('dressmate', style: GoogleFonts.pacifico(color: Colors.black))
           ],
         ),
       ),

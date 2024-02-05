@@ -1,7 +1,9 @@
+import 'package:dressr/main.dart';
 import 'package:dressr/middle.dart';
 import 'package:dressr/screens/auth/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key, required this.onPressed});
@@ -34,23 +36,38 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   googleSignIn() async {
-    //    final GoogleSignIn googleSignIn = GoogleSignIn();
-    // final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
-    // if (googleSignInAccount != null) {
-    //   final GoogleSignInAuthentication googleSignInAuthentication =
-    //       await googleSignInAccount.authentication;
-    //   final AuthCredential authCredential = GoogleAuthProvider.credential(
-    //       idToken: googleSignInAuthentication.idToken,
-    //       accessToken: googleSignInAuthentication.accessToken);
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user;
 
-    // var auth = FirebaseAuth.instance;
-    // UserCredential result = await auth.signInWithCredential(authCredential);
-    // // User user = result.user;
+    final GoogleSignIn googleSignIn = GoogleSignIn();
 
-    // // if (result != null) {
-    // //   Navigator.pushReplacement(
-    // //       context, MaterialPageRoute(builder: (context) => HomePage()));
-    // // } //
+    final GoogleSignInAccount? googleSignInAccount =
+        await googleSignIn.signIn();
+
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+
+      try {
+        final UserCredential userCredential =
+            await auth.signInWithCredential(credential);
+
+        user = userCredential.user;
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'account-exists-with-different-credential') {
+          // handle the error here
+        } else if (e.code == 'invalid-credential') {
+          // handle the error here
+        }
+      } catch (e) {
+        // handle the error here
+      }
+    }
   }
 
   @override
@@ -63,10 +80,21 @@ class LoginScreenState extends State<LoginScreen> {
               child: ListView(
                   // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                SizedBox(height: 100),
                 SizedBox(
-                  height: 50,
-                  child: TextField(
+                  height: 60,
+                  child: TextFormField(
                     controller: emailController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter an email address';
+                      } else if (!RegExp(
+                              r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
+                          .hasMatch(value)) {
+                        return 'Please enter a valid email address';
+                      }
+                      return null; // Return null if the input is valid
+                    },
                     decoration: InputDecoration(
                       hintText: 'email',
                     ),
@@ -75,7 +103,7 @@ class LoginScreenState extends State<LoginScreen> {
 
                 SizedBox(height: 15),
                 SizedBox(
-                  height: 50,
+                  height: 60,
                   child: TextField(
                     controller: passwordController,
                     obscureText: seePassword,
@@ -123,32 +151,31 @@ class LoginScreenState extends State<LoginScreen> {
                         child: Center(child: CircularProgressIndicator())),
 
                 SizedBox(height: 15),
-                Row(
-                  children: [
-                    Text('you dont have an account?'),
-                    TextButton(
-                        onPressed: widget.onPressed,
-                        child: Text('register now'))
-                  ],
-                ),
-
-                Text('or'),
-                GestureDetector(
-                  onTap: googleSignIn,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black45, width: 2),
-                        borderRadius: BorderRadius.circular(15),
-                        color: const Color.fromRGBO(0, 0, 0, 1)),
-                    height: 60,
-                    child: Center(
-                        child: Text('google',
-                            style: TextStyle(color: Colors.white))),
-                  ),
-                )
+                Text('you don`t have an account?'),
+                TextButton(
+                    onPressed: widget.onPressed, child: Text('register now')),
+                // Center(
+                //   child: Text('or'),
+                // ),
+                // GestureDetector(
+                //   onTap: googleSignIn,
+                //   child: Container(
+                //     decoration: BoxDecoration(
+                //         border: Border.all(color: Colors.black45, width: 2),
+                //         borderRadius: BorderRadius.circular(15),
+                //         color: const Color.fromRGBO(0, 0, 0, 1)),
+                //     height: 60,
+                //     child: Center(
+                //         child: Text('google',
+                //             style: TextStyle(color: Colors.white))),
+                //   ),
+                // )
               ])),
         ),
       ),
     );
   }
 }
+
+
+//blueishincolour@gmail.com

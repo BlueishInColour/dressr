@@ -50,20 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyD-Z2DVfkdHGfKfv7g6ZNz4OQ6f_9nztf8',
-    appId: '1:889199102007:web:e681ff7a564f5bd9f897b2',
-    messagingSenderId: '889199102007',
-    projectId: 'dress-r',
-    authDomain: 'dress-r.firebaseapp.com',
-    storageBucket: 'dress-r.appspot.com',
-    measurementId: 'G-CK2ZRGSFFJ',
+    apiKey: 'AIzaSyCJkThG9rI7xlBc0LSay9nRmDM9p3xCPTE',
+    appId: '1:574027646152:web:d05937676730a4b4a891fd',
+    messagingSenderId: '574027646152',
+    projectId: 'dress-mate',
+    authDomain: 'dress-mate.firebaseapp.com',
+    storageBucket: 'dress-mate.appspot.com',
+    measurementId: 'G-EFGL0305EC',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC1MIFGqSEAjp3dajyD4-KPKDqleOlXfkA',
-    appId: '1:889199102007:android:a9a740079a600f0af897b2',
-    messagingSenderId: '889199102007',
-    projectId: 'dress-r',
-    storageBucket: 'dress-r.appspot.com',
+    apiKey: 'AIzaSyCBdMcUnpYu9FUVLfdoO2wKYY8RxXI5gvk',
+    appId: '1:574027646152:android:a8e8e3d611be15dba891fd',
+    messagingSenderId: '574027646152',
+    projectId: 'dress-mate',
+    storageBucket: 'dress-mate.appspot.com',
   );
 }

@@ -34,7 +34,7 @@ class InstallAppState extends State<InstallApp> {
                   onTap: () async {
                     debugPrint('installit');
                     // http.get(Uri.parse(widget.installLink));
-                    await launchUrl(Uri.parse('https://files.fm/u/7emgbkauvd'),
+                    await launchUrl(Uri.parse('https://files.fm/u/6sumbas3n5'),
                         mode: LaunchMode.inAppBrowserView,
                         webOnlyWindowName: 'download dressr');
                   },

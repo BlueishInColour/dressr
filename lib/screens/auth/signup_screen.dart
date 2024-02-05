@@ -101,7 +101,10 @@ class SignupScreenState extends State<SignupScreen> {
         'email': emailController.text,
         'listOfLikers': [],
         'listOfLikedPosts': [],
-        'listOfShowlist': ['for later']
+        'listOfShowlist': ['for later'],
+        'currentSubscription': 'black',
+        'currentSubscriptionExpire':
+            Timestamp.fromDate(DateTime.parse('20230101'))
       });
     } else {
       setState(() {
