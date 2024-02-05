@@ -1,0 +1,130 @@
+im working on this petty project hoping it will help me connect to my customers more
+dressr is or will be a suit making brand, and will want to fully operate online 
+from order to delevery, 
+4 screens; main shop, cart, blog, profile(wardrope) 
+
+
+main = renders all document 
+cart renders document by liked by a perticular user, ie doc has a list of likers, if user is in the list, fetch it
+blog renders all document
+profile renders documents where creator is the username
+
+
+12 dec,2023
+
+> make the home screen display with pictures any how you can
+> ability to switch with masonery view with a button
+done  -  make like button work so username are added to the post or stories list of likers and can be fetched dynamically by the page
+done - find better design for the blog page and remove appbar
+
+14 dec, 2023
+
+>make chat screen work, so a chat button from the items is redirected to chat
+> te cart screen items like logistics should display profile photos of the owners that is taken with camera not gallry
+> report bug should immidiately go to steeze personal message box
+> profile should show posts count
+> home screen should sidplay the styles in better ways
+> blog items should be ablue to be clicked and display blog posts. 
+> create apk for this so it cakn easuly be used to upload styles
+> blog should display another type of item where there is no picture but words as click bait
+> try to create search
+> like button should download  the style for offline use
+> solve the user problem so each user is made accounted for 
+> slide left from home to enter post comments which will show the initial post then the post then the comments under the posts
+
+
+17 dec 2023
+> chat section should be built
+> heart on a user will had the user to chat
+> chat on  a user will directly move the user to chat with the other user
+> index page should list already added chats and also saved chats
+> the user identity like username displayname and profile pix , cover pix should be called as soon as app is loaded and saved 
+    to shared prefererence and for shared p. be called whenever needed
+> 
+
+20th dec 2023
+> build the profile screen with the entry screen with ring that shows the status of the person
+> user should swipe left to a steeze and woll be brought to steeze up page whith is a tab with 'comments' as the second tab
+>
+
+2nd jan, 2024
+> build the chat screen to be better, more fluid
+> build the save screeb to save any like post to offline, so that it can be viewed without data
+> build the search feature to be fluid
+> 
+
+5th jan, 2024
+> remove blog and work on profile
+> work on the chat screen a lot better
+> make the styles screen a lot finer
+
+8th jan, 2024
+> ensure that the   profile screen is more efficirent
+> chat screen should arrainge chatby latest timestamp
+> searches should start working
+> add tags to posts  items so that they are easily searched
+> comment button should be replace by chat button so when clicked, it will be dirrected to the creator chat screen
+> 
+
+9th jan, 2024
+> find how swipe leftand right works
+> include my icon
+> create the login screen, this time make signup more fluid with ability to imput profile pix and user and display names
+> 
+
+10th jan, 2024
+> make swipe left and right work
+> research on search
+> make the pages save states
+> research on a payment system
+> make comment section to be on moreitemin as in bottom sheeet that can be pulled up, it will also contain caption
+> make user in bar section of storeitems be clickeable and will nav page to their profile section
+> 
+
+13th jan. 2024
+> uploads should be smoother,
+> set a difference between singles and collection uploads
+> set a difference betweenn singles and collection rendering
+>
+
+15th january ,2024
+> fork on like screen only and like button
+
+25th jan, 2024
+> make the search screen work again
+> test the like button count when theres data
+
+
+27th jan, 2024
+> make the re post and add in more in button work with corrolation with post id, headPostId, and ancenstorId
+> make the search screen work no fail
+> look for a better way to design add screen
+>   postId is for each post
+    headPostId holds all the posts more in of
+    ancenstorId holds all post of more out of 
+
+30th january 2024
+> profile should render post in masonary with firebase pagenated
+> work on the chat section
+> user should follow someone by liking
+> logo picute should be desplayed in here
+>uploaidng post in add up and moreitem in or out should use ansector id to group there selve passed a  parameter before hand
+>if connection is loading what apppear, solve thar in every sceem
+> the default data to be passed like pictureand text should be passed not just post 
+
+31 jan 2024
+> order chat by timestamp and message
+>workmoreon streambuilder sotheres  no errror
+> 
+
+**** happy new month !!! *****
+
+1st feb, 2024
+> the future builder for profile screen
+
+2nd feb 2024
+>scroll position most be saved by all means necessary
+> in chat, pod like status should show to help view post from friends only
+> chat section most be veru good, request messaged should be grouped
+> login section is to be refined
+> switch everything to dressr
