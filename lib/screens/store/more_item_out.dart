@@ -17,6 +17,8 @@ import 'package:uuid/uuid.dart';
 import '../../models/comments.dart';
 import 'item/item.dart';
 
+import '../../middle.dart';
+
 class SteezeSection extends StatefulWidget {
   const SteezeSection({
     super.key,
@@ -31,87 +33,89 @@ class SteezeSection extends StatefulWidget {
 class SteezeSectionState extends State<SteezeSection> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        // appBar: AppBar(
-        //   elevation: 0,
-        //   backgroundColor: Colors.white,
-        //   automaticallyImplyLeading: true,
-        //   leading: IconButton(
-        //     onPressed: () {
-        //       Navigator.pop(context);
-        //     },
-        //     icon: Icon(
-        //       Icons.arrow_back_ios_new_outlined,
-        //       color: Colors.black,
-        //     ),
-        //   ),
-        // ),
+    return Middle(
+      child: Scaffold(
+          // appBar: AppBar(
+          //   elevation: 0,
+          //   backgroundColor: Colors.white,
+          //   automaticallyImplyLeading: true,
+          //   leading: IconButton(
+          //     onPressed: () {
+          //       Navigator.pop(context);
+          //     },
+          //     icon: Icon(
+          //       Icons.arrow_back_ios_new_outlined,
+          //       color: Colors.black,
+          //     ),
+          //   ),
+          // ),
 
-        body: FirestorePagination(
-            query: FirebaseFirestore.instance
-                .collection('posts')
-                .where('ancestorId', isEqualTo: widget.ancestorId),
-            itemBuilder: (context, snap, snapshot) {
-              return Item(
-                postId: snap['postId'],
-              );
-            }),
-        bottomSheet: FutureBuilder(
-            future: FirebaseFirestore.instance.collection('posts').get(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                var data = snapshot.data!.docs[0];
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        PageRouteBuilder(pageBuilder: (context, _, __) {
-                      return MoreItemIn(
-                        creatorUid: data['creatorUid'],
-                        postId: data['postId'],
-                        ancestorId: data['ancestorId'],
-                      );
-                    }));
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(15),
-                            topRight: Radius.circular(15))),
-                    height: 50,
-                    child: ListTile(
-                      leading: BackButton(
-                        color: Colors.white60,
-                      ),
-                      trailing: CircleAvatar(
-                          backgroundColor: Colors.blue,
-                          child: IconButton(
-                            onPressed: () {
-                              Navigator.push(context, PageRouteBuilder(
-                                  pageBuilder: (context, _, __) {
-                                return kIsWeb
-                                    ? InstallApp()
-                                    : CreateScreen(
-                                        ancestorId: widget.ancestorId,
-                                      );
-                              }));
-                            },
-                            icon:
-                                Icon(LineIcons.retweet, color: Colors.white60),
-                          )),
-                      title: Text(
-                        'view original post',
-                        style: TextStyle(color: Colors.white60, fontSize: 14),
+          body: FirestorePagination(
+              query: FirebaseFirestore.instance
+                  .collection('posts')
+                  .where('ancestorId', isEqualTo: widget.ancestorId),
+              itemBuilder: (context, snap, snapshot) {
+                return Item(
+                  postId: snap['postId'],
+                );
+              }),
+          bottomSheet: FutureBuilder(
+              future: FirebaseFirestore.instance.collection('posts').get(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  var data = snapshot.data!.docs[0];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          PageRouteBuilder(pageBuilder: (context, _, __) {
+                        return MoreItemIn(
+                          creatorUid: data['creatorUid'],
+                          postId: data['postId'],
+                          ancestorId: data['ancestorId'],
+                        );
+                      }));
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(15),
+                              topRight: Radius.circular(15))),
+                      height: 50,
+                      child: ListTile(
+                        leading: BackButton(
+                          color: Colors.white60,
+                        ),
+                        trailing: CircleAvatar(
+                            backgroundColor: Colors.blue,
+                            child: IconButton(
+                              onPressed: () {
+                                Navigator.push(context, PageRouteBuilder(
+                                    pageBuilder: (context, _, __) {
+                                  return kIsWeb
+                                      ? InstallApp()
+                                      : CreateScreen(
+                                          ancestorId: widget.ancestorId,
+                                        );
+                                }));
+                              },
+                              icon: Icon(LineIcons.retweet,
+                                  color: Colors.white60),
+                            )),
+                        title: Text(
+                          'view original post',
+                          style: TextStyle(color: Colors.white60, fontSize: 14),
+                        ),
                       ),
                     ),
-                  ),
-                );
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }));
+                  );
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              })),
+    );
   }
 }
 

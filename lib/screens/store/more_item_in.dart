@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
 import '../../main.dart';
+import '../../middle.dart';
 
 import 'item/item.dart';
 import 'package:flutter/material.dart';
@@ -53,69 +54,71 @@ class MoreItemInState extends State<MoreItemIn> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar(
-      //   automaticallyImplyLeading: true,
-      //   title: Text('steeze-on'),
-      //   actions: [
-      //     IconButton(
-      //         onPressed: () {
-      //           Navigator.push(context,
-      //               PageRouteBuilder(pageBuilder: (context, _, __) {
-      //             return MainIndex();
-      //           }));
-      //         },
-      //         icon: Icon(
-      //           Icons.home,
-      //           color: Colors.white,
-      //         ))
-      //   ],
-      // ),
+    return Middle(
+      child: Scaffold(
+        // appBar: AppBar(
+        //   automaticallyImplyLeading: true,
+        //   title: Text('steeze-on'),
+        //   actions: [
+        //     IconButton(
+        //         onPressed: () {
+        //           Navigator.push(context,
+        //               PageRouteBuilder(pageBuilder: (context, _, __) {
+        //             return MainIndex();
+        //           }));
+        //         },
+        //         icon: Icon(
+        //           Icons.home,
+        //           color: Colors.white,
+        //         ))
+        //   ],
+        // ),
 
-      body: FirestorePagination(
-          query: FirebaseFirestore.instance
-              .collection('posts')
-              .where('ancestorId', isEqualTo: widget.ancestorId)
-              .where('creatorUid', isEqualTo: widget.creatorUid),
-          itemBuilder: (context, snap, snapshot) {
-            return Item(
-              postId: snap['postId'],
-            );
-          }),
-      bottomSheet: GestureDetector(
-          onTap: showBottomSheet,
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15))),
-            height: 50,
-            child: ListTile(
-              leading: BackButton(
-                color: Colors.white60,
+        body: FirestorePagination(
+            query: FirebaseFirestore.instance
+                .collection('posts')
+                .where('ancestorId', isEqualTo: widget.ancestorId)
+                .where('creatorUid', isEqualTo: widget.creatorUid),
+            itemBuilder: (context, snap, snapshot) {
+              return Item(
+                postId: snap['postId'],
+              );
+            }),
+        bottomSheet: GestureDetector(
+            onTap: showBottomSheet,
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15))),
+              height: 50,
+              child: ListTile(
+                leading: BackButton(
+                  color: Colors.white60,
+                ),
+                trailing: CircleAvatar(
+                    backgroundColor: Colors.blue,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                            PageRouteBuilder(pageBuilder: (context, _, __) {
+                          return kIsWeb
+                              ? InstallApp()
+                              : CreateScreen(
+                                  ancestorId: widget.ancestorId,
+                                );
+                        }));
+                      },
+                      icon: Icon(Icons.add, color: Colors.white60),
+                    )),
+                title: Text(
+                  'view comments',
+                  style: TextStyle(color: Colors.white60, fontSize: 14),
+                ),
               ),
-              trailing: CircleAvatar(
-                  backgroundColor: Colors.blue,
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                          PageRouteBuilder(pageBuilder: (context, _, __) {
-                        return kIsWeb
-                            ? InstallApp()
-                            : CreateScreen(
-                                ancestorId: widget.ancestorId,
-                              );
-                      }));
-                    },
-                    icon: Icon(Icons.add, color: Colors.white60),
-                  )),
-              title: Text(
-                'view comments',
-                style: TextStyle(color: Colors.white60, fontSize: 14),
-              ),
-            ),
-          )),
+            )),
+      ),
     );
   }
 }

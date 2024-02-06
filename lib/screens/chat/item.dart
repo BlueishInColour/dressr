@@ -10,16 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class Item extends StatefulWidget {
-  const Item(
-      {super.key,
-      required this.uid,
-      required this.userName,
-      required this.profilePicture,
-      required this.displayName});
+  const Item({
+    super.key,
+    required this.uid,
+  });
 
-  final String userName;
-  final String displayName;
-  final String profilePicture;
   final String uid;
 
   @override
@@ -38,30 +33,47 @@ class ItemState extends State<Item> {
           foregroundColor: Colors.black,
           leadingWidth: 30,
           automaticallyImplyLeading: false,
-          title: GestureDetector(
-            onTap: () {
-              Navigator.push(context,
-                  PageRouteBuilder(pageBuilder: (context, _, __) {
-                return ProfileScreen(userUid: widget.uid);
-              }));
-            },
-            child: ListTile(
-              leading: CircleAvatar(
-                backgroundImage:
-                    CachedNetworkImageProvider(widget.profilePicture),
-              ),
-              title: Text(
-                widget.displayName,
-                style: TextStyle(color: Colors.black87),
-              ),
-              subtitle: Text(
-                widget.uid == FirebaseAuth.instance.currentUser!.uid
-                    ? 'messaging myself'
-                    : '@${widget.userName}',
-                style: TextStyle(color: Colors.black54),
-              ),
-            ),
-          ),
+          title: FutureBuilder(
+              future: FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(widget.uid)
+                  .get(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Row(
+                    children: [CircleAvatar()],
+                  );
+                }
+                if (snapshot.hasData) {
+                  var details = snapshot.data!;
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          PageRouteBuilder(pageBuilder: (context, _, __) {
+                        return ProfileScreen(userUid: details['uid']);
+                      }));
+                    },
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundImage: CachedNetworkImageProvider(
+                            details['profilePicture']),
+                      ),
+                      title: Text(
+                        details['displayName'],
+                        style: TextStyle(color: Colors.black87),
+                      ),
+                      subtitle: Text(
+                        widget.uid == FirebaseAuth.instance.currentUser!.uid
+                            ? 'messaging myself'
+                            : '@${details['userName']}',
+                        style: TextStyle(color: Colors.black54),
+                      ),
+                    ),
+                  );
+                } else {
+                  return CircularProgressIndicator();
+                }
+              }),
           actions: [
             // FollowButton(
             //   userUid: widget.uid,

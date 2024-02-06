@@ -141,6 +141,7 @@ class ItemHeaderState extends State<ItemHeader> {
                               context: context,
                               builder: (context) {
                                 return ItemActions(
+                                    creatorUid: widget.creatorUid,
                                     postId: widget.postId,
                                     bytes: widget.bytes,
                                     controller: widget.controller);

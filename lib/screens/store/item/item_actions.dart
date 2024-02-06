@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dressr/screens/store/item/item.dart';
+import 'package:dressr/utils/chat_button.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
@@ -17,6 +18,7 @@ class ItemActions extends StatefulWidget {
     required this.controller,
     required this.bytes,
     required this.postId,
+    required  this.creatorUid,
   });
   final String postId;
 
@@ -25,7 +27,7 @@ class ItemActions extends StatefulWidget {
   final WidgetsToImageController controller;
   // to save image bytes of widget
   final Uint8List? bytes;
-
+final  String creatorUid;
   @override
   State<ItemActions> createState() => ItemActionsState();
 }
@@ -104,7 +106,12 @@ class ItemActionsState extends State<ItemActions> {
                   ? SizedBox(
                       width: 14, height: 14, child: CircularProgressIndicator())
                   : Icon(Icons.share))
-        ],
+       
+       
+       
+       ,
+       
+      ChatButton(uid: widget.creatorUid,) ],
       )),
       body: ListView(
         children: [

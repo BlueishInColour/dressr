@@ -107,12 +107,7 @@ class FollowButtonState extends State<FollowButton> {
               );
             }
             return haveLiked
-                ? ChatButton(
-                    color: Colors.white60,
-                    userName: widget.userName,
-                    displayName: widget.displayName,
-                    profilePicture: widget.profilePicture,
-                    uid: widget.userUid)
+                ? ChatButton(color: Colors.white60, uid: widget.userUid)
                 : IconButton(
                     onPressed: action,
                     icon: Icon(

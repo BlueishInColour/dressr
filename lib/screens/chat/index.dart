@@ -16,7 +16,10 @@ import './item.dart';
 import '../../models/chat_user.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key, required this.listOfFriends});
+  const ChatScreen({
+    super.key,
+    required this.listOfFriends,
+  });
   final List<String> listOfFriends;
 
   @override
@@ -24,12 +27,6 @@ class ChatScreen extends StatefulWidget {
 }
 
 class ChatScreenState extends State<ChatScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -46,7 +43,6 @@ class ChatScreenState extends State<ChatScreen> {
           Divider(),
           Expanded(
             child: FirestorePagination(
-                isLive: true,
                 onEmpty:
                     Center(child: Text('any user you like will appear here')),
                 query: FirebaseFirestore.instance
@@ -73,9 +69,6 @@ class ChatScreenState extends State<ChatScreen> {
                                     pageBuilder: (context, _, __) {
                                   return Item(
                                     uid: userUid,
-                                    displayName: snap['displayName'],
-                                    profilePicture: snap['profilePicture'],
-                                    userName: snap['userName'],
                                   );
                                 }));
                               },
