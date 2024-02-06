@@ -1,14 +1,20 @@
+import 'dart:typed_data';
+
 import 'package:dressr/screens/profile/index.dart';
+import 'package:dressr/screens/store/item/item_actions.dart';
 import 'package:dressr/screens/store/item/item_caption.dart';
 import 'package:dressr/utils/like_button.dart';
 import 'package:dressr/utils/repost_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:widgets_to_image/widgets_to_image.dart';
 
 class ItemHeader extends StatefulWidget {
   const ItemHeader(
       {super.key,
+      required this.controller,
+      required this.bytes,
       required this.creatorUid,
       required this.ancestorId,
       this.showButtons = true,
@@ -21,6 +27,13 @@ class ItemHeader extends StatefulWidget {
   final bool showButtons;
   final String caption;
   final bool isPictureAvailable;
+
+  //for download button
+  // WidgetsToImageController to access widget
+  final WidgetsToImageController controller;
+  // to save image bytes of widget
+  final Uint8List? bytes;
+
   @override
   State<ItemHeader> createState() => ItemHeaderState();
 }
@@ -82,7 +95,7 @@ class ItemHeaderState extends State<ItemHeader> {
                         }));
                       },
                       child: SizedBox(
-                        width: 220,
+                        width: 185,
                         child: Padding(
                           padding: const EdgeInsets.only(top: 6.0),
                           child: Row(
@@ -95,7 +108,7 @@ class ItemHeaderState extends State<ItemHeader> {
                                       snap['profilePicture'])),
                               SizedBox(width: 5),
                               SizedBox(
-                                width: 180,
+                                width: 130,
                                 child: Text(
                                   '${snap['displayName']}'
                                   ' | '
@@ -122,7 +135,21 @@ class ItemHeaderState extends State<ItemHeader> {
                         idType: 'postId',
                         postId: widget.postId,
                         collection: 'posts'),
-                    SizedBox(width: 10)
+                    IconButton(
+                        onPressed: () {
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (context) {
+                                return ItemActions(
+                                    postId: widget.postId,
+                                    bytes: widget.bytes,
+                                    controller: widget.controller);
+                              });
+                        },
+                        icon: Icon(
+                          Icons.more_vert_rounded,
+                          color: Colors.white70,
+                        )),
                   ],
                 ),
 

@@ -77,8 +77,8 @@ class StoreScreenState extends State<StoreScreen>
   initState() {
     super.initState();
     getListOfFriends();
-    Future.delayed(Duration(minutes: 20));
-    callSubScription(context);
+    // Future.delayed(Duration(minutes: 20));
+    // callSubScription(context);
   }
 
   button(context) {
@@ -103,8 +103,6 @@ class StoreScreenState extends State<StoreScreen>
     );
   }
 
-  PageStorageBucket bucket = PageStorageBucket();
-
   final FirebaseFirestore db = FirebaseFirestore.instance;
   @override
   bool get wantKeepAlive => true;
@@ -123,7 +121,7 @@ class StoreScreenState extends State<StoreScreen>
                   // Image.asset('assets/icon.png', height: 30),
                   // SizedBox(width: 10),
                   GestureDetector(
-                    onTap: callSubScription(context),
+                    // onTap: callSubScription(context),
                     child: Text(
                       "dressmate",
                       style: GoogleFonts.pacifico(

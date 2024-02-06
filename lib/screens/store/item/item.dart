@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:dressr/screens/store/item/item.dart';
 import 'package:dressr/screens/store/item/item_caption.dart';
 import 'package:dressr/screens/store/item/item_header.dart';
@@ -6,6 +8,7 @@ import 'package:dressr/screens/store/more_item_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:widgets_to_image/widgets_to_image.dart';
 
 class Item extends StatefulWidget {
   const Item({
@@ -25,6 +28,11 @@ class Item extends StatefulWidget {
 }
 
 class ItemState extends State<Item> {
+  // WidgetsToImageController to access widget
+  WidgetsToImageController controller = WidgetsToImageController();
+  // to save image bytes of widget
+  Uint8List? bytes;
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -47,6 +55,9 @@ class ItemState extends State<Item> {
               child: Column(
                 children: [
                   ItemHeader(
+//for donwlowder
+                    bytes: bytes, controller: controller,
+
                     postId: snap['postId'],
                     ancestorId: snap['ancestorId'],
                     creatorUid: snap['creatorUid'],
