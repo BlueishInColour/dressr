@@ -1,10 +1,10 @@
 import 'dart:typed_data';
 
-import 'package:dressr/screens/store/item/item.dart';
-import 'package:dressr/screens/store/item/item_caption.dart';
-import 'package:dressr/screens/store/item/item_header.dart';
-import 'package:dressr/screens/store/item/item_picture.dart';
-import 'package:dressr/screens/store/more_item_in.dart';
+import 'package:dressr/screens/explore/item/item.dart';
+import 'package:dressr/screens/explore/item/item_caption.dart';
+import 'package:dressr/screens/explore/item/item_header.dart';
+import 'package:dressr/screens/explore/item/item_picture.dart';
+import 'package:dressr/screens/explore/more_item_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

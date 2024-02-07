@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:dressr/screens/profile/index.dart';
-import 'package:dressr/screens/store/item/item_actions.dart';
-import 'package:dressr/screens/store/item/item_caption.dart';
+import 'package:dressr/screens/explore/item/item_actions.dart';
+import 'package:dressr/screens/explore/item/item_caption.dart';
 import 'package:dressr/utils/like_button.dart';
 import 'package:dressr/utils/repost_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';

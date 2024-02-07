@@ -1,7 +1,7 @@
 import 'package:dressr/screens/profile/index.dart';
-import 'package:dressr/screens/store/item/item_header.dart';
-import 'package:dressr/screens/store/more_item_in.dart';
-import 'package:dressr/screens/store/more_item_out.dart';
+import 'package:dressr/screens/explore/item/item_header.dart';
+import 'package:dressr/screens/explore/more_item_in.dart';
+import 'package:dressr/screens/explore/more_item_out.dart';
 import 'package:dressr/utils/repost_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';

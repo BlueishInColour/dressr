@@ -27,6 +27,8 @@ class ChatScreen extends StatefulWidget {
 }
 
 class ChatScreenState extends State<ChatScreen> {
+  List<String> myUid = [FirebaseAuth.instance.currentUser!.uid];
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -39,7 +41,9 @@ class ChatScreenState extends State<ChatScreen> {
       ),
       body: Column(
         children: [
-          DayPost(listOfFreinds: widget.listOfFriends),
+          DayPost(
+              listOfFreinds:
+                  widget.listOfFriends.isEmpty ? myUid : widget.listOfFriends),
           Divider(),
           Expanded(
             child: FirestorePagination(

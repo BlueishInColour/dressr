@@ -1,5 +1,5 @@
 import 'package:dressr/middle.dart';
-import 'package:dressr/screens/store/item/item.dart';
+import 'package:dressr/screens/explore/item/item.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dressr/utils/utils_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';

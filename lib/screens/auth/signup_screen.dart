@@ -136,9 +136,19 @@ class SignupScreenState extends State<SignupScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                       SizedBox(
-                        height: 50,
-                        child: TextField(
+                        height: 60,
+                        child: TextFormField(
                           controller: emailController,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter an email address';
+                            } else if (!RegExp(
+                                    r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
+                                .hasMatch(value)) {
+                              return 'Please enter a valid email address';
+                            }
+                            return null; // Return null if the input is valid
+                          },
                           decoration: InputDecoration(
                             hintText: 'email',
                           ),
@@ -146,7 +156,7 @@ class SignupScreenState extends State<SignupScreen> {
                       ),
                       SizedBox(height: 15),
                       SizedBox(
-                        height: 50,
+                        height: 60,
                         child: TextField(
                           controller: passwordController,
                           obscureText: seePassword,
@@ -168,11 +178,14 @@ class SignupScreenState extends State<SignupScreen> {
                         ),
                       ),
                       SizedBox(height: 15),
-                      TextField(
-                        controller: secondPasswordController,
-                        obscureText: seePassword,
-                        decoration:
-                            InputDecoration(hintText: 'confirm password'),
+                      SizedBox(
+                        height: 60,
+                        child: TextField(
+                          controller: secondPasswordController,
+                          obscureText: seePassword,
+                          decoration:
+                              InputDecoration(hintText: 'confirm password'),
+                        ),
                       ),
                       SizedBox(height: 15),
                       GestureDetector(
@@ -212,14 +225,20 @@ class SignupScreenState extends State<SignupScreen> {
                   child: ListView(
                     // mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ElevatedButton(
-                          onPressed: changeSetProfilebool,
-                          child: Icon(Icons.arrow_back),
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStatePropertyAll(Colors.black),
-                              foregroundColor:
-                                  MaterialStatePropertyAll(Colors.white))),
+                      GestureDetector(
+                        onTap: changeSetProfilebool,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: Colors.black45, width: 2),
+                              borderRadius: BorderRadius.circular(15),
+                              color: const Color.fromRGBO(0, 0, 0, 1)),
+                          height: 60,
+                          child: Center(
+                              child: Text('signup',
+                                  style: TextStyle(color: Colors.white))),
+                        ),
+                      ),
 
                       SizedBox(height: 15),
 

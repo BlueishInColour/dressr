@@ -12,7 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:imagekit_io/imagekit_io.dart';
 import 'package:uuid/uuid.dart';
 import '../../main.dart';
-import '../store/item/item.dart';
+import '../explore/item/item.dart';
 
 class CreateScreen extends StatefulWidget {
   const CreateScreen({super.key, required this.ancestorId});
