@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dressr/utils/install_app_function.dart';
 import 'package:dressr/utils/subscripe.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -178,8 +179,15 @@ updateFirebaseDocument(context,
 }
 
 //call to subscribe
-callSubScription(context, {String warning = ''}) async {
-  if (!kIsWeb) {
+callSubScription(context,
+    {String warning = '', required Function function}) async {
+  if (kIsWeb) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return InstallApp();
+        });
+  } else if (!kIsWeb) {
     var res = await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -194,6 +202,6 @@ callSubScription(context, {String warning = ''}) async {
           });
     }
   } else {
-    //
+    function;
   }
 }

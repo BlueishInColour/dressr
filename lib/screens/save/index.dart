@@ -30,8 +30,9 @@ class LikeScreenState extends State<LikeScreen> {
               .collection('posts'),
           itemBuilder: (context, document, snapshot) {
             if (snapshot > 100) {
-              callSubScription(context,
-                  warning: 'you have suppass your limit of 100 total saves');
+              callSubScription(context, function: () {
+                debugPrint('');
+              }, warning: 'you have suppass your limit of 100 total saves');
             }
             return Item(
               postId: document['postId'],

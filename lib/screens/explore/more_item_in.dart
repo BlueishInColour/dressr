@@ -4,6 +4,8 @@ import 'package:dressr/screens/explore/index.dart';
 import 'package:dressr/screens/explore/more_item_out.dart';
 import 'package:dressr/utils/install_app_function.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dressr/utils/repost_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -97,21 +99,25 @@ class MoreItemInState extends State<MoreItemIn> {
                 leading: BackButton(
                   color: Colors.white60,
                 ),
-                trailing: CircleAvatar(
-                    backgroundColor: Colors.blue,
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.push(context,
-                            PageRouteBuilder(pageBuilder: (context, _, __) {
-                          return kIsWeb
-                              ? InstallApp()
-                              : CreateScreen(
-                                  ancestorId: widget.ancestorId,
-                                );
-                        }));
-                      },
-                      icon: Icon(Icons.add, color: Colors.white60),
-                    )),
+                trailing: widget.creatorUid ==
+                        FirebaseAuth.instance.currentUser!.uid
+                    ? CircleAvatar(
+                        backgroundColor: Colors.blue,
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.push(context,
+                                PageRouteBuilder(pageBuilder: (context, _, __) {
+                              return kIsWeb
+                                  ? InstallApp()
+                                  : CreateScreen(
+                                      ancestorId: widget.ancestorId,
+                                    );
+                            }));
+                          },
+                          icon: Icon(Icons.add, color: Colors.white60),
+                        ))
+                    : RepostButton(
+                        ancestorId: widget.ancestorId, postId: widget.postId),
                 title: Text(
                   'view comments',
                   style: TextStyle(color: Colors.white60, fontSize: 14),

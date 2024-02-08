@@ -137,7 +137,7 @@ class StoreScreenState extends State<StoreScreen>
                     onPressed: () {
                       Navigator.push(context,
                           PageRouteBuilder(pageBuilder: (context, _, __) {
-                        return ChatScreen(
+                        return ChatScreen(typeOfChat: 'active',
                           listOfFriends: listOfFriends,
                         );
                       }));

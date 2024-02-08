@@ -92,11 +92,12 @@ class CreateScreenState extends State<CreateScreen> {
       });
     }
 
-    createTags() {
+    createTags({String firstCaption = 'designs'}) {
       listOfCreatingPost.forEach((element) {
         List tagss = element['tags'];
         setState(() {
           tagss.addAll(element['caption'].split(' '));
+          tagss.addAll(firstCaption.split(' '));
         });
       });
     }
@@ -177,7 +178,6 @@ class CreateScreenState extends State<CreateScreen> {
 
     uploadPost() async {
       String firstCaption = listOfCreatingPost.first['caption'];
-      List<String> firstCaptionTags = firstCaption.split(' ');
       listOfCreatingPost.forEach((element) {
         String picture = element['picture'];
         String caption = element['caption'];
@@ -185,7 +185,6 @@ class CreateScreenState extends State<CreateScreen> {
           List<String> tags = element['tags'];
           setState(() {
             canTheUploadBeDone = false;
-            tags.addAll(firstCaptionTags);
           });
         }
       });
@@ -204,7 +203,8 @@ class CreateScreenState extends State<CreateScreen> {
       } else {
         listOfCreatingPost.forEach((element) async {
           String postId = Uuid().v1();
-          createTags();
+          firstCaption = listOfCreatingPost.first['caption'];
+          createTags(firstCaption: firstCaption);
           setState(() {
             element['postId'] = postId;
           });

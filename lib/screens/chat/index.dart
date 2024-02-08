@@ -16,11 +16,18 @@ import './item.dart';
 import '../../models/chat_user.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({
-    super.key,
-    required this.listOfFriends,
-  });
+  const ChatScreen(
+      {super.key,
+      required this.typeOfChat,
+      this.listOfFriends = const [],
+      this.appBarTitle = 'chats',
+      this.showOthers = true,
+      this.showDayPost = true});
   final List<String> listOfFriends;
+  final String typeOfChat;
+  final String appBarTitle;
+  final bool showDayPost;
+  final bool showOthers;
 
   @override
   State<ChatScreen> createState() => ChatScreenState();
@@ -37,33 +44,63 @@ class ChatScreenState extends State<ChatScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: true,
         foregroundColor: Colors.black54,
-        title: Text('chats'),
+        title: Text(widget.appBarTitle),
       ),
       body: Column(
         children: [
-          DayPost(
-              listOfFreinds:
-                  widget.listOfFriends.isEmpty ? myUid : widget.listOfFriends),
-          Divider(),
+          widget.showDayPost
+              ? DayPost(
+                  listOfFreinds: widget.listOfFriends.isEmpty
+                      ? myUid
+                      : widget.listOfFriends)
+              : SizedBox(),
+          widget.showDayPost ? Divider() : SizedBox(),
+          widget.showOthers
+              ? ListTile(
+                  onTap: () {
+                    Navigator.push(context,
+                        PageRouteBuilder(pageBuilder: (context, _, __) {
+                      return ChatScreen(
+                        typeOfChat: 'requests',
+                        showOthers: true,
+                        appBarTitle: 'message requests',
+                        showDayPost: false,
+                      );
+                    }));
+                  },
+                  title: Text('message requests'),
+                  trailing: Icon(Icons.arrow_forward_ios_outlined),
+                )
+              : SizedBox(),
           Expanded(
             child: FirestorePagination(
-                onEmpty:
-                    Center(child: Text('any user you like will appear here')),
+                onEmpty: Center(child: Text('no  user here yet')),
                 query: FirebaseFirestore.instance
                     .collection('chat')
                     .doc(FirebaseAuth.instance.currentUser!.uid)
-                    .collection('active')
-                    .orderBy('lastMessageTimeStamp'),
+                    .collection(widget.typeOfChat)
+                // .orderBy('lastMessageTimeStamp')
+                ,
                 itemBuilder: (context, document, snapshot) {
                   String userUid = document['userUid'];
-                  return StreamBuilder(
-                      stream: FirebaseFirestore.instance
+                  return FutureBuilder(
+                      future: FirebaseFirestore.instance
                           .collection('users')
                           .doc(userUid)
-                          .snapshots(),
+                          .get(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
-                            ConnectionState.active) {
+                            ConnectionState.waiting) {
+                          return Container(
+                            height: 40,
+                            margin: EdgeInsets.all(10),
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade200,
+                                borderRadius: BorderRadius.circular(10)),
+                          );
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.done) {
                           String lastMessage = document['lastMessage'];
                           if (snapshot.hasData) {
                             var snap = snapshot.data!;
@@ -98,7 +135,10 @@ class ChatScreenState extends State<ChatScreen> {
                               ),
                             );
                           } else {
-                            return Text('user not found');
+                            return Row(children: [
+                              CircleAvatar(),
+                              Text('user might have disable account')
+                            ]);
                           }
                         } else {
                           return Container(

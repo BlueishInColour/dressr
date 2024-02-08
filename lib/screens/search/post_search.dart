@@ -80,6 +80,8 @@ class PostSearchState extends State<PostSearch> {
               Expanded(
                 child: SearchBar(
                   controller: controller,
+                  textStyle: MaterialStatePropertyAll(
+                      TextStyle(color: Colors.white60)),
                   backgroundColor: MaterialStatePropertyAll(Colors.white38),
                   onChanged: (v) {
                     setState(() {

@@ -22,6 +22,51 @@ class Item extends StatefulWidget {
 }
 
 class ItemState extends State<Item> {
+  //check or add
+  checkOrAdd() async {
+    //check  if you are in ther person active chat else add you to his request chat
+    var res = await FirebaseFirestore.instance
+        .collection('chat')
+        .doc(widget.uid)
+        .collection('active')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    if (await res.exists) {
+      await FirebaseFirestore.instance
+          .collection('chat')
+          .doc(widget.uid)
+          .collection('requests')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .delete();
+    } else {
+      await FirebaseFirestore.instance
+          .collection('chat')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection('requests')
+          .doc(widget.uid)
+          .set({
+        //likedById
+        'followedBy': FirebaseAuth.instance.currentUser!.uid,
+        //post id
+        'userUid': widget.uid,
+        //timeStamp
+        'timestamp': Timestamp.now(),
+
+//to order the chats
+        'lastMessageTimeStamp': Timestamp.now(),
+        'lastMessage': ' '
+        //
+      });
+    }
+  }
+
+  @override
+  initState() {
+    super.initState();
+    checkOrAdd();
+  }
+
   @override
   Widget build(BuildContext context) {
     List chatRoom = [FirebaseAuth.instance.currentUser!.uid, widget.uid];
@@ -147,14 +192,7 @@ class ItemState extends State<Item> {
             title: MessageBar(
               messageBarColor: Colors.transparent,
               onSend: (text) async {
-                debugPrint('about to send message');
-                // for (var i = 0; i < chatRoom.length; i++) {
-                // debugPrint(i.toString());
-                await FirebaseFirestore.instance
-                    .collection('chatroom')
-                    .doc(chatKey)
-                    .collection('messages')
-                    .add({
+                Map<String, dynamic> message = {
                   'senderId': FirebaseAuth.instance.currentUser!.uid,
                   'reciever': 'tinuke',
                   'recieverId': widget.uid,
@@ -164,7 +202,16 @@ class ItemState extends State<Item> {
                   'timestamp': Timestamp.now(),
                   'status': 'seen',
                   'listOfChatters': chatRoom,
-                });
+                };
+
+                debugPrint('about to send message');
+                // for (var i = 0; i < chatRoom.length; i++) {
+                // debugPrint(i.toString());
+                await FirebaseFirestore.instance
+                    .collection('chatroom')
+                    .doc(chatKey)
+                    .collection('messages')
+                    .add(message);
                 // chatRoom.map((e) async =>);
                 // }
 

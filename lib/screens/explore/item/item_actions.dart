@@ -1,9 +1,15 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dressr/screens/explore/item/item.dart';
 import 'package:dressr/utils/chat_button.dart';
 import 'package:dressr/utils/check_sub_and_isweb.dart';
+import 'package:dressr/utils/install_app_function.dart';
+import 'package:dressr/utils/subscripe.dart';
+import 'package:dressr/utils/utils_functions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
@@ -47,9 +53,29 @@ class ItemActionsState extends State<ItemActions> {
           title: Row(
         children: [
           //download button
-          CheckSubAndIsWeb(
-            child: IconButton(
-                onPressed: () async {
+          IconButton(
+              onPressed: () async {
+                if (kIsWeb) {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return InstallApp();
+                      });
+                } else if (!kIsWeb) {
+                  var res = await FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(FirebaseAuth.instance.currentUser!.uid)
+                      .get();
+                  String currentSubscription = res['currentSubscription'];
+                  bool isBlack = currentSubscription == 'black';
+                  if (isBlack) {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return Subscripe();
+                        });
+                  }
+                } else {
                   setState(() {
                     isDownloading = true;
                   });
@@ -67,19 +93,37 @@ class ItemActionsState extends State<ItemActions> {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text('your image have been downloaded')));
-                },
-                icon: isDownloading
-                    ? SizedBox(
-                        width: 14,
-                        height: 14,
-                        child: CircularProgressIndicator())
-                    : Icon(Icons.download)),
-          ),
+                }
+              },
+              icon: isDownloading
+                  ? SizedBox(
+                      width: 14, height: 14, child: CircularProgressIndicator())
+                  : Icon(Icons.download)),
 
           //  sharebutton
-          CheckSubAndIsWeb(
-            child: IconButton(
-                onPressed: () async {
+          IconButton(
+              onPressed: () async {
+                if (kIsWeb) {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return InstallApp();
+                      });
+                } else if (!kIsWeb) {
+                  var res = await FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(FirebaseAuth.instance.currentUser!.uid)
+                      .get();
+                  String currentSubscription = res['currentSubscription'];
+                  bool isBlack = currentSubscription == 'black';
+                  if (isBlack) {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return Subscripe();
+                        });
+                  }
+                } else {
                   setState(() {
                     isSharing = true;
                   });
@@ -107,14 +151,12 @@ class ItemActionsState extends State<ItemActions> {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('your image have been shared')));
                   }
-                },
-                icon: isSharing
-                    ? SizedBox(
-                        width: 14,
-                        height: 14,
-                        child: CircularProgressIndicator())
-                    : Icon(Icons.share)),
-          ),
+                }
+              },
+              icon: isSharing
+                  ? SizedBox(
+                      width: 14, height: 14, child: CircularProgressIndicator())
+                  : Icon(Icons.share)),
 
           ChatButton(
             uid: widget.creatorUid,
