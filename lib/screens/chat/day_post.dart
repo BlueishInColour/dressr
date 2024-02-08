@@ -36,10 +36,14 @@ class DayPostState extends State<DayPost> {
                   children: [CircleAvatar()],
                 ),
                 bottomLoader: Row(
-                  children: [CircleAvatar()],
+                  children: [CircleAvatar(child: CircularProgressIndicator())],
                 ),
                 initialLoader: Row(
-                  children: [CircleAvatar()],
+                  children: [
+                    CircleAvatar(
+                      child: CircularProgressIndicator(),
+                    )
+                  ],
                 ),
                 query: FirebaseFirestore.instance
                     .collection('posts')
@@ -53,6 +57,9 @@ class DayPostState extends State<DayPost> {
                       width: 5,
                     );
                   }
+                  // if (snapshot == 0) {
+                  //   return CircleAvatar();
+                  // }
                   return DayPostItem(data: data);
                 })),
       ],

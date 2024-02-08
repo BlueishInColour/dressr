@@ -145,7 +145,7 @@ class ItemActionsState extends State<ItemActions> {
                     title: 'share from dressmate',
                     filePath: savedPath,
                   );
-                  if (true == true) {
+                  if (result == true) {
                     print('Thank you for sharing the picture!');
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(

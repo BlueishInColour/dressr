@@ -121,7 +121,7 @@ class StoreScreenState extends State<StoreScreen>
                   // Image.asset('assets/icon.png', height: 30),
                   // SizedBox(width: 10),
                   GestureDetector(
-                    // onTap: callSubScription(context),
+                    // onTap: callSubScription(context, function: () {}),
                     child: Text(
                       "dressmate",
                       style: GoogleFonts.pacifico(
@@ -137,7 +137,8 @@ class StoreScreenState extends State<StoreScreen>
                     onPressed: () {
                       Navigator.push(context,
                           PageRouteBuilder(pageBuilder: (context, _, __) {
-                        return ChatScreen(typeOfChat: 'active',
+                        return ChatScreen(
+                          typeOfChat: 'active',
                           listOfFriends: listOfFriends,
                         );
                       }));

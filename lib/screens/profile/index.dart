@@ -6,6 +6,7 @@ import 'package:dressr/utils/follow-button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masonry_view/flutter_masonry_view.dart';
 import 'package:get/get.dart';
@@ -43,51 +44,31 @@ class ProfileScreenState extends State<ProfileScreen>
       child: Scaffold(
         //wordrope],
 
-        body: FutureBuilder(
-          future: FirebaseFirestore.instance
-              .collection('posts')
-              .where('creatorUid', isEqualTo: widget.userUid)
-              .get(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            //if we have data, get all dic
+        body: FirestorePagination(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+                crossAxisSpacing: 5,
+                mainAxisSpacing: 5,
+                childAspectRatio: 0.7),
+            isLive: true,
+            limit: 25,
+            viewType: ViewType.grid,
+            query: FirebaseFirestore.instance
+                .collection('posts')
+                .where('creatorUid', isEqualTo: widget.userUid),
+            itemBuilder: (context, item, snapshot) {
+              // setState(() {
+              //   listOfSnapshots.add(document);
+              // });
 
-            if (snapshot.hasData) {
-              // if (userName.isEmpty) {
-              //   return Scaffold(
-              //       body: Center(child: CircularProgressIndicator()));
-              // }
-              if (snapshot.data!.docs.isEmpty) {
-                return Center(
-                  child: Text(' no content yet'),
-                );
-              }
-              return ListView(
-                children: [
-                  MasonryView(
-                      itemPadding: 3,
-                      listOfItem: snapshot.data!.docs,
-                      numberOfColumn: 4,
-                      itemBuilder: (item) {
-                        return Item(
-                          caption: item['caption'],
-                          picture: item['picture'],
-                          ancestorId: item['ancestorId'],
-                          postId: item['postId'],
-                          creatorUid: item['creatorUid'],
-                        );
-                      }),
-                ],
+              return Item(
+                caption: item['caption'],
+                picture: item['picture'],
+                ancestorId: item['ancestorId'],
+                postId: item['postId'],
+                creatorUid: item['creatorUid'],
               );
-            }
-
-            return Center(child: CircularProgressIndicator());
-          },
-        ),
+            }),
         bottomSheet: FutureBuilder(
             future: FirebaseFirestore.instance
                 .collection('users')

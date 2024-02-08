@@ -36,7 +36,7 @@ class ItemState extends State<Item> {
       },
       child: widget.picture.isNotEmpty
           ? Container(
-              color: Colors.blue,
+              color: Colors.transparent,
               // height: 50,
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
@@ -56,7 +56,19 @@ class ItemState extends State<Item> {
                   //     ),
                   //   ),
                   ))
-          : SizedBox(height: 1),
+          : Container(
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  gradient:
+                      LinearGradient(colors: [Colors.blue, Colors.purple])),
+              child: Text(widget.caption,
+                  maxLines: 10,
+                  style: TextStyle(
+                      color: Colors.white60,
+                      fontSize: 9,
+                      overflow: TextOverflow.ellipsis)),
+            ),
     );
   }
 }

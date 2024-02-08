@@ -204,9 +204,36 @@ class ItemState extends State<Item> {
                   'listOfChatters': chatRoom,
                 };
 
+//        add lastmessage and it timestamp to both user
+//first in my own
+                await FirebaseFirestore.instance
+                    .collection('chat')
+                    .doc(FirebaseAuth.instance.currentUser!.uid)
+                    .collection('active')
+                    .doc(widget.uid)
+                    .update({
+//to order the chats
+                  'lastMessageTimeStamp': Timestamp.now(),
+                  'lastMessage': text
+                  //
+                });
+                //then his own
+                await FirebaseFirestore.instance
+                    .collection('chat')
+                    .doc(widget.uid)
+                    .collection('active')
+                    .doc(FirebaseAuth.instance.currentUser!.uid)
+                    .update({
+//to order the chats
+                  'lastMessageTimeStamp': Timestamp.now(),
+                  'lastMessage': text
+                  //
+                });
+
                 debugPrint('about to send message');
                 // for (var i = 0; i < chatRoom.length; i++) {
                 // debugPrint(i.toString());
+
                 await FirebaseFirestore.instance
                     .collection('chatroom')
                     .doc(chatKey)

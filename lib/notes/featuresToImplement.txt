@@ -142,3 +142,6 @@ done - find better design for the blog page and remove appbar
 7th feb , 2024
 > work on report secton in utils
 > workon ads/promotion
+
+8th feb, 2024
+> create referal system and ensure subscription system is very good
