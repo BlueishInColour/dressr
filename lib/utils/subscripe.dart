@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pay/pay.dart';
@@ -37,8 +39,19 @@ class SubscripeState extends State<Subscripe> {
     );
   }
 
-  void onGooglePayResult(paymentResult) {
+  void onGooglePayResult(paymentResult) async {
     debugPrint(paymentResult.toString());
+    await FirebaseFirestore.instance
+        .collection('subscription')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('current')
+        .doc('current')
+        .set({
+      'subscriptionStart': Timestamp.now(),
+      'subscription': 'blue',
+      'subscriptionEnd':
+          Timestamp.fromDate(DateTime.fromMillisecondsSinceEpoch(259200000))
+    });
   }
 
   void onApplePayResult(paymentResult) {

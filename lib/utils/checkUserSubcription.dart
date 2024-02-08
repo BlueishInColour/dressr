@@ -19,14 +19,17 @@ class CheckUserSubscriptionState extends State<CheckUserSubscription> {
   Widget build(BuildContext context) {
     return StreamBuilder(
         stream: FirebaseFirestore.instance
-            .collection('users')
-            .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+            .collection('subscription')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('current')
+            .doc('current')
             .snapshots(),
         builder: (context, snapshot) {
-          var snap = snapshot.data!.docs.first;
-          String subscription = snap['subscription'];
+          var snap = snapshot.data!;
+          Timestamp subscriptionEnd = snap['subscriptionEnd'];
+          Timestamp now = Timestamp.now();
           if (snapshot.hasData) {
-            if (subscription == widget.acceptableSubscriptionMode) {
+            if (now.toDate().isBefore(subscriptionEnd.toDate())) {
               return widget.child;
             } else {
               showModalBottomSheet(

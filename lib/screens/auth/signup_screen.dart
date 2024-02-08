@@ -27,6 +27,7 @@ class SignupScreenState extends State<SignupScreen> {
   final displayNameController = TextEditingController();
   final userNameController = TextEditingController();
   final captionController = TextEditingController();
+  final referralNameController = TextEditingController();
   // final userTagsController = TextEditingController();
   String profilePicture =
       'https://ik.imagekit.io/bluerubic/flutter_imagekit/afilename_sbfW8SCgg_'; // 'https://source.unsplash.com/random';
@@ -106,6 +107,29 @@ class SignupScreenState extends State<SignupScreen> {
         'currentSubscriptionExpire':
             Timestamp.fromDate(DateTime.parse('20230101'))
       });
+      Map referrerDetails = await getUserDetails(referralNameController.text);
+      if (referrerDetails.isNotEmpty) {
+        await FirebaseFirestore.instance
+            .collection('subscription')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('current')
+            .doc('current')
+            .set({
+          'subscriptionStart': Timestamp.now(),
+          'subscription': 'blue',
+          'subscriptionEnd':
+              Timestamp.fromDate(DateTime.fromMillisecondsSinceEpoch(259200000))
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Row(
+          children: [
+            Icon(Icons.error, color: Colors.red),
+            SizedBox(width: 15),
+            Text('referrer is not registered yet, try another')
+          ],
+        )));
+      }
     } else {
       setState(() {
         isLoading = false;
@@ -324,6 +348,12 @@ class SignupScreenState extends State<SignupScreen> {
                         ),
                       ),
 
+                      SizedBox(height: 15),
+                      TextField(
+                          controller: referralNameController,
+                          decoration: InputDecoration(
+                              hintText: 'referer name',
+                              prefixIcon: Icon(Icons.alternate_email_rounded))),
                       SizedBox(height: 15),
 
                       //signupbutton
