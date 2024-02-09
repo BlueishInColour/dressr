@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:dressr/middle.dart';
 import 'package:dressr/screens/auth/auth_service.dart';
+import 'package:dressr/screens/explore/order.dart';
 import 'package:dressr/screens/save/index.dart';
 import 'package:dressr/screens/chat/index.dart';
 import 'package:dressr/screens/profile/index.dart';
+import 'package:dressr/utils/chat_screen_button.dart';
 import 'package:dressr/utils/my_profile_button.dart';
 import 'package:dressr/utils/subscripe.dart';
 import 'package:dressr/utils/utils_functions.dart';
@@ -40,17 +42,11 @@ class StoreScreen extends StatefulWidget {
 
 class StoreScreenState extends State<StoreScreen>
     with AutomaticKeepAliveClientMixin {
-  TextEditingController searchBarController = TextEditingController();
   bool click = false;
-  String url = 'http://localhost:8080/shop';
-  List<Post> listOfPost = [];
-  int cartCount = 3;
-  String profilePicture = '';
 
   List<String> listOfFriends = [];
 
   // initialize bucket globally
-  final pageBucket = PageStorageBucket();
 
   getListOfFriends() async {
     var res = await FirebaseFirestore.instance
@@ -76,9 +72,6 @@ class StoreScreenState extends State<StoreScreen>
 
   initState() {
     super.initState();
-    getListOfFriends();
-    // Future.delayed(Duration(minutes: 20));
-    // callSubScription(context);
   }
 
   button(context) {
@@ -103,7 +96,6 @@ class StoreScreenState extends State<StoreScreen>
     );
   }
 
-  final FirebaseFirestore db = FirebaseFirestore.instance;
   @override
   bool get wantKeepAlive => true;
 
@@ -111,69 +103,46 @@ class StoreScreenState extends State<StoreScreen>
   Widget build(BuildContext context) {
     super.build(context);
     return Middle(
-        child: Scaffold(
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              elevation: 0,
-              backgroundColor: Colors.transparent,
-              title: Row(
-                children: [
-                  // Image.asset('assets/icon.png', height: 30),
-                  // SizedBox(width: 10),
-                  GestureDetector(
-                    // onTap: callSubScription(context, function: () {}),
-                    child: Text(
-                      "dressmate",
-                      style: GoogleFonts.pacifico(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              actions: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                          PageRouteBuilder(pageBuilder: (context, _, __) {
-                        return ChatScreen(
-                          typeOfChat: 'active',
-                          listOfFriends: listOfFriends,
-                        );
-                      }));
-                    },
-                    icon: Icon(
-                      Ionicons.chatbox_ellipses_outline,
-                      color: Colors.black,
-                      size: 32,
-                    )),
-                SizedBox(width: 7),
-                MyProfileButton(),
-                SizedBox(width: 7)
-              ],
-            ),
-            backgroundColor: Colors.white,
-            body: PageStorage(
-              bucket: pageBucket,
-              child: FirestorePagination(
-                  isLive: true,
-                  key: PageStorageKey<String>('pageOne'),
-                  limit: 20,
-                  onEmpty: Text('thats all for now'),
-                  query: db
-                      .collection('posts')
-                      .orderBy('timestamp', descending: true),
-                  itemBuilder: (context, document, snapshot) {
-                    //if we have data, get all dic
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          toolbarHeight: 40,
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          title: Text("dressmate",
+              style: GoogleFonts.pacifico(
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+              )),
+          actions: [
+            ChatScreenButton(listOfFriends: listOfFriends),
+            SizedBox(width: 7),
+            MyProfileButton(),
+            SizedBox(width: 7)
+          ],
+          bottom: AppBar(
+            toolbarHeight: 40,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            title: Orderr(),
+            automaticallyImplyLeading: false,
+          ),
+        ),
+        body: FirestorePagination(
+            // isLive: true,
+            limit: 20,
+            onEmpty: Text('thats all for now'),
+            query: FirebaseFirestore.instance
+                .collection('posts')
+                .orderBy('timestamp', descending: true),
+            itemBuilder: (context, document, snapshot) {
+              //if we have data, get all dic
 
-                    return Item(
-                      postId: document['postId'],
-                    );
-                  }
-                  //
-
-                  ),
-            )));
+              return Item(
+                postId: document['postId'],
+              );
+            }),
+      ),
+    );
   }
 }
