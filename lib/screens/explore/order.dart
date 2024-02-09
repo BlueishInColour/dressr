@@ -1,4 +1,7 @@
 import 'package:dressr/screens/chat/item.dart';
+import 'package:dressr/utils/chat_screen_button.dart';
+import 'package:dressr/utils/fluttter_pay.dart';
+import 'package:dressr/utils/my_profile_button.dart';
 import 'package:dressr/utils/utils_functions.dart';
 import 'package:flutter/material.dart';
 
@@ -13,13 +16,15 @@ class OrderrState extends State<Orderr> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 35,
+      padding: EdgeInsets.all(8),
+      height: 50,
       color: Colors.transparent,
       child: Row(children: [
 //order button with money tag
         GestureDetector(
           onTap: () async {
-            callOnlySubScription(context);
+            showModalBottomSheet(
+                context: context, builder: (context) => FlutterPay());
           },
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
@@ -36,7 +41,7 @@ class OrderrState extends State<Orderr> {
                             fontSize: 10,
                             color: Colors.white,
                             fontWeight: FontWeight.w900)),
-                    Text('a/c #1.2k',
+                    Text('see bal',
                         style: TextStyle(fontSize: 10, color: Colors.white))
                   ],
                 ),
@@ -73,12 +78,12 @@ class OrderrState extends State<Orderr> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('dryclean',
+                    Text('drycleaner',
                         style: TextStyle(
                             fontSize: 10,
                             color: Colors.black,
                             fontWeight: FontWeight.w900)),
-                    Text('#250/pics',
+                    Text('#250/pcs',
                         style: TextStyle(fontSize: 8, color: Colors.black))
                   ],
                 ),
@@ -87,11 +92,16 @@ class OrderrState extends State<Orderr> {
                   Icons.chat_bubble_outline,
                   color: Colors.black,
                   size: 16,
-                )
+                ),
               ],
             ),
           ),
-        )
+        ),
+        Expanded(child: SizedBox()),
+        ChatScreenButton(),
+        SizedBox(width: 7),
+        MyProfileButton(),
+        SizedBox(width: 7)
       ]),
     );
   }

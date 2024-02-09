@@ -52,10 +52,12 @@ class ItemHeaderState extends State<ItemHeader> {
           return Container(
             height: 45,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15), topRight: Radius.circular(15)),
-              color: Colors.black,
-            ),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15)),
+                // color: Colors.black,
+                gradient: LinearGradient(
+                    colors: [Colors.blue, Colors.purple, Colors.red])),
             child: Row(children: [
               Expanded(child: SizedBox()),
               CircleAvatar(radius: 17),
@@ -67,19 +69,22 @@ class ItemHeaderState extends State<ItemHeader> {
           DocumentSnapshot snap = snapshot.data!;
           return Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15),
-                  topRight: Radius.circular(15),
-                  bottomLeft: widget.isPictureAvailable
-                      ? Radius.circular(15)
-                      : Radius.circular(0),
-                  bottomRight: widget.isPictureAvailable
-                      ? Radius.circular(15)
-                      : Radius.circular(0),
-                ),
-                color: snap['currentSubscription'] == 'black'
-                    ? Colors.black
-                    : Colors.blue),
+              gradient: LinearGradient(
+                  colors: [Colors.blue, Colors.purple, Colors.red]),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+                bottomLeft: widget.isPictureAvailable
+                    ? Radius.circular(15)
+                    : Radius.circular(0),
+                bottomRight: widget.isPictureAvailable
+                    ? Radius.circular(15)
+                    : Radius.circular(0),
+              ),
+              // color: snap['currentSubscription'] == 'black'
+              // ? Colors.black
+              // : Colors.blue
+            ),
             child: Column(
               children: [
                 Row(

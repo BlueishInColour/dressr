@@ -44,31 +44,34 @@ class ProfileScreenState extends State<ProfileScreen>
       child: Scaffold(
         //wordrope],
 
-        body: FirestorePagination(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                crossAxisSpacing: 5,
-                mainAxisSpacing: 5,
-                childAspectRatio: 0.7),
-            isLive: true,
-            limit: 25,
-            viewType: ViewType.grid,
-            query: FirebaseFirestore.instance
-                .collection('posts')
-                .where('creatorUid', isEqualTo: widget.userUid),
-            itemBuilder: (context, item, snapshot) {
-              // setState(() {
-              //   listOfSnapshots.add(document);
-              // });
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: FirestorePagination(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 5,
+                  childAspectRatio: 0.7),
+              isLive: true,
+              limit: 25,
+              viewType: ViewType.grid,
+              query: FirebaseFirestore.instance
+                  .collection('posts')
+                  .where('creatorUid', isEqualTo: widget.userUid),
+              itemBuilder: (context, item, snapshot) {
+                // setState(() {
+                //   listOfSnapshots.add(document);
+                // });
 
-              return Item(
-                caption: item['caption'],
-                picture: item['picture'],
-                ancestorId: item['ancestorId'],
-                postId: item['postId'],
-                creatorUid: item['creatorUid'],
-              );
-            }),
+                return Item(
+                  caption: item['caption'],
+                  picture: item['picture'],
+                  ancestorId: item['ancestorId'],
+                  postId: item['postId'],
+                  creatorUid: item['creatorUid'],
+                );
+              }),
+        ),
         bottomSheet: FutureBuilder(
             future: FirebaseFirestore.instance
                 .collection('users')

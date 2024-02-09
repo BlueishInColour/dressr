@@ -55,6 +55,8 @@ dependencies:
   url_launcher: ^6.2.4
   firebase_pagination: ^3.1.0
   google_sign_in: ^6.2.1
+  # 
+  flutterwave_standard: ^1.0.8
   pay: ^1.1.2
 
   # chat screen

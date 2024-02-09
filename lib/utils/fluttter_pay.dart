@@ -1,5 +1,6 @@
 import 'package:flutterwave_standard/flutterwave.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:uuid/uuid.dart';
 
 class FlutterPay extends StatefulWidget {
@@ -113,9 +114,11 @@ class FlutterPayState extends State<FlutterPay> {
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   height: 50,
                   decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: Colors.black)),
+                    // color: Colors.black,
+                    gradient: LinearGradient(
+                        colors: [Colors.blue, Colors.purple, Colors.red]),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
                   child: Center(
                     child: Text(
                       'confirm pay',
@@ -132,12 +135,20 @@ class FlutterPayState extends State<FlutterPay> {
 
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(5.0),
         child: Center(
           child: Container(
-            height: 200,
-            child: Column(
+            child: ListView(
               children: [
+                Text(
+                  '10x faster & safer',
+                  style: GoogleFonts.montserrat(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(height: 15),
                 //account balance and addmoney
                 Container(
                   child: Row(
@@ -148,6 +159,7 @@ class FlutterPayState extends State<FlutterPay> {
                           padding: EdgeInsets.symmetric(horizontal: 10),
                           height: 50,
                           decoration: BoxDecoration(
+                              color: Colors.black,
                               borderRadius: BorderRadius.circular(14),
                               border: Border.all(color: Colors.black)),
                           child: Center(
@@ -155,13 +167,17 @@ class FlutterPayState extends State<FlutterPay> {
                             children: [
                               Text(
                                 'WALLET',
-                                style: TextStyle(fontWeight: FontWeight.w800),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w800),
                               ),
                               SizedBox(width: 20),
                               Text(
                                 '#' '250,000',
                                 style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w800),
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w800),
                               )
                             ],
                           )),
@@ -180,9 +196,13 @@ class FlutterPayState extends State<FlutterPay> {
                           padding: EdgeInsets.symmetric(horizontal: 10),
                           height: 50,
                           decoration: BoxDecoration(
+                              color: Colors.black,
                               borderRadius: BorderRadius.circular(14),
                               border: Border.all(color: Colors.black)),
-                          child: Icon(Icons.add),
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          ),
                         ),
                       )
                     ],
@@ -214,9 +234,14 @@ class FlutterPayState extends State<FlutterPay> {
                           padding: EdgeInsets.symmetric(horizontal: 10),
                           height: 50,
                           decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(14),
-                              border: Border.all(color: Colors.black)),
+                            // color: Colors.black,
+                            gradient: LinearGradient(colors: [
+                              Colors.blue,
+                              Colors.purple,
+                              Colors.red
+                            ]),
+                            borderRadius: BorderRadius.circular(14),
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

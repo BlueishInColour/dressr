@@ -21,8 +21,6 @@ class MyProfileButtonState extends State<MyProfileButton> {
         }));
       },
       child: SizedBox(
-        width: 30,
-        height: 30,
         child: FutureBuilder(
             future: FirebaseFirestore.instance
                 .collection('users')
@@ -35,7 +33,7 @@ class MyProfileButtonState extends State<MyProfileButton> {
               } else if (snapshot.connectionState == ConnectionState.done) {
                 String data = snapshot.data?['profilePicture'] ?? '';
                 return CircleAvatar(
-                  radius: 12,
+                  radius: 8,
                   backgroundImage: CachedNetworkImageProvider(data),
                 );
               } else {

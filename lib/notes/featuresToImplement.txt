@@ -133,7 +133,7 @@ done - find better design for the blog page and remove appbar
 > implement download feature and share immidiately
 > implement download only
 > those who can upload on main dcreen should be subscrped ussers
-> ads promotion should be added for ussers
+> ads promotion should be added for users
 > edit post for subscrinbers
 > enable delete of post
 > 
@@ -145,3 +145,6 @@ done - find better design for the blog page and remove appbar
 
 8th feb, 2024
 > create referal system and ensure subscription system is very good
+> payment sytem with flutter wave
+> google ads
+> free share and downloads
