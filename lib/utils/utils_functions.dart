@@ -205,3 +205,27 @@ callSubScription(context,
     function;
   }
 }
+
+Future callOnlySubScription(context, {String warning = ''}) async {
+  if (kIsWeb) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return InstallApp();
+        });
+  } else {
+    var res = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    String currentSubscription = res['currentSubscription'];
+    bool isBlack = currentSubscription == 'black';
+    if (isBlack) {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Subscripe();
+          });
+    }
+  }
+}

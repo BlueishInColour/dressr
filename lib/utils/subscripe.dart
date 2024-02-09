@@ -106,7 +106,7 @@ class SubscripeState extends State<Subscripe> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                     gradient:
-                        RadialGradient(colors: [Colors.purple, Colors.blue]),
+                        LinearGradient(colors: [Colors.purple, Colors.blue]),
                   ),
                 );
               },

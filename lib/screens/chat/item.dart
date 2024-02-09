@@ -4,8 +4,10 @@ import 'package:dressr/utils/follow-button.dart';
 import 'package:chat_bubbles/chat_bubbles.dart';
 import 'package:chatview/chatview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dressr/utils/utils_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -13,15 +15,20 @@ class Item extends StatefulWidget {
   const Item({
     super.key,
     required this.uid,
+    this.message = const {},
+    this.hintText = '',
   });
 
+  final Map<String, dynamic> message;
   final String uid;
+  final String hintText;
 
   @override
   State<Item> createState() => ItemState();
 }
 
 class ItemState extends State<Item> {
+  bool showSendOptions = false;
   //check or add
   checkOrAdd() async {
     //check  if you are in ther person active chat else add you to his request chat
@@ -61,6 +68,21 @@ class ItemState extends State<Item> {
     }
   }
 
+  tile(context, {String text = ''}) {
+    return GestureDetector(
+      //define how money will bw sent savely
+
+      //
+      child: Column(
+        children: [
+          CircleAvatar(child: Icon(Icons.headphones, color: Colors.white)),
+          SizedBox(height: 3),
+          Text(text, style: TextStyle(color: Colors.white))
+        ],
+      ),
+    );
+  }
+
   @override
   initState() {
     super.initState();
@@ -77,7 +99,7 @@ class ItemState extends State<Item> {
       appBar: AppBar(
           foregroundColor: Colors.black,
           leadingWidth: 30,
-          automaticallyImplyLeading: false,
+          automaticallyImplyLeading: true,
           title: FutureBuilder(
               future: FirebaseFirestore.instance
                   .collection('users')
@@ -130,128 +152,110 @@ class ItemState extends State<Item> {
           ]),
       body: Column(children: [
         Expanded(
-          child: StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection('chatroom')
-                .doc(chatKey)
-                .collection('messages')
-                // .where('listOfChatters', isEqualTo: chatRoom)
-                .orderBy('timestamp', descending: false)
-                .snapshots(),
-            builder: (context, snapshot) {
-              //if we have data, get all dic
-              if (snapshot.hasData) {
-                return SizedBox(
-                  height: 500,
-                  child: ListView.builder(
-                      itemCount: snapshot.data?.docs.length,
-                      itemBuilder: ((context, index) {
-                        //get indicidual doc
-                        DocumentSnapshot documentSnapshot =
-                            snapshot.data!.docs[index];
-
-                        return BubbleSpecialTwo(
-                          text: documentSnapshot['text'],
-                          color: documentSnapshot['senderId'] ==
-                                  FirebaseAuth.instance.currentUser!.uid
-                              ? Colors.black
-                              : Color(0xFF1B97F3),
-                          tail: true,
-                          isSender: documentSnapshot['senderId'] ==
-                                  FirebaseAuth.instance.currentUser!.uid
-                              ? true
-                              : false,
-                          textStyle:
-                              TextStyle(color: Colors.white, fontSize: 11),
-                        );
-                      })),
-                );
-              }
-
-              return Center(
-                  child:
-                      CircularProgressIndicator(color: Colors.blue.shade600));
-            },
-          ),
-        ),
+            child: FirestorePagination(
+          query: FirebaseFirestore.instance
+              .collection('chatroom')
+              .doc(chatKey)
+              .collection('messages')
+              // .where('listOfChatters', isEqualTo: chatRoom)
+              .orderBy('timestamp', descending: false),
+          itemBuilder: (context, documentSnapshot, snapshot) {
+            return BubbleSpecialOne(
+              text: documentSnapshot['text'],
+              color: documentSnapshot['senderId'] ==
+                      FirebaseAuth.instance.currentUser!.uid
+                  ? Colors.black
+                  : Color(0xFF1B97F3),
+              tail: false,
+              isSender: documentSnapshot['senderId'] ==
+                      FirebaseAuth.instance.currentUser!.uid
+                  ? true
+                  : false,
+              textStyle: TextStyle(color: Colors.white, fontSize: 11),
+            );
+          },
+        )),
         Container(
           decoration: BoxDecoration(
               color: Colors.black,
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(15), topRight: Radius.circular(15))),
           // height: 65,
-          child: ListTile(
-            leading: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: Colors.white60,
-                )),
-            title: MessageBar(
-              messageBarColor: Colors.transparent,
-              onSend: (text) async {
-                Map<String, dynamic> message = {
-                  'senderId': FirebaseAuth.instance.currentUser!.uid,
-                  'reciever': 'tinuke',
-                  'recieverId': widget.uid,
-                  'text': text,
-                  'picture': '',
-                  'voiceNote': '',
-                  'timestamp': Timestamp.now(),
-                  'status': 'seen',
-                  'listOfChatters': chatRoom,
-                };
+          child: Column(
+            children: [
+              ListTile(
+                leading: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        showSendOptions = !showSendOptions;
+                      });
+                    },
+                    padding: EdgeInsets.all(0),
+                    icon: Icon(
+                      showSendOptions
+                          ? Icons.keyboard_arrow_down
+                          : Icons.keyboard_arrow_up_sharp,
+                      color: Colors.white60,
+                    )),
+                title: MessageBar(
+                  messageBarHitText: widget.hintText,
+                  messageBarColor: Colors.transparent,
+                  onSend: (text) async {
+                    Map<String, dynamic> message = {
+                      'senderId': FirebaseAuth.instance.currentUser!.uid,
+                      'reciever': 'tinuke',
+                      'recieverId': widget.uid,
+                      'text': text,
+                      'picture': '',
+                      'voiceNote': '',
+                      'timestamp': Timestamp.now(),
+                      'status': 'seen',
+                      'listOfChatters': chatRoom,
+                    };
 
-//        add lastmessage and it timestamp to both user
-//first in my own
-                await FirebaseFirestore.instance
-                    .collection('chat')
-                    .doc(FirebaseAuth.instance.currentUser!.uid)
-                    .collection('active')
-                    .doc(widget.uid)
-                    .update({
-//to order the chats
-                  'lastMessageTimeStamp': Timestamp.now(),
-                  'lastMessage': text
-                  //
-                });
-                //then his own
-                await FirebaseFirestore.instance
-                    .collection('chat')
-                    .doc(widget.uid)
-                    .collection('active')
-                    .doc(FirebaseAuth.instance.currentUser!.uid)
-                    .update({
-//to order the chats
-                  'lastMessageTimeStamp': Timestamp.now(),
-                  'lastMessage': text
-                  //
-                });
+                    debugPrint('about to send message');
 
-                debugPrint('about to send message');
-                // for (var i = 0; i < chatRoom.length; i++) {
-                // debugPrint(i.toString());
+                    await FirebaseFirestore.instance
+                        .collection('chatroom')
+                        .doc(chatKey)
+                        .collection('messages')
+                        .add(message);
+                    // chatRoom.map((e) async =>);
+                    // }
 
-                await FirebaseFirestore.instance
-                    .collection('chatroom')
-                    .doc(chatKey)
-                    .collection('messages')
-                    .add(message);
-                // chatRoom.map((e) async =>);
-                // }
-
-                debugPrint('message sent');
-              },
-              sendButtonColor: Colors.white60,
-              actions: [],
-            ),
-            horizontalTitleGap: 0,
-            contentPadding: EdgeInsets.all(0),
-            minLeadingWidth: 0,
+                    debugPrint('message sent');
+                  },
+                  sendButtonColor: Colors.white60,
+                  actions: [],
+                ),
+                horizontalTitleGap: 0,
+                contentPadding: EdgeInsets.all(0),
+                minLeadingWidth: 0,
+              ),
+            ],
           ),
         ),
+        //send message buttons
+        showSendOptions
+            ? Container(
+                color: Colors.black,
+                height: 100,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        tile(context, text: '#50'),
+                        tile(context, text: '#100'),
+                        tile(context, text: '#200'),
+                        tile(context, text: '#500'),
+                        tile(context, text: '#1k'),
+                      ],
+                    )
+                  ],
+                ),
+              )
+            : SizedBox.shrink()
       ]),
     );
   }
