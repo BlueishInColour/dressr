@@ -14,10 +14,12 @@ class Item extends StatefulWidget {
   const Item({
     super.key,
     required this.postId,
+    this.showHeader = true,
     // required this.typeOfShowlist,
     // required this.timesamp
   });
 
+  final bool showHeader;
   // final Timestamp timesamp;
   final String postId;
   // final String typeOfShowlist;
@@ -63,6 +65,7 @@ class ItemState extends State<Item> {
                     creatorUid: snap['creatorUid'],
                     caption: snap['caption'],
                     isPictureAvailable: isPictureAvailable,
+                    showHeader: widget.showHeader,
                   ),
                   ItemPicture(
                     creatorUid: snap['creatorUid'],
@@ -77,12 +80,25 @@ class ItemState extends State<Item> {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                height: 200,
+                height: 300,
                 decoration: BoxDecoration(
-                    color: Colors.grey[200],
+                    // color: Colors.grey[200],
+                    gradient: LinearGradient(
+                        colors: [Colors.blue, Colors.purple, Colors.red]),
                     borderRadius: BorderRadius.circular(15)),
-                child: Center(
-                  child: CircularProgressIndicator(),
+                child: Column(
+                  children: [
+                    Row(children: [
+                      Expanded(child: SizedBox()),
+                      CircleAvatar(radius: 17),
+                      SizedBox(width: 2),
+                    ]),
+                    Expanded(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             );

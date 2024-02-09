@@ -108,7 +108,7 @@ class ChatScreenState extends State<ChatScreen> {
                               onTap: () {
                                 Navigator.push(context, PageRouteBuilder(
                                     pageBuilder: (context, _, __) {
-                                  return Item(
+                                  return ChatItem(
                                     uid: userUid,
                                   );
                                 }));

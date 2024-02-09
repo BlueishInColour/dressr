@@ -76,6 +76,16 @@ class ShareButtonState extends State<ShareButton> {
         icon: isSharing
             ? SizedBox(
                 width: 14, height: 14, child: CircularProgressIndicator())
-            : Icon(Icons.share));
+            : ShaderMask(
+                blendMode: BlendMode.srcIn,
+                shaderCallback: (Rect bounds) => RadialGradient(
+                      center: Alignment.topLeft,
+                      stops: [.5, 1],
+                      colors: [Colors.blue, Colors.purple, Colors.red],
+                    ).createShader(bounds),
+                child: Icon(
+                  Icons.share_rounded,
+                  size: 40,
+                )));
   }
 }

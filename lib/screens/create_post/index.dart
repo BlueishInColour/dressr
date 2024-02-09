@@ -52,7 +52,7 @@ class CreateScreenState extends State<CreateScreen> {
 
       //metadata
 
-      'timestamp': Timestamp.now()
+      'timestamp': Timestamp.now(), 'status': '',
     });
   }
 

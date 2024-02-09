@@ -65,6 +65,16 @@ class DownloadButtonState extends State<DownloadButton> {
         icon: isDownloading
             ? SizedBox(
                 width: 14, height: 14, child: CircularProgressIndicator())
-            : Icon(Icons.download));
+            : ShaderMask(
+                blendMode: BlendMode.srcIn,
+                shaderCallback: (Rect bounds) => RadialGradient(
+                      center: Alignment.topLeft,
+                      stops: [.5, 1],
+                      colors: [Colors.blue, Colors.purple, Colors.red],
+                    ).createShader(bounds),
+                child: Icon(
+                  Icons.file_download_outlined,
+                  size: 40,
+                )));
   }
 }

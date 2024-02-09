@@ -19,6 +19,7 @@ class ItemHeader extends StatefulWidget {
       required this.ancestorId,
       this.showButtons = true,
       this.caption = '',
+      this.showHeader = true,
       this.isPictureAvailable = false,
       required this.postId});
   final String creatorUid;
@@ -27,6 +28,7 @@ class ItemHeader extends StatefulWidget {
   final bool showButtons;
   final String caption;
   final bool isPictureAvailable;
+  final bool showHeader;
 
   //for download button
   // WidgetsToImageController to access widget
@@ -87,77 +89,81 @@ class ItemHeaderState extends State<ItemHeader> {
             ),
             child: Column(
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  textDirection: TextDirection.rtl,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(context,
-                            PageRouteBuilder(pageBuilder: (context, _, __) {
-                          return ProfileScreen(userUid: snap['uid']);
-                        }));
-                      },
-                      child: SizedBox(
-                        width: 185,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 6.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            textDirection: TextDirection.rtl,
-                            children: [
-                              CircleAvatar(
-                                  radius: 17,
-                                  backgroundImage: CachedNetworkImageProvider(
-                                      snap['profilePicture'])),
-                              SizedBox(width: 5),
-                              SizedBox(
-                                width: 130,
-                                child: Text(
-                                  '${snap['displayName']}'
-                                  ' | '
-                                  '@'
-                                  '${snap['userName']}',
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      color: Colors.white70,
-                                      overflow: TextOverflow.ellipsis),
+                widget.showHeader
+                    ? Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        textDirection: TextDirection.rtl,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(context, PageRouteBuilder(
+                                  pageBuilder: (context, _, __) {
+                                return ProfileScreen(userUid: snap['uid']);
+                              }));
+                            },
+                            child: SizedBox(
+                              width: 185,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 6.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  textDirection: TextDirection.rtl,
+                                  children: [
+                                    CircleAvatar(
+                                        radius: 17,
+                                        backgroundImage:
+                                            CachedNetworkImageProvider(
+                                                snap['profilePicture'])),
+                                    SizedBox(width: 5),
+                                    SizedBox(
+                                      width: 130,
+                                      child: Text(
+                                        '${snap['displayName']}'
+                                        ' | '
+                                        '@'
+                                        '${snap['userName']}',
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.white70,
+                                            overflow: TextOverflow.ellipsis),
+                                      ),
+                                    )
+                                  ],
                                 ),
-                              )
-                            ],
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
-                    Expanded(child: SizedBox()),
-                    RepostButton(
-                      ancestorId: widget.ancestorId,
-                      postId: widget.postId,
-                    ),
-                    LikeButton(
-                        typeOfShowlist: '',
-                        idType: 'postId',
-                        postId: widget.postId,
-                        collection: 'posts'),
-                    IconButton(
-                        onPressed: () {
-                          showModalBottomSheet(
-                              context: context,
-                              builder: (context) {
-                                return ItemActions(
-                                    creatorUid: widget.creatorUid,
-                                    postId: widget.postId,
-                                    bytes: widget.bytes,
-                                    controller: widget.controller);
-                              });
-                        },
-                        icon: Icon(
-                          Icons.more_vert_rounded,
-                          color: Colors.white70,
-                        )),
-                  ],
-                ),
+                          Expanded(child: SizedBox()),
+                          RepostButton(
+                            ancestorId: widget.ancestorId,
+                            postId: widget.postId,
+                          ),
+                          LikeButton(
+                              typeOfShowlist: '',
+                              idType: 'postId',
+                              postId: widget.postId,
+                              collection: 'posts'),
+                          IconButton(
+                              onPressed: () {
+                                showModalBottomSheet(
+                                    showDragHandle: true,
+                                    context: context,
+                                    builder: (context) {
+                                      return ItemActions(
+                                          creatorUid: widget.creatorUid,
+                                          postId: widget.postId,
+                                          bytes: widget.bytes,
+                                          controller: widget.controller);
+                                    });
+                              },
+                              icon: Icon(
+                                Icons.more_vert_rounded,
+                                color: Colors.white70,
+                              )),
+                        ],
+                      )
+                    : SizedBox.shrink(),
 
                 //item captionn
                 ItemCaption(

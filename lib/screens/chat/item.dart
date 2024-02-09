@@ -12,8 +12,10 @@ import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-class Item extends StatefulWidget {
-  const Item({
+import '../explore/item/item.dart';
+
+class ChatItem extends StatefulWidget {
+  const ChatItem({
     super.key,
     required this.uid,
     this.message = const {},
@@ -25,11 +27,10 @@ class Item extends StatefulWidget {
   final String hintText;
 
   @override
-  State<Item> createState() => ItemState();
+  State<ChatItem> createState() => ChatItemState();
 }
 
-class ItemState extends State<Item> {
-  bool showSendOptions = false;
+class ChatItemState extends State<ChatItem> {
   //check or add
   checkOrAdd() async {
     //check  if you are in ther person active chat else add you to his request chat
@@ -160,23 +161,21 @@ class ItemState extends State<Item> {
               .collection('messages')
               // .where('listOfChatters', isEqualTo: chatRoom)
               .orderBy('timestamp', descending: false),
-          itemBuilder: (context, documentSnapshot, snapshot) {
-            return BubbleSpecialOne(
-              text: documentSnapshot['text'],
-              color: documentSnapshot['senderId'] ==
-                      FirebaseAuth.instance.currentUser!.uid
-                  ? Colors.black
-                  : Color(0xFF1B97F3),
-              tail: false,
-              isSender: documentSnapshot['senderId'] ==
-                      FirebaseAuth.instance.currentUser!.uid
-                  ? true
-                  : false,
-              textStyle: TextStyle(color: Colors.white, fontSize: 11),
-            );
+          itemBuilder: (context, snap, snapshot) {
+            String creator = snap['creatorUid'];
+            return SizedBox(
+                width: 150,
+                child: Align(
+                  alignment: creator == FirebaseAuth.instance.currentUser!.uid
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft,
+                  child: Item(postId: snap['postId'], showHeader: false),
+                ));
           },
         )),
-        MessageBarr()
+        MessageBarr(
+          uid: widget.uid,
+        )
       ]),
     );
   }

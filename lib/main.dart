@@ -137,8 +137,20 @@ class SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            ShaderMask(
+              blendMode: BlendMode.srcIn,
+              shaderCallback: (Rect bounds) => RadialGradient(
+                center: Alignment.topLeft,
+                stops: [.5, 1],
+                colors: [Colors.blue, Colors.purple, Colors.red],
+              ).createShader(bounds),
+              child: Icon(
+                Icons.star_rounded,
+                size: 150,
+              ),
+            ),
             // Image.asset('assets/icon.png', height: 100),
-            // SizedBox(height: 100),
+            SizedBox(height: 100),
             Text('dressmate', style: GoogleFonts.pacifico(color: Colors.black))
           ],
         ),

@@ -20,6 +20,20 @@ class OrderrState extends State<Orderr> {
       height: 50,
       color: Colors.transparent,
       child: Row(children: [
+        //dressmate icon
+        ShaderMask(
+          blendMode: BlendMode.srcIn,
+          shaderCallback: (Rect bounds) => RadialGradient(
+            center: Alignment.topLeft,
+            stops: [.5, 1],
+            colors: [Colors.blue, Colors.purple, Colors.red],
+          ).createShader(bounds),
+          child: Icon(
+            Icons.star_rounded,
+            size: 40,
+          ),
+        ),
+        SizedBox(width: 15),
 //order button with money tag
         GestureDetector(
           onTap: () async {
@@ -61,7 +75,7 @@ class OrderrState extends State<Orderr> {
           onTap: () {
             Navigator.push(context,
                 PageRouteBuilder(pageBuilder: (context, _, __) {
-              return Item(
+              return ChatItem(
                 uid: 'qHr2JjqrNydJ01rrRTftgWlVxnK2',
                 hintText: 'i want your service',
               );

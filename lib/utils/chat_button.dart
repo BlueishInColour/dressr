@@ -18,16 +18,21 @@ class ChatButtonState extends State<ChatButton> {
         onPressed: () {
           Navigator.push(context,
               PageRouteBuilder(pageBuilder: (context, _, __) {
-            return Item(
+            return ChatItem(
               uid: widget.uid,
             );
           }));
         },
-        icon: Icon(
-          LineIcons.alternateComment,
-          color: widget.color,
-          size: 20,
-          weight: 1,
-        ));
+        icon: ShaderMask(
+            blendMode: BlendMode.srcIn,
+            shaderCallback: (Rect bounds) => RadialGradient(
+                  center: Alignment.topLeft,
+                  stops: [.5, 1],
+                  colors: [Colors.blue, Colors.purple, Colors.red],
+                ).createShader(bounds),
+            child: Icon(
+              Icons.chat,
+              size: 40,
+            )));
   }
 }
