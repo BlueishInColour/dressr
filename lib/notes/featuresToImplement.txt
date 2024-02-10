@@ -148,3 +148,12 @@ done - find better design for the blog page and remove appbar
 > payment sytem with flutter wave
 > google ads
 > free share and downloads
+
+
+10th feb 2024
+> tv plan
+> wiget to play video
+> widget to show list of program when taped like listview in model bottomshet, sows time to time, video name, alarm
+> gear button for only me to rearrage program and upload new  url  
+>button  for fullsreen
+> set alarm system

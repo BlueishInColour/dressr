@@ -5,6 +5,7 @@ import 'package:dressr/utils/follow-button.dart';
 import 'package:chat_bubbles/chat_bubbles.dart';
 import 'package:chatview/chatview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dressr/utils/user_details_bar.dart';
 import 'package:dressr/utils/utils_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -102,47 +103,7 @@ class ChatItemState extends State<ChatItem> {
           foregroundColor: Colors.black,
           leadingWidth: 30,
           automaticallyImplyLeading: true,
-          title: FutureBuilder(
-              future: FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(widget.uid)
-                  .get(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Row(
-                    children: [CircleAvatar()],
-                  );
-                }
-                if (snapshot.hasData) {
-                  var details = snapshot.data!;
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(context,
-                          PageRouteBuilder(pageBuilder: (context, _, __) {
-                        return ProfileScreen(userUid: details['uid']);
-                      }));
-                    },
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage: CachedNetworkImageProvider(
-                            details['profilePicture']),
-                      ),
-                      title: Text(
-                        details['displayName'],
-                        style: TextStyle(color: Colors.black87),
-                      ),
-                      subtitle: Text(
-                        widget.uid == FirebaseAuth.instance.currentUser!.uid
-                            ? 'messaging myself'
-                            : '@${details['userName']}',
-                        style: TextStyle(color: Colors.black54),
-                      ),
-                    ),
-                  );
-                } else {
-                  return CircularProgressIndicator();
-                }
-              }),
+          title: UserDetailsBar(uid: widget.uid),
           actions: [
             // FollowButton(
             //   userUid: widget.uid,
