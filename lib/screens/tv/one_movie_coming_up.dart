@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class OneMovieComingUp extends StatefulWidget {
   const OneMovieComingUp({super.key, required this.postId, required this.snap});
@@ -36,6 +37,7 @@ class OneMovieComingUpState extends State<OneMovieComingUp> {
 }
 
 Map<String, dynamic> document = {
+  'id': Uuid().v1(),
   'title': '',
   'caption': '',
   'moviewLink': '',

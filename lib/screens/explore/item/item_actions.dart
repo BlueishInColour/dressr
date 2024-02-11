@@ -26,6 +26,7 @@ class ItemActions extends StatefulWidget {
   const ItemActions({
     super.key,
     required this.controller,
+    required this.context,
     required this.bytes,
     required this.postId,
     required this.creatorUid,
@@ -37,6 +38,7 @@ class ItemActions extends StatefulWidget {
   final WidgetsToImageController controller;
   // to save image bytes of widget
   final Uint8List? bytes;
+  final BuildContext context;
   final String creatorUid;
   @override
   State<ItemActions> createState() => ItemActionsState();
@@ -52,31 +54,22 @@ class ItemActionsState extends State<ItemActions> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Row(
-      children: [
-        //download button
-        DownloadButton(controller: widget.controller),
-        //  sharebutton
-        ShareButton(controller: widget.controller),
-        //chat creator
-        ChatButton(uid: widget.creatorUid),
-        Expanded(child: SizedBox()),
-        //delete post else report
-        DeletePostButton(postId: widget.postId, creatorUid: widget.creatorUid)
-      ],
-    )
-
-        //  ListView(
-        //   children: [
-        //     // Screenshot(
-        //     //   controller: screenshotController,
-        //     //   child: Text("This text will be captured as image"),
-        //     // ),
-        //     WidgetsToImage(controller: widget.controller, child: cardWidget()),
-        //     // if (bytes != null) buildImage(bytes!),
-        //   ],
-        // ),
-        );
+        body: Row(children: [
+      //download button
+      DownloadButton(controller: widget.controller),
+      //  sharebutton
+      ShareButton(controller: widget.controller),
+      //chat creator
+      ChatButton(uid: widget.creatorUid),
+      Expanded(child: SizedBox()),
+      //delete post else report
+      DeletePostButton(postId: widget.postId, creatorUid: widget.creatorUid),
+      ListView(
+        children: [
+          WidgetsToImage(controller: widget.controller, child: cardWidget()),
+        ],
+      )
+    ]));
   }
 
   Widget cardWidget() {

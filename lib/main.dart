@@ -13,6 +13,7 @@ import 'package:dressr/screens/search/index.dart';
 import 'package:dressr/screens/search/post_search.dart';
 // import 'package:dressr/screens/store/add_item.dart';
 import 'package:dressr/screens/explore/index.dart';
+import 'package:dressr/screens/tv/index.dart';
 import 'package:dressr/utils/install_app_function.dart';
 import 'package:dressr/utils/shared_pref.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
@@ -20,11 +21,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hidable/hidable.dart';
+import 'package:ionicons/ionicons.dart';
 // dressr@gmail.com
 // Oluwapelumide631$
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:line_icons/line_icons.dart';
 import 'firebase_options.dart';
 import 'screens/auth/login_screen.dart';
 // import 'package:window_manager/window_manager.dart';
@@ -138,15 +141,19 @@ class SplashScreenState extends State<SplashScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ShaderMask(
-              blendMode: BlendMode.srcIn,
-              shaderCallback: (Rect bounds) => RadialGradient(
-                center: Alignment.topLeft,
-                stops: [.5, 1],
-                colors: [Colors.blue, Colors.purple, Colors.red],
-              ).createShader(bounds),
-              child: Icon(
-                Icons.star_rounded,
-                size: 150,
+              shaderCallback: (Rect bounds) {
+                return LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Colors.blue, Colors.purple, Colors.red])
+                    .createShader(bounds);
+              },
+              child: Center(
+                child: Icon(
+                  Icons.star_rounded,
+                  color: Colors.white,
+                  size: 120.0,
+                ),
               ),
             ),
             // Image.asset('assets/icon.png', height: 100),
@@ -191,6 +198,7 @@ class MainIndexState extends State<MainIndex> {
           // AuthGateTwo(),
           StoreScreen(controller: controller),
           // BlogScre
+          Tv(),
           PostSearch(),
           LikeScreen(),
           kIsWeb ? InstallApp() : CreateScreen(ancestorId: '')
@@ -198,83 +206,102 @@ class MainIndexState extends State<MainIndex> {
           // ProfileScreen(userUid: FirebaseAuth.instance.currentUser!.uid),
           // EditProfile()
         ][currentMainIndex],
-        bottomNavigationBar: Theme(
-          data: Theme.of(context).copyWith(
-            canvasColor: Colors.black,
-          ),
-          child: BottomNavigationBar(
-              currentIndex: currentMainIndex,
-              onTap: (v) {
-                setState(() {
-                  currentMainIndex = v;
-                });
-              },
-              showSelectedLabels: false,
-              items: <BottomNavigationBarItem>[
-                //
-                // featured
-                BottomNavigationBarItem(
-                    label: 'home',
+        bottomNavigationBar: SizedBox(
+          height: 55,
+          child: Theme(
+            data: Theme.of(context).copyWith(
+              canvasColor: Colors.black,
+            ),
+            child: BottomNavigationBar(
+                currentIndex: currentMainIndex,
+                onTap: (v) {
+                  setState(() {
+                    currentMainIndex = v;
+                  });
+                },
+                showSelectedLabels: false,
+                items: <BottomNavigationBarItem>[
+                  //
+                  // featured
+                  BottomNavigationBarItem(
+                      label: 'home',
+                      icon: Icon(
+                        Icons.home_outlined,
+                        color: Colors.white38,
+                        size: 17,
+                      ),
+                      activeIcon: Icon(
+                        Icons.home_filled,
+                        color: Colors.white,
+                        size: 17,
+                      )),
+
+                  // blog
+                  BottomNavigationBarItem(
+                    label: 'tv',
                     icon: Icon(
-                      Icons.home_outlined,
+                      Icons.live_tv_rounded,
                       color: Colors.white38,
-                      size: 26,
+                      size: 17,
+                      weight: 10,
                     ),
-                    activeIcon: Icon(
-                      Icons.home_filled,
-                      color: Colors.white,
-                    )),
-
-                // blog
-
-                BottomNavigationBarItem(
-                  label: 'search',
-                  icon: Icon(
-                    Icons.search,
-                    color: Colors.white38,
-                    weight: 10,
+                    activeIcon: Icon(Icons.live_tv_rounded,
+                        size: 17, color: Colors.white),
                   ),
-                  activeIcon: Icon(Icons.search, color: Colors.white),
-                ),
 
-                BottomNavigationBarItem(
-                  label: 'saved',
-                  icon: Icon(
-                    Icons.favorite_border,
-                    color: Colors.white38,
-                  ),
-                  activeIcon: Icon(Icons.favorite_rounded, color: Colors.white),
-                ),
-                //chat
-                BottomNavigationBarItem(
-                  label: 'chat',
-                  icon: CircleAvatar(
-                    radius: 12,
-                    backgroundColor: Colors.white,
-                    child: Icon(
-                      Icons.add,
-                      color: Colors.black,
-                      size: 23,
+                  BottomNavigationBarItem(
+                    label: 'search',
+                    icon: Icon(
+                      Icons.search,
+                      color: Colors.white38,
+                      size: 17,
+                      weight: 10,
                     ),
+                    activeIcon:
+                        Icon(Icons.search, size: 17, color: Colors.white),
                   ),
-                  activeIcon: Icon(Icons.add, color: Colors.white),
-                ),
-                //   BottomNavigationBarItem(
-                //     label: 'profile',
-                //     icon: Icon(
-                //       Icons.person,
-                //       color: Colors.black26,
-                //     ),
-                //     activeIcon: Icon(Icons.person, color: Colors.black),
-                //   ),
-                // ]),
-                // BottomNavigationBarItem(
-                //   label: 'profile',
-                //   icon: Icon(Icons.person, color: Colors.black26),
-                //   activeIcon: Icon(Icons.person, color: Colors.black),
-                // ), // upload
-                //mine
-              ]),
+
+                  BottomNavigationBarItem(
+                    label: 'saved',
+                    icon: Icon(
+                      Icons.favorite_border,
+                      size: 17,
+                      color: Colors.white38,
+                    ),
+                    activeIcon: Icon(Icons.favorite_rounded,
+                        size: 17, color: Colors.white),
+                  ),
+                  //chat
+                  BottomNavigationBarItem(
+                    label: 'chat',
+                    icon: CircleAvatar(
+                      radius: 9,
+                      backgroundColor: Colors.white,
+                      child: Icon(
+                        Icons.add,
+                        color: Colors.black,
+                        size: 17,
+                      ),
+                    ),
+                    activeIcon: Icon(Icons.add, size: 15, color: Colors.white),
+                  ),
+                  //   BottomNavigationBarItem(
+                  //     label: 'profile',
+                  //     icon: Icon(
+                  //       Icons.person,
+                  //       color: Colors.black26,
+                  //     ),
+                  //     activeIcon: Icon(Icons.person, color: Colors.black),
+                  //   ),
+                  // ]),
+                  // BottomNavigationBarItem(
+                  //   label: 'profile',
+                  //   icon: Icon(Icons.person, color: Colors.black26),
+                  //   activeIcon: Icon(Icons.person, color: Colors.black),
+                  // ), // upload
+                  //mine
+                ]),
+          ),
         ),
         resizeToAvoidBottomInset: false,
       ),

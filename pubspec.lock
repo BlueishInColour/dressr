@@ -442,7 +442,7 @@ packages:
     source: hosted
     version: "7.0.0"
   file_picker:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: file_picker
       sha256: be325344c1f3070354a1d84a231a1ba75ea85d413774ec4bdf444c023342e030
@@ -2034,6 +2034,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.1.2"
+  youtube_player_flutter:
+    dependency: "direct main"
+    description:
+      name: youtube_player_flutter
+      sha256: "72d487e1a1b9155a2dc9d448c137380791101a0ff623723195275ac275ac6942"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "8.1.2"
 sdks:
   dart: ">=3.2.3 <3.5.0"
   flutter: ">=3.16.6"

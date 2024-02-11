@@ -14,6 +14,7 @@ class PartnershipScreenState extends State<MoviesComingUp> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Color.fromARGB(234, 13, 1, 61),
       child: FirestorePagination(
           query: FirebaseFirestore.instance
               .collection('tv')
@@ -23,6 +24,9 @@ class PartnershipScreenState extends State<MoviesComingUp> {
           separatorBuilder: (context, index) {
             return Divider();
           },
+          onEmpty: Center(
+            child: Text('no movie yet'),
+          ),
           itemBuilder: (context, snap, index) {
             return OneMovieComingUp(
               postId: snap['postId'],
