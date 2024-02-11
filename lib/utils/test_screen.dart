@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:flutter/material.dart';
 
 class TestScreen extends StatefulWidget {
@@ -18,7 +19,7 @@ class TestScreenState extends State<TestScreen> {
             return Scaffold(body: Text(snapshot.data!.docs.toString()));
           } else {
             return Center(
-              child: CircularProgressIndicator(),
+              child: Loading(),
             );
           }
         });

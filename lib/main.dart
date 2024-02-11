@@ -1,6 +1,7 @@
 import 'dart:async';
 
 // import 'package:dressr/screens/auth/auth_gate.dart';
+import 'package:dressr/loading_page.dart';
 import 'package:dressr/middle.dart';
 import 'package:dressr/screens/auth/auth_gate_two.dart';
 import 'package:dressr/screens/auth/login_or_signup.dart';
@@ -15,6 +16,7 @@ import 'package:dressr/screens/search/post_search.dart';
 import 'package:dressr/screens/explore/index.dart';
 import 'package:dressr/screens/tv/index.dart';
 import 'package:dressr/utils/install_app_function.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:dressr/utils/shared_pref.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -123,7 +125,7 @@ class SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-        const Duration(seconds: 3),
+        const Duration(seconds: 5),
         () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -135,33 +137,7 @@ class SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ShaderMask(
-              shaderCallback: (Rect bounds) {
-                return LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [Colors.blue, Colors.purple, Colors.red])
-                    .createShader(bounds);
-              },
-              child: Center(
-                child: Icon(
-                  Icons.star_rounded,
-                  color: Colors.white,
-                  size: 120.0,
-                ),
-              ),
-            ),
-            // Image.asset('assets/icon.png', height: 100),
-            SizedBox(height: 100),
-            Text('dressmate', style: GoogleFonts.pacifico(color: Colors.black))
-          ],
-        ),
-      ),
+      body: Center(child: Loading()),
     );
   }
 }

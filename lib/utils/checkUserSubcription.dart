@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -53,7 +54,7 @@ class CheckUserSubscriptionState extends State<CheckUserSubscription> {
           }
 
           return Center(
-            child: CircularProgressIndicator(),
+            child: Loading(),
           );
         });
   }

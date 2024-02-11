@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dressr/screens/chat/day_post_item.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
@@ -36,12 +37,12 @@ class DayPostState extends State<DayPost> {
                   children: [CircleAvatar()],
                 ),
                 bottomLoader: Row(
-                  children: [CircleAvatar(child: CircularProgressIndicator())],
+                  children: [CircleAvatar(child: Loading())],
                 ),
                 initialLoader: Row(
                   children: [
                     CircleAvatar(
-                      child: CircularProgressIndicator(),
+                      child: Loading(),
                     )
                   ],
                 ),

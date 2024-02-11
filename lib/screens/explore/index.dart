@@ -1,6 +1,7 @@
 import 'package:dressr/middle.dart';
 import 'package:dressr/screens/explore/order.dart';
 import 'package:dressr/utils/chat_screen_button.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:dressr/utils/my_profile_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -35,6 +36,8 @@ class StoreScreenState extends State<StoreScreen>
         body: FirestorePagination(
             // isLive: true,
             limit: 20,
+            bottomLoader: Loading(),
+            initialLoader: Loading(),
             onEmpty: Text('thats all for now'),
             query: FirebaseFirestore.instance
                 .collection('posts')

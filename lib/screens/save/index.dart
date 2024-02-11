@@ -1,6 +1,7 @@
 import 'package:dressr/middle.dart';
 import 'package:dressr/screens/explore/item/item.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:dressr/utils/utils_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
@@ -21,6 +22,8 @@ class LikeScreenState extends State<LikeScreen> {
         width: 500,
         child: FirestorePagination(
           isLive: true,
+          bottomLoader: Loading(),
+          initialLoader: Loading(),
           limit: 15,
           controller: likeController,
           onEmpty: Center(child: Text('save items appear here')),

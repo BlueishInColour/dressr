@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dressr/utils/install_app_function.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -63,8 +64,7 @@ class DownloadButtonState extends State<DownloadButton> {
           }
         },
         icon: isDownloading
-            ? SizedBox(
-                width: 14, height: 14, child: CircularProgressIndicator())
+            ? SizedBox(width: 14, height: 14, child: Loading())
             : ShaderMask(
                 blendMode: BlendMode.srcIn,
                 shaderCallback: (Rect bounds) => RadialGradient(

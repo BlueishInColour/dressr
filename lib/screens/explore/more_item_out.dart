@@ -2,6 +2,7 @@ import 'package:dressr/screens/create_post/index.dart';
 // import 'package:dressr/screens/store/add_item.dart';
 import 'package:dressr/screens/explore/more_item_in.dart';
 import 'package:dressr/utils/install_app_function.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:dressr/utils/utils_functions.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_bubbles/message_bars/message_bar.dart';
@@ -51,6 +52,8 @@ class SteezeSectionState extends State<SteezeSection> {
           // ),
 
           body: FirestorePagination(
+              initialLoader: Loading(),
+              bottomLoader: Loading(),
               query: FirebaseFirestore.instance
                   .collection('posts')
                   .where('ancestorId', isEqualTo: widget.ancestorId),
@@ -111,7 +114,7 @@ class SteezeSectionState extends State<SteezeSection> {
                   );
                 } else {
                   return Center(
-                    child: CircularProgressIndicator(),
+                    child: Loading(),
                   );
                 }
               })),
@@ -192,8 +195,7 @@ class CommentSectionState extends State<CommentSection> {
                   }));
             }
 
-            return Center(
-                child: CircularProgressIndicator(color: Colors.blue.shade600));
+            return Center(child: Loading());
           },
         ),
       ),

@@ -2,6 +2,7 @@ import 'package:dressr/middle.dart';
 import 'package:dressr/screens/auth/auth_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -315,7 +316,7 @@ class SignupScreenState extends State<SignupScreen> {
                                         return SizedBox(
                                           width: 5,
                                           height: 5,
-                                          child: CircularProgressIndicator(),
+                                          child: Loading(),
                                         );
                                       } else if (snapshot.connectionState ==
                                           ConnectionState.active) {
@@ -380,8 +381,7 @@ class SignupScreenState extends State<SignupScreen> {
                                     borderRadius: BorderRadius.circular(15),
                                     color: const Color.fromRGBO(0, 0, 0, 1)),
                                 height: 60,
-                                child:
-                                    Center(child: CircularProgressIndicator()),
+                                child: Center(child: Loading()),
                               ),
                       ),
 

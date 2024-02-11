@@ -1,6 +1,7 @@
 import 'package:dressr/main.dart';
 import 'package:dressr/middle.dart';
 import 'package:dressr/screens/auth/auth_service.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -148,7 +149,7 @@ class LoginScreenState extends State<LoginScreen> {
                             borderRadius: BorderRadius.circular(15),
                             color: const Color.fromRGBO(0, 0, 0, 1)),
                         height: 60,
-                        child: Center(child: CircularProgressIndicator())),
+                        child: Center(child: Loading())),
 
                 SizedBox(height: 15),
                 Text('you don`t have an account?'),

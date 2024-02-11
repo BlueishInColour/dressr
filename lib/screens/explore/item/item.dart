@@ -6,6 +6,7 @@ import 'package:dressr/screens/explore/item/item_header.dart';
 import 'package:dressr/screens/explore/item/item_picture.dart';
 import 'package:dressr/screens/explore/more_item_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:widgets_to_image/widgets_to_image.dart';
@@ -95,7 +96,7 @@ class ItemState extends State<Item> {
                     ]),
                     Expanded(
                       child: Center(
-                        child: CircularProgressIndicator(),
+                        child: Loading(),
                       ),
                     ),
                   ],

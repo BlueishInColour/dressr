@@ -2,6 +2,7 @@ import 'package:dressr/screens/chat/item.dart';
 import 'package:dressr/screens/explore/book_loungry.dart';
 import 'package:dressr/utils/chat_screen_button.dart';
 import 'package:dressr/utils/fluttter_pay.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:dressr/utils/my_profile_button.dart';
 import 'package:dressr/utils/utils_functions.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class OrderrState extends State<Orderr> {
           radius: 13,
           child: Stack(
             children: [
-              // CircularProgressIndicator(strokeWidth: 1),
+              //Loading(strokeWidth: 1),
               ShaderMask(
                 shaderCallback: (Rect bounds) {
                   return LinearGradient(
@@ -58,6 +59,7 @@ class OrderrState extends State<Orderr> {
         //     size: 40,
         //   ),
         // ),
+
         SizedBox(width: 15),
 //order button with money tag
         GestureDetector(

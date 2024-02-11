@@ -4,6 +4,7 @@ import 'package:dressr/screens/search/default_post_search.dart';
 import 'package:dressr/screens/explore/item/item.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,6 +42,8 @@ class PostSearchState extends State<PostSearch> {
         body: widget.searchText.isEmpty
             ? DefaultPostSearch()
             : FirestorePagination(
+                bottomLoader: Loading(),
+                initialLoader: Loading(),
                 isLive: true,
                 onEmpty: Column(
                   children: [

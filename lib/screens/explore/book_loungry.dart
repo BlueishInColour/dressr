@@ -16,41 +16,57 @@ class BookLoungry extends StatefulWidget {
 
 class BookLoungryState extends State<BookLoungry> {
   List listOfPicture = [];
-  final listOfInt =
-      List<String>.generate(100, (index) => index.toString(), growable: true);
+  final listOfInt = List<int>.generate(100, (index) => index, growable: true);
   bool isItUrgent = false;
 
-  String smallSizeValue = '1';
-  String mediumSizeValue = '1';
-  String LargeSizeValue = '1';
-
+  int smallSizeValue = 1;
+  int mediumSizeValue = 1;
+  int LargeSizeValue = 1;
   @override
   Widget build(BuildContext context) {
     countClothes({selectedValue = '', String typeOfSize = 'X'}) {
-      return Row(
-        children: [
-          Container(
-            color: Colors.purple.shade900,
-            width: 30,
-            height: 30,
-            child: Center(
-                child: Text(
-              'X',
-              style: TextStyle(color: Colors.white),
-            )),
-          ),
-          DropdownButton(
-              value: selectedValue,
-              onChanged: (newValue) {
-                setState(() {
-                  selectedValue = newValue;
-                });
-              },
-              items: listOfInt.map<DropdownMenuItem<Object>>((e) {
-                return DropdownMenuItem(
-                    child: Text(e.toString()), value: e.toString());
-              }).toList()),
-        ],
+      return Container(
+        height: 20,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+        child: Row(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.purple.shade900,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(5),
+                      bottomLeft: Radius.circular(5))),
+              width: 30,
+              child: Center(
+                  child: Text(
+                'X',
+                style: TextStyle(color: Colors.white),
+              )),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(5),
+                  bottomRight: Radius.circular(5),
+                ),
+                color: Colors.purple.shade100,
+              ),
+              child: DropdownButton(
+                  elevation: 0,
+                  underline: SizedBox(),
+                  value: selectedValue,
+                  onChanged: <int>(newValue) {
+                    setState(() {
+                      selectedValue = newValue;
+                    });
+                  },
+                  items: listOfInt.map<DropdownMenuItem<int>>((e) {
+                    return DropdownMenuItem(
+                        child: Text(e.toString()), value: e);
+                  }).toList()),
+            ),
+          ],
+        ),
       );
     }
 
@@ -98,11 +114,12 @@ class BookLoungryState extends State<BookLoungry> {
                     })
               ],
             ),
+
+            Text('sizes and count'),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text('sizes and count'),
-
                 //X small
                 countClothes(selectedValue: smallSizeValue, typeOfSize: 'X'),
                 countClothes(selectedValue: mediumSizeValue, typeOfSize: 'M'),

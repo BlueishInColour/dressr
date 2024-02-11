@@ -4,6 +4,7 @@ import 'package:dressr/screens/explore/index.dart';
 import 'package:dressr/screens/explore/more_item_out.dart';
 import 'package:dressr/utils/install_app_function.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:dressr/utils/repost_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
@@ -77,6 +78,7 @@ class MoreItemInState extends State<MoreItemIn> {
         // ),
 
         body: FirestorePagination(
+            bottomLoader: Loading(),
             query: FirebaseFirestore.instance
                 .collection('posts')
                 .where('ancestorId', isEqualTo: widget.ancestorId)

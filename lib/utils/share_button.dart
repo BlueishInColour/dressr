@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dressr/utils/install_app_function.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
@@ -74,8 +75,7 @@ class ShareButtonState extends State<ShareButton> {
           }
         },
         icon: isSharing
-            ? SizedBox(
-                width: 14, height: 14, child: CircularProgressIndicator())
+            ? SizedBox(width: 14, height: 14, child: Loading())
             : ShaderMask(
                 blendMode: BlendMode.srcIn,
                 shaderCallback: (Rect bounds) => RadialGradient(

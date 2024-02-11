@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dressr/utils/install_app_function.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:dressr/utils/subscripe.dart';
 import 'package:dressr/utils/utils_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -32,9 +33,7 @@ class CheckSubAndIsWebState extends State<CheckSubAndIsWeb> {
           //if its still loading
           else if (snapshot.connectionState == ConnectionState.waiting) {
             return SizedBox(
-                width: 15,
-                height: 15,
-                child: Center(child: CircularProgressIndicator()));
+                width: 15, height: 15, child: Center(child: Loading()));
           }
 
           //  if have subscribed

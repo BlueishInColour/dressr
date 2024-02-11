@@ -1,5 +1,6 @@
 import 'package:dressr/middle.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masonry_view/flutter_masonry_view.dart';
@@ -20,6 +21,8 @@ class DefaultPostSearchState extends State<DefaultPostSearch> {
     return Middle(
       child: Scaffold(
           body: FirestorePagination(
+              bottomLoader: Loading(),
+              initialLoader: Loading(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
                   crossAxisSpacing: 5,
@@ -78,7 +81,7 @@ class DefaultPostSearchState extends State<DefaultPostSearch> {
           //       );
           //     }
 
-          //     return Center(child: CircularProgressIndicator());
+          //     return Center(child:Loading());
           //   },
           // ),
           ),

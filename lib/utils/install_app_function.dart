@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dressr/middle.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -68,7 +69,7 @@ class InstallAppState extends State<InstallApp> {
                         ),
                         height: 50,
                         width: 200,
-                        child: Center(child: CircularProgressIndicator()),
+                        child: Center(child: Loading()),
                       );
                     } else if (snapshot.hasData) {
                       String urlLink = snapshot.data?['url'];

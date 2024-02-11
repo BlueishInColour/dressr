@@ -1,4 +1,5 @@
 import 'package:dressr/screens/tv/movies_coming_up.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -53,7 +54,7 @@ class TvState extends State<Tv> {
             bottomActions: [],
             topActions: [],
             thumbnail: Container(
-              child: Center(child: CircularProgressIndicator()),
+              child: Center(child: Loading()),
             ),
           ),
         ),

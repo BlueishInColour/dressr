@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dressr/screens/tv/one_movie_coming_up.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,8 @@ class PartnershipScreenState extends State<MoviesComingUp> {
     return Container(
       color: Color.fromARGB(234, 13, 1, 61),
       child: FirestorePagination(
+          bottomLoader: Loading(),
+          initialLoader: Loading(),
           query: FirebaseFirestore.instance
               .collection('tv')
               .doc('movies')

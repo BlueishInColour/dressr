@@ -5,6 +5,7 @@ import 'package:dressr/utils/chat_button.dart';
 import 'package:dressr/utils/follow-button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +48,8 @@ class ProfileScreenState extends State<ProfileScreen>
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: FirestorePagination(
+              bottomLoader: Loading(),
+              initialLoader: Loading(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
                   crossAxisSpacing: 5,

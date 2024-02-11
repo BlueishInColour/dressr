@@ -5,6 +5,7 @@ import 'package:dressr/screens/search/post_search.dart';
 import 'package:dressr/screens/explore/item/item.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,6 +28,8 @@ class UserSearchState extends State<UserSearch> {
       width: 500,
       child: Scaffold(
           body: FirestorePagination(
+        bottomLoader: Loading(),
+        initialLoader: Loading(),
         isLive: true,
         limit: 15,
         onEmpty:

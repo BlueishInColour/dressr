@@ -2,6 +2,7 @@
 
 import 'package:dressr/middle.dart';
 import 'package:dressr/screens/chat/day_post.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:dressr/utils/shared_pref.dart';
 import 'package:dressr/utils/utils_functions.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -74,6 +75,7 @@ class ChatScreenState extends State<ChatScreen> {
               : SizedBox(),
           Expanded(
             child: FirestorePagination(
+                bottomLoader: Loading(),
                 onEmpty: Center(child: Text('no  user here yet')),
                 query: FirebaseFirestore.instance
                     .collection('chat')

@@ -1,6 +1,7 @@
 import 'package:dressr/utils/add_showlist_button.dart';
 import 'package:dressr/utils/chat_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
@@ -117,8 +118,7 @@ class FollowButtonState extends State<FollowButton> {
                     ),
                   );
           } else {
-            return SizedBox(
-                width: 10, height: 10, child: CircularProgressIndicator());
+            return SizedBox(width: 10, height: 10, child: Loading());
           }
         });
   }
