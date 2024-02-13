@@ -54,22 +54,22 @@ class ItemActionsState extends State<ItemActions> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Row(children: [
-      //download button
-      DownloadButton(controller: widget.controller),
-      //  sharebutton
-      ShareButton(controller: widget.controller),
-      //chat creator
-      ChatButton(uid: widget.creatorUid),
-      Expanded(child: SizedBox()),
-      //delete post else report
-      DeletePostButton(postId: widget.postId, creatorUid: widget.creatorUid),
-      ListView(
-        children: [
+        appBar: AppBar(
+            title: Row(children: [
+          //download button
+          DownloadButton(controller: widget.controller),
+          //  sharebutton
+          ShareButton(controller: widget.controller),
+          //chat creator
+          ChatButton(uid: widget.creatorUid),
+          Expanded(child: SizedBox()),
+          //delete post else report
+          DeletePostButton(
+              postId: widget.postId, creatorUid: widget.creatorUid),
+        ])),
+        body: ListView(children: [
           WidgetsToImage(controller: widget.controller, child: cardWidget()),
-        ],
-      )
-    ]));
+        ]));
   }
 
   Widget cardWidget() {
