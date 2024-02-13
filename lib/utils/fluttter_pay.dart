@@ -52,7 +52,7 @@ class FlutterPayState extends State<FlutterPay> {
 
         final Flutterwave flutterwave = Flutterwave(
             context: context,
-            publicKey: getPublicKey(),
+            publicKey: 'FLWPUBK_TEST-ef4d818fa96ee72db01e180edd283079-X',
             currency: selectedCurrency,
             redirectUrl: 'https://dress-mate.web.app',
             txRef: Uuid().v1(),
