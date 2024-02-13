@@ -157,3 +157,9 @@ done - find better design for the blog page and remove appbar
 > gear button for only me to rearrage program and upload new  url  
 >button  for fullsreen
 > set alarm system
+
+13th feb , 2024
+> login screeen should be better
+> find implementation ,download and share button
+> make bookings for loundry better and tv screen
+> then all is set to go 
