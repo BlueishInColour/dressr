@@ -84,8 +84,9 @@ class PostSearchState extends State<PostSearch> {
                 child: SearchBar(
                   controller: controller,
                   textStyle: MaterialStatePropertyAll(
-                      TextStyle(color: Colors.white60)),
-                  backgroundColor: MaterialStatePropertyAll(Colors.white38),
+                      TextStyle(color: Colors.purple.shade900, fontSize: 11)),
+                  backgroundColor:
+                      MaterialStatePropertyAll(Colors.purple.shade100),
                   onChanged: (v) {
                     setState(() {
                       searchText = v;
@@ -104,7 +105,8 @@ class PostSearchState extends State<PostSearch> {
                             );
                           }));
                         },
-                        icon: Icon(Icons.search))
+                        icon: Icon(Icons.search,
+                            size: 17, color: Colors.purple.shade900))
                   ],
                 ),
               ),

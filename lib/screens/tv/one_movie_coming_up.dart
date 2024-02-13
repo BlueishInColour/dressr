@@ -16,32 +16,31 @@ class OneMovieComingUpState extends State<OneMovieComingUp> {
   @override
   Widget build(BuildContext context) {
     DocumentSnapshot<Object?> snap = widget.snap;
+    Timestamp start = snap['startTime'];
+    Timestamp stop = snap['stopTime'];
 
+    DateTime startt = start.toDate();
+    DateTime stopp = stop.toDate();
     return ListTile(
       //time tot time
-      leading: Text(''),
+      leading: Text('${startt.hour} : ${startt.minute}',
+          style: TextStyle(color: Colors.white)),
+      //time tot time
+      trailing: Text('${stopp.hour} : ${stopp.minute}',
+          style: TextStyle(color: Colors.white)),
       //title of video
-      title: Text(snap['title']),
+      title: Text(snap['title'],
+          style: TextStyle(fontSize: 12, color: Colors.white)),
       //set alrm
-      trailing: IconButton(onPressed: ringAlarm, icon: Icon(Icons.alarm)),
+      // trailing: IconButton(onPressed: ringAlarm, icon: Icon(Icons.alarm)),
       onTap: () {
-        showModalBottomSheet(
-            context: context,
-            builder: (context) => Container(
-                  padding: EdgeInsets.all(10),
-                  child: Text(snap['description']),
-                ));
+        // showModalBottomSheet(
+        //     context: context,
+        //     builder: (context) => Container(
+        //           padding: EdgeInsets.all(10),
+        //           child: Text(snap['description']),
+        //         ));
       },
     );
   }
 }
-
-Map<String, dynamic> document = {
-  'id': Uuid().v1(),
-  'title': '',
-  'caption': '',
-  'moviewLink': '',
-  'movieLength': '',
-  'startTime': '',
-  'endTime': '',
-};

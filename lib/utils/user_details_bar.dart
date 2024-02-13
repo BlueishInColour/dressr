@@ -46,9 +46,7 @@ class PartnershipScreenState extends State<UserDetailsBar> {
                   style: TextStyle(color: Colors.black87),
                 ),
                 subtitle: Text(
-                  widget.uid == FirebaseAuth.instance.currentUser!.uid
-                      ? 'messaging myself'
-                      : '@${details['userName']}',
+               '@${details['userName']}',
                   style: TextStyle(color: Colors.black54),
                 ),
               ),

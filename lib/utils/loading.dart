@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 class Loading extends StatefulWidget {
-  const Loading({super.key});
-
+  const Loading({super.key, this.size = 40.0});
+  final double size;
   @override
   State<Loading> createState() => LoadingState();
 }
@@ -15,30 +15,28 @@ class LoadingState extends State<Loading> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: AnimatedBuilder(
-          animation: _controller,
-          builder: (_, child) {
-            return Transform.rotate(
-              angle: _controller.value * 10 * math.pi,
-              child: child,
-            );
+    return Center(
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (_, child) {
+          return Transform.rotate(
+            angle: _controller.value * 10 * math.pi,
+            child: child,
+          );
+        },
+        child: ShaderMask(
+          shaderCallback: (Rect bounds) {
+            return LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Colors.blue, Colors.purple, Colors.red])
+                .createShader(bounds);
           },
-          child: ShaderMask(
-            shaderCallback: (Rect bounds) {
-              return LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [Colors.blue, Colors.purple, Colors.red])
-                  .createShader(bounds);
-            },
-            child: Center(
-              child: Icon(
-                Icons.star_rounded,
-                color: Colors.white,
-                size: 40.0,
-              ),
+          child: Center(
+            child: Icon(
+              Icons.star_rounded,
+              color: Colors.white,
+              size: widget.size,
             ),
           ),
         ),

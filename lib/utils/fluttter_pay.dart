@@ -54,7 +54,7 @@ class FlutterPayState extends State<FlutterPay> {
             context: context,
             publicKey: getPublicKey(),
             currency: selectedCurrency,
-            redirectUrl: 'https://facebook.com',
+            redirectUrl: 'https://dress-mate.web.app',
             txRef: Uuid().v1(),
             amount: amountController.text.toString().trim(),
             customer: customer,

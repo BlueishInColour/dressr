@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dressr/screens/tv/movies_coming_up.dart';
 import 'package:dressr/utils/loading.dart';
 import 'package:flutter/material.dart';
@@ -13,30 +14,15 @@ class Tv extends StatefulWidget {
 }
 
 class TvState extends State<Tv> {
-  String getIdFromLink() {
-    var videoId = YoutubePlayer.convertUrlToId(
-        "https://youtu.be/XoiOOiuH8iI?si=nIbhSwMHvjY2YgPa");
+  String getIdFromLink(
+      {String url = "https://youtu.be/LWeiydKl0mU?si=4dfFr1iwWCDQucyR"}) {
+    var videoId = YoutubePlayer.convertUrlToId(url);
     print(videoId); // BBAyRBTfsOU
     return videoId ?? '';
   }
 
   @override
   Widget build(BuildContext context) {
-    YoutubePlayerController _controller = YoutubePlayerController(
-      initialVideoId: getIdFromLink(),
-      flags: YoutubePlayerFlags(
-        hideControls: true,
-        //  showLiveFullscreenButton: true,
-        disableDragSeek: true,
-        autoPlay: false,
-        //possibly use this to set play time
-        hideThumbnail: true,
-        // startAt:
-        useHybridComposition: true, controlsVisibleAtStart: false,
-
-        mute: false,
-      ),
-    );
     return GestureDetector(
       onTap: () {
         showModalBottomSheet(
@@ -48,15 +34,53 @@ class TvState extends State<Tv> {
       child: Scaffold(
         backgroundColor: Color.fromARGB(255, 17, 1, 47),
         body: Center(
-          child: YoutubePlayer(
-            controller: _controller,
-            showVideoProgressIndicator: true,
-            bottomActions: [],
-            topActions: [],
-            thumbnail: Container(
-              child: Center(child: Loading()),
-            ),
-          ),
+          child: StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection('tv')
+                  .doc('movies')
+                  .collection('youtube')
+                  .where(
+                    'startTime',
+                    isLessThan: Timestamp.now(),
+                  )
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting ||
+                    snapshot.data!.docs.isEmpty ||
+                    !snapshot.hasData) {
+                  return Loading();
+                }
+                if (snapshot.hasData) {
+                  // if()
+                  String url = snapshot.data!.docs.first['url'];
+                  return YoutubePlayer(
+                    controller: YoutubePlayerController(
+                      initialVideoId: getIdFromLink(url: url),
+                      flags: YoutubePlayerFlags(
+                        hideControls: true,
+                        //  showLiveFullscreenButton: true,
+                        disableDragSeek: true,
+                        autoPlay: true,
+                        //possibly use this to set play time
+                        hideThumbnail: true,
+                        // startAt:
+                        useHybridComposition: true,
+                        controlsVisibleAtStart: false,
+
+                        mute: false,
+                      ),
+                    ),
+                    showVideoProgressIndicator: true,
+                    bottomActions: [],
+                    topActions: [],
+                    thumbnail: Container(
+                      child: Center(child: Loading()),
+                    ),
+                  );
+                } else {
+                  return Loading();
+                }
+              }),
         ),
 
         //      PotraitPlayer(

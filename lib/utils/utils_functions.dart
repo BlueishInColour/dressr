@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:imagekit_io/imagekit_io.dart';
 import '../../models/stories.dart';
 import 'package:http/http.dart' as http;
+// import 'package:image_picker_for_web/image_picker_for_web.dart';
 // import '../../';
 
 escShowModelBottomSheet(context, {Widget screen = const SizedBox()}) {
@@ -38,7 +39,11 @@ showSnackBar(context, Icon icon, String text) {
 }
 
 Future<List<File>> selectImage(bool isCamera) async {
-  final xFile = await ImagePicker().pickMultiImage();
+  final xFile =
+      // kIsWeb
+      //     ? await ImagePickerPlugin().getMultiImageWithOptions()
+      //     :
+      await ImagePicker().pickMultiImage();
   if (xFile != null) {
     List<File> listOfXfile = [];
     xFile.forEach(
@@ -48,9 +53,9 @@ Future<List<File>> selectImage(bool isCamera) async {
     );
 
     return listOfXfile;
+  } else {
+    return [File('')];
   }
-
-  return [File('')];
 }
 
 String privateKey = 'private_A9tBBPhf/8CSEYPp+CR986xpRzE=';
@@ -81,30 +86,13 @@ pickPicture(bool isCamera) async {
   return listOfUrl;
 }
 
-Future<String> uploadPixGetUrl(File file) async {
-  String? url = await ImageKit.io(
-    file.readAsBytesSync(),
-    fileName: 'afilename',
-    //  folder: "folder_name/nested_folder", (Optional)
-    privateKey: privateKey, // (Keep Confidential)
-    onUploadProgress: (progressValue) {
-      if (true) {
-        debugPrint(progressValue.toString());
-      }
-    },
-  ).then((ImagekitResponse data) {
-    /// Get your uploaded Image file link from [ImageKit.io]
-    /// then save it anywhere you want. For Example- [Firebase, MongoDB] etc.
-
-    debugPrint(data.url!); // (you will get all Response data from ImageKit)
-    return data.url;
-  });
-  return '';
-}
-
 Future<String> addSingleImage(ImageSource source) async {
 //
-  final xFile = await ImagePicker().pickImage(source: source);
+  final xFile =
+      //  kIsWeb
+      //     ? await ImagePickerPlugin().getImageFromSource(source: source)
+      //     :
+      await ImagePicker().pickImage(source: source);
 
   File file = File(xFile!.path);
   //

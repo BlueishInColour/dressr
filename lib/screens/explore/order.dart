@@ -1,5 +1,5 @@
 import 'package:dressr/screens/chat/item.dart';
-import 'package:dressr/screens/explore/book_loungry.dart';
+import 'package:dressr/screens/explore/loundry/book_loungry.dart';
 import 'package:dressr/utils/chat_screen_button.dart';
 import 'package:dressr/utils/fluttter_pay.dart';
 import 'package:dressr/utils/loading.dart';
