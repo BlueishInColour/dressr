@@ -9,6 +9,10 @@ import 'package:dressr/utils/utils_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterwave_standard/core/flutterwave.dart';
+import 'package:flutterwave_standard/models/requests/customer.dart';
+import 'package:flutterwave_standard/models/requests/customizations.dart';
+import 'package:flutterwave_standard/models/responses/charge_response.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:imagekit_io/imagekit_io.dart';
 import 'package:uuid/uuid.dart';
@@ -382,7 +386,36 @@ class BookLoungryState extends State<BookLoungry> {
                 )),
                 //button
                 GestureDetector(
-                  onTap: upload,
+                  onTap: () async {
+                    final Customer customer =
+                        Customer(email: "customer@customer.com");
+
+                    final Flutterwave flutterwave = Flutterwave(
+                        context: context,
+                        publicKey:
+                            'FLWPUBK_TEST-ef4d818fa96ee72db01e180edd283079-X',
+                        currency: 'NGN',
+                        redirectUrl: 'https://dress-mate.web.app',
+                        txRef: Uuid().v1(),
+                        amount: pricing(),
+                        customer: customer,
+                        paymentOptions:
+                            "card, payattitude, barter, bank transfer, ussd",
+                        customization: Customization(title: "Test Payment"),
+                        isTestMode: true);
+                    final ChargeResponse response = await flutterwave.charge();
+                    if (response.success != null) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(response.toString()),
+                      ));
+                      // showLoading(response.toString());
+                      print("${response.toJson()}");
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('no response'),
+                      ));
+                    }
+                  },
                   child: Container(
                     padding: EdgeInsets.all(7),
                     margin: EdgeInsets.all(7),

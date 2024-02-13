@@ -1,7 +1,7 @@
 import 'package:dressr/screens/chat/item.dart';
 import 'package:dressr/screens/explore/loundry/book_loungry.dart';
 import 'package:dressr/utils/chat_screen_button.dart';
-import 'package:dressr/utils/fluttter_pay.dart';
+// import 'package:dressr/utils/fluttter_pay.dart';
 import 'package:dressr/utils/loading.dart';
 import 'package:dressr/utils/my_profile_button.dart';
 import 'package:dressr/utils/utils_functions.dart';
@@ -64,8 +64,8 @@ class OrderrState extends State<Orderr> {
 //order button with money tag
         GestureDetector(
           onTap: () async {
-            showModalBottomSheet(
-                context: context, builder: (context) => FlutterPay());
+            // showModalBottomSheet(
+            //     context: context, builder: (context) => FlutterPay());
           },
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
