@@ -38,11 +38,15 @@ class ItemCaptionState extends State<ItemCaption> {
         child: widget.isPictureAvailable
             ? Padding(
                 padding: const EdgeInsets.all(8),
-                child: Text(widget.caption,
-                    maxLines: 20,
-                    style: TextStyle(
-                        overflow: TextOverflow.ellipsis,
-                        color: Colors.white60)),
+                child: Row(
+                  children: [
+                    Text(widget.caption,
+                        maxLines: 20,
+                        style: TextStyle(
+                            overflow: TextOverflow.ellipsis,
+                            color: Colors.white60)),
+                  ],
+                ),
               )
             : SizedBox(),
       ),

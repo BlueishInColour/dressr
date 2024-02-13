@@ -18,12 +18,15 @@ class OneMovieComingUpState extends State<OneMovieComingUp> {
     DocumentSnapshot<Object?> snap = widget.snap;
     Timestamp start = snap['startTime'];
     Timestamp stop = snap['stopTime'];
-
+    Timestamp now = Timestamp.now();
+    bool isNowShowing = now.toDate().isAfter(start.toDate()) &&
+        now.toDate().isBefore(stop.toDate());
     DateTime startt = start.toDate();
     DateTime stopp = stop.toDate();
     return ListTile(
       //time tot time
-      leading: Text('${startt.hour} : ${startt.minute}',
+      leading: Text(
+          isNowShowing ? 'now showing' : '${startt.hour} : ${startt.minute}',
           style: TextStyle(color: Colors.white)),
       //time tot time
       trailing: Text('${stopp.hour} : ${stopp.minute}',

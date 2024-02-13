@@ -48,6 +48,8 @@ Future<List<File>> selectImage(bool isCamera) async {
     List<File> listOfXfile = [];
     xFile.forEach(
       (element) {
+        debugPrint(element.path);
+
         listOfXfile.add(File(element.path));
       },
     );

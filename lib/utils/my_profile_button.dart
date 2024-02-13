@@ -28,7 +28,8 @@ class MyProfileButtonState extends State<MyProfileButton> {
                 .get(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.active ||
-                  snapshot.connectionState == ConnectionState.waiting) {
+                  snapshot.connectionState == ConnectionState.waiting ||
+                  !snapshot.data!.exists) {
                 return CircleAvatar(radius: 12);
               } else if (snapshot.connectionState == ConnectionState.done) {
                 String data = snapshot.data?['profilePicture'] ?? '';

@@ -17,6 +17,7 @@ class LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   bool isLoading = false;
+  bool isGuestLoading = false;
   bool seePassword = true;
 
   login() async {
@@ -25,6 +26,24 @@ class LoginScreenState extends State<LoginScreen> {
     });
     try {
       await AuthService().login(emailController.text, passwordController.text);
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('wrong email or password'),
+        showCloseIcon: true,
+      ));
+    }
+  }
+
+  guestLogin() async {
+    setState(() {
+      isGuestLoading = true;
+    });
+
+    try {
+      await FirebaseAuth.instance.signInAnonymously();
     } catch (e) {
       setState(() {
         isLoading = false;
@@ -155,6 +174,33 @@ class LoginScreenState extends State<LoginScreen> {
                 Text('you don`t have an account?'),
                 TextButton(
                     onPressed: widget.onPressed, child: Text('register now')),
+
+                SizedBox(height: 20),
+                //guests
+                !isGuestLoading
+                    ? GestureDetector(
+                        onTap: () async {
+                          await guestLogin();
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: Colors.black45, width: 2),
+                              borderRadius: BorderRadius.circular(15),
+                              color: const Color.fromRGBO(0, 0, 0, 1)),
+                          height: 60,
+                          child: Center(
+                              child: Text('guest',
+                                  style: TextStyle(color: Colors.white))),
+                        ),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black45, width: 2),
+                            borderRadius: BorderRadius.circular(15),
+                            color: const Color.fromRGBO(0, 0, 0, 1)),
+                        height: 60,
+                        child: Center(child: Loading())),
                 // Center(
                 //   child: Text('or'),
                 // ),

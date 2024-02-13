@@ -5,7 +5,9 @@ import 'package:dressr/screens/create_post/offline_item.dart';
 import 'package:dressr/utils/utils_functions.dart';
 import 'package:chat_bubbles/chat_bubbles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,6 +15,7 @@ import 'package:imagekit_io/imagekit_io.dart';
 import 'package:uuid/uuid.dart';
 import '../../main.dart';
 import '../explore/item/item.dart';
+import 'package:image_picker_for_web/image_picker_for_web.dart';
 
 class CreateScreen extends StatefulWidget {
   const CreateScreen({super.key, required this.ancestorId});
@@ -100,6 +103,72 @@ class CreateScreenState extends State<CreateScreen> {
           tagss.addAll(firstCaption.split(' '));
         });
       });
+    }
+
+    getWebImages() async {
+      // FilePickerResult? result = await FilePicker.platform.pickFiles(
+      //   type: FileType.custom,
+      //   allowedExtensions: ['jpg', 'png', 'mp4', 'avi'],
+      // );
+
+      var images = await ImagePicker.platform.getMultiImageWithOptions();
+
+      if (images.isNotEmpty) {
+        images.forEach((element) async {
+          var bytes = await element.readAsBytes();
+          List<int> bytesint = bytes.toList();
+          ImageKit.io(
+            bytesint,
+            fileName: Uuid().v1(),
+            //  folder: "folder_name/nested_folder", (Optional)
+            privateKey: privateKey, // (Keep Confidential)
+            onUploadProgress: (progressValue) {
+              if (true) {
+                debugPrint(progressValue.toString());
+                setState(() {
+                  progressingValue = progressValue;
+                });
+              }
+            },
+          ).then((ImagekitResponse data) {
+            /// Get your uploaded Image file link from [ImageKit.io]
+            /// then save it anywhere you want. For Example- [Firebase, MongoDB] etc.
+
+            debugPrint(data.url ?? 'xxx');
+
+            // (you will get all Response data from ImageKit)
+            Map onPost = listOfCreatingPost.last;
+
+            setState(() {
+              listOfCreatingPost.add({
+                //id
+                'postId': '',
+                // 'headPostId': widget.headPostId,
+                'ancestorId':
+                    widget.ancestorId.isEmpty ? ancestorId : widget.ancestorId,
+
+                //content
+                'caption': '',
+                'picture': data.url ?? '',
+                'audio': '',
+                'video': '',
+                'tags': [],
+
+                //creator
+                'creatorUid': FirebaseAuth.instance.currentUser!.uid,
+
+                //metadata
+
+                'timestamp': Timestamp.now()
+              });
+            });
+          });
+        });
+        // File file = File(result.files.single.path!);
+      } else {
+        // User canceled the picker
+        return [File(' ')];
+      }
     }
 
     getFilePics() async {
@@ -327,7 +396,7 @@ class CreateScreenState extends State<CreateScreen> {
                               color: Colors.white60,
                             )),
                         IconButton(
-                            onPressed: getFilePics,
+                            onPressed: kIsWeb ? getWebImages : getFilePics,
                             //  () async {
                             //   String url = await addSingleImage(ImageSource.gallery);
                             //   setState(() {

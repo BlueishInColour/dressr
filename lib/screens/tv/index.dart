@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dressr/screens/tv/movies_coming_up.dart';
 import 'package:dressr/utils/loading.dart';
 import 'package:flutter/material.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:youtube_player_iframe_plus/youtube_player_iframe_plus.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart'
+    hide YoutubePlayerController;
 
 // import 'package:flutter_youtube_player/flutter_youtube_player.dart';
 
@@ -53,30 +55,46 @@ class TvState extends State<Tv> {
                 if (snapshot.hasData) {
                   // if()
                   String url = snapshot.data!.docs.first['url'];
-                  return YoutubePlayer(
+                  return YoutubeValueBuilder(
                     controller: YoutubePlayerController(
                       initialVideoId: getIdFromLink(url: url),
-                      flags: YoutubePlayerFlags(
-                        hideControls: true,
-                        //  showLiveFullscreenButton: true,
-                        disableDragSeek: true,
+                      params: YoutubePlayerParams(
+                        startAt: Duration(seconds: 30),
+                        showControls: false,
                         autoPlay: true,
-                        //possibly use this to set play time
-                        hideThumbnail: true,
-                        // startAt:
-                        useHybridComposition: true,
-                        controlsVisibleAtStart: false,
-
-                        mute: false,
+                        enableKeyboard: false,
+                        showVideoAnnotations: true,
+                        showFullscreenButton: true,
                       ),
-                    ),
-                    showVideoProgressIndicator: true,
-                    bottomActions: [],
-                    topActions: [],
-                    thumbnail: Container(
-                      child: Center(child: Loading()),
-                    ),
+                    ), // This can be omitted, if using `YoutubePlayerControllerProvider`
+                    builder: (context, value) {
+                      return SizedBox();
+                    },
                   );
+                  // YoutubePlayer(
+                  //   controller: YoutubePlayerController(
+                  //     initialVideoId: getIdFromLink(url: url),
+                  //     flags: YoutubePlayerFlags(
+                  //       hideControls: true,
+                  //       //  showLiveFullscreenButton: true,
+                  //       disableDragSeek: true,
+                  //       autoPlay: true,
+                  //       //possibly use this to set play time
+                  //       hideThumbnail: true,
+                  //       // startAt:
+                  //       useHybridComposition: true,
+                  //       controlsVisibleAtStart: false,
+
+                  //       mute: false,
+                  //     ),
+                  //   ),
+                  //   showVideoProgressIndicator: true,
+                  //   bottomActions: [],
+                  //   topActions: [],
+                  //   thumbnail: Container(
+                  //     child: Center(child: Loading()),
+                  //   ),
+                  // );
                 } else {
                   return Loading();
                 }

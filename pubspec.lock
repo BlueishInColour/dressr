@@ -442,7 +442,7 @@ packages:
     source: hosted
     version: "7.0.0"
   file_picker:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: file_picker
       sha256: be325344c1f3070354a1d84a231a1ba75ea85d413774ec4bdf444c023342e030
@@ -2042,6 +2042,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "8.1.2"
+  youtube_player_iframe_plus:
+    dependency: "direct main"
+    description:
+      name: youtube_player_iframe_plus
+      sha256: b3053b855bdeee8828d63d744d86b7ca4d3330d58e6730b5f7af05dd25126906
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.3.2"
 sdks:
   dart: ">=3.2.3 <3.5.0"
   flutter: ">=3.16.6"

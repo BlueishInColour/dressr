@@ -177,7 +177,7 @@ class MainIndexState extends State<MainIndex> {
           Tv(),
           PostSearch(),
           LikeScreen(),
-          kIsWeb ? InstallApp() : CreateScreen(ancestorId: '')
+          CreateScreen(ancestorId: '')
           // AddItem(headPostId: ''),
           // ProfileScreen(userUid: FirebaseAuth.instance.currentUser!.uid),
           // EditProfile()
