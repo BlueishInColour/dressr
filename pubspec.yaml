@@ -109,7 +109,7 @@ dependencies:
   scroll_to_index: ^3.0.1
   flutter_launcher_icons: ^0.13.1
   hidable: ^1.0.6
-  image_picker_for_web: ^3.0.2  
+  # image_picker_for_web: ^3.0.2  
   # extra paid features for users
   widgets_to_image: ^0.0.2 #to download images
   screenshot: ^2.1.0
