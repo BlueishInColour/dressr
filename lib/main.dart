@@ -6,6 +6,7 @@ import 'package:dressr/middle.dart';
 import 'package:dressr/screens/auth/auth_gate_two.dart';
 import 'package:dressr/screens/auth/login_or_signup.dart';
 import 'package:dressr/screens/auth/signup_screen.dart';
+import 'package:dressr/screens/create_post/create.dart';
 import 'package:dressr/screens/save/index.dart';
 import 'package:dressr/screens/chat/index.dart';
 import 'package:dressr/screens/create_post/index.dart';
@@ -22,6 +23,7 @@ import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hidable/hidable.dart';
 import 'package:ionicons/ionicons.dart';
 // dressr@gmail.com
@@ -35,6 +37,9 @@ import 'screens/auth/login_screen.dart';
 // import 'package:window_manager/window_manager.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 
+import 'package:flutterwave_web_client/flutterwave_web_client.dart';
+// import 'package:admob_flutter/admob_flutter.dart';
+
 //to prevent screenshots in app
 Future<void> secureScreen() async {
   await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
@@ -45,6 +50,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // Admob.initialize();
+  // unawaited(MobileAds.instance.initialize());
+  if (kIsWeb) {
+    FlutterwaveWebClient.initialize(
+        'FLWPUBK_TEST-ef4d818fa96ee72db01e180edd283079-X');
+  }
   if (!kIsWeb) {
     secureScreen();
   }
@@ -177,7 +188,7 @@ class MainIndexState extends State<MainIndex> {
           Tv(),
           PostSearch(),
           LikeScreen(),
-          CreateScreen(ancestorId: '')
+          Create(ancestorId: '')
           // AddItem(headPostId: ''),
           // ProfileScreen(userUid: FirebaseAuth.instance.currentUser!.uid),
           // EditProfile()

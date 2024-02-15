@@ -50,7 +50,9 @@ class ItemHeaderState extends State<ItemHeader> {
           .doc(widget.creatorUid)
           .get(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
+        if (snapshot.connectionState == ConnectionState.waiting ||
+            !snapshot.hasData ||
+            !snapshot.data!.exists) {
           return Container(
             height: 45,
             decoration: BoxDecoration(

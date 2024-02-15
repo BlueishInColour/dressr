@@ -4,6 +4,7 @@ import 'package:dressr/screens/auth/auth_service.dart';
 import 'package:dressr/utils/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -101,6 +102,11 @@ class LoginScreenState extends State<LoginScreen> {
                   // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                 SizedBox(height: 100),
+                Text(
+                  'login',
+                  style: GoogleFonts.montserrat(
+                      fontSize: 60, fontWeight: FontWeight.w900),
+                ),
                 SizedBox(
                   height: 60,
                   child: TextFormField(
@@ -156,7 +162,7 @@ class LoginScreenState extends State<LoginScreen> {
                                   Border.all(color: Colors.black45, width: 2),
                               borderRadius: BorderRadius.circular(15),
                               color: const Color.fromRGBO(0, 0, 0, 1)),
-                          height: 60,
+                          height: 50,
                           child: Center(
                               child: Text('login',
                                   style: TextStyle(color: Colors.white))),
@@ -172,35 +178,59 @@ class LoginScreenState extends State<LoginScreen> {
 
                 SizedBox(height: 15),
                 Text('you don`t have an account?'),
-                TextButton(
-                    onPressed: widget.onPressed, child: Text('register now')),
-
-                SizedBox(height: 20),
-                //guests
-                !isGuestLoading
-                    ? GestureDetector(
-                        onTap: () async {
-                          await guestLogin();
-                        },
+                Row(
+                  children: [
+                    !isGuestLoading
+                        ? Expanded(
+                            child: GestureDetector(
+                              onTap: () async {
+                                await guestLogin();
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.black45, width: 2),
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: const Color.fromRGBO(0, 0, 0, 1)),
+                                height: 50,
+                                child: Center(
+                                    child: Text('guest',
+                                        style: TextStyle(color: Colors.white))),
+                              ),
+                            ),
+                          )
+                        : Expanded(
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.black45, width: 2),
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: const Color.fromRGBO(0, 0, 0, 1)),
+                                height: 50,
+                                child: Center(child: Loading())),
+                          ),
+                    SizedBox(width: 20),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: widget.onPressed,
                         child: Container(
                           decoration: BoxDecoration(
                               border:
                                   Border.all(color: Colors.black45, width: 2),
                               borderRadius: BorderRadius.circular(15),
                               color: const Color.fromRGBO(0, 0, 0, 1)),
-                          height: 60,
+                          height: 50,
                           child: Center(
-                              child: Text('guest',
+                              child: Text('register',
                                   style: TextStyle(color: Colors.white))),
                         ),
-                      )
-                    : Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black45, width: 2),
-                            borderRadius: BorderRadius.circular(15),
-                            color: const Color.fromRGBO(0, 0, 0, 1)),
-                        height: 60,
-                        child: Center(child: Loading())),
+                      ),
+                    )
+                  ],
+                ),
+
+                //guests
+
                 // Center(
                 //   child: Text('or'),
                 // ),

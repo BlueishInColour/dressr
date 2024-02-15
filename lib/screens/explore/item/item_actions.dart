@@ -54,19 +54,25 @@ class ItemActionsState extends State<ItemActions> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.black,
         appBar: AppBar(
+            automaticallyImplyLeading: false,
+            foregroundColor: Colors.white,
             title: Row(children: [
-          //download button
-          DownloadButton(controller: widget.controller),
-          //  sharebutton
-          ShareButton(controller: widget.controller),
-          //chat creator
-          ChatButton(uid: widget.creatorUid),
-          Expanded(child: SizedBox()),
-          //delete post else report
-          DeletePostButton(
-              postId: widget.postId, creatorUid: widget.creatorUid),
-        ])),
+              //download button
+              DownloadButton(controller: widget.controller),
+              //  sharebutton
+              ShareButton(controller: widget.controller),
+              //chat creator
+              // ChatButton(uid: widget.creatorUid),
+              //use button should be here
+
+              //
+              Expanded(child: SizedBox()),
+              //delete post else report
+              DeletePostButton(
+                  postId: widget.postId, creatorUid: widget.creatorUid),
+            ])),
         body: ListView(children: [
           WidgetsToImage(controller: widget.controller, child: cardWidget()),
         ]));

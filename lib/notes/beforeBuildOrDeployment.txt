@@ -1,0 +1,4 @@
+BEFORE YOU DEPLOY THE APP, THIS THINGS MUST BE IMPLEMENTED
+
+> applogo and icon
+> admobs settings in android manifest , set ids

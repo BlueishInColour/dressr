@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dressr/utils/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../utils/utils_functions.dart';
@@ -160,6 +161,15 @@ class SignupScreenState extends State<SignupScreen> {
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                      Row(
+                        children: [
+                          Text(
+                            'signup',
+                            style: GoogleFonts.montserrat(
+                                fontSize: 50, fontWeight: FontWeight.w900),
+                          ),
+                        ],
+                      ),
                       SizedBox(
                         height: 60,
                         child: TextFormField(
@@ -258,9 +268,9 @@ class SignupScreenState extends State<SignupScreen> {
                                   Border.all(color: Colors.black45, width: 2),
                               borderRadius: BorderRadius.circular(15),
                               color: const Color.fromRGBO(0, 0, 0, 1)),
-                          height: 60,
+                          height: 50,
                           child: Center(
-                              child: Text('signup',
+                              child: Text('back',
                                   style: TextStyle(color: Colors.white))),
                         ),
                       ),

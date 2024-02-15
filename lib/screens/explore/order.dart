@@ -5,6 +5,7 @@ import 'package:dressr/utils/chat_screen_button.dart';
 import 'package:dressr/utils/loading.dart';
 import 'package:dressr/utils/my_profile_button.dart';
 import 'package:dressr/utils/utils_functions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Orderr extends StatefulWidget {
@@ -121,6 +122,11 @@ class OrderrState extends State<Orderr> {
           ),
         ),
         Expanded(child: SizedBox()),
+        IconButton(
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+            },
+            icon: Icon(Icons.logout)),
         // ChatScreenButton(),
         // SizedBox(width: 7),
         MyProfileButton(),

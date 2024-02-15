@@ -1,31 +1,27 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dressr/screens/create_post/offline_item.dart';
-import 'package:dressr/utils/utils_functions.dart';
-import 'package:chat_bubbles/chat_bubbles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:dressr/main.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:imagekit_io/imagekit_io.dart';
 import 'package:uuid/uuid.dart';
-import '../../main.dart';
-import '../explore/item/item.dart';
-// import 'package:image_picker_for_web/image_picker_for_web.dart';
+import 'package:dressr/utils/utils_functions.dart';
+import './offline_item.dart';
 
-class CreateScreen extends StatefulWidget {
-  const CreateScreen({super.key, required this.ancestorId});
+class Create extends StatefulWidget {
+  const Create({super.key, required this.ancestorId});
   final String ancestorId;
 
   @override
-  State<CreateScreen> createState() => CreateScreenState();
+  State<Create> createState() => CreateState();
 }
 
-class CreateScreenState extends State<CreateScreen> {
+class CreateState extends State<Create> {
+  bool isUploading = false;
   String ancestorId = Uuid().v1();
   List<String> theListOfUrl = [];
   List<Map<String, dynamic>> listOfCreatingPost = [];
@@ -34,30 +30,6 @@ class CreateScreenState extends State<CreateScreen> {
   TextEditingController textController = TextEditingController();
   bool canTheUploadBeDone = true;
   double progressingValue = 0;
-  @override
-  initState() {
-    super.initState();
-    listOfCreatingPost.add({
-      //id
-      'postId': '',
-      // 'headPostId': widget.headPostId,
-      'ancestorId': widget.ancestorId.isEmpty ? ancestorId : widget.ancestorId,
-
-      //content
-      'caption': '',
-      'picture': '',
-      'audio': '',
-      'video': '',
-      'tags': [],
-
-      //creator
-      'creatorUid': FirebaseAuth.instance.currentUser!.uid,
-
-      //metadata
-
-      'timestamp': Timestamp.now(), 'status': '',
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +109,7 @@ class CreateScreenState extends State<CreateScreen> {
             debugPrint(data.url ?? 'xxx');
 
             // (you will get all Response data from ImageKit)
-            Map onPost = listOfCreatingPost.last;
+            // Map onPost = listOfCreatingPost.last;
 
             setState(() {
               listOfCreatingPost.add({
@@ -194,7 +166,7 @@ class CreateScreenState extends State<CreateScreen> {
           debugPrint(data.url ?? 'xxx');
 
           // (you will get all Response data from ImageKit)
-          Map onPost = listOfCreatingPost.last;
+          // Map onPost = listOfCreatingPost.last;
 
           setState(() {
             listOfCreatingPost.add({
@@ -246,18 +218,10 @@ class CreateScreenState extends State<CreateScreen> {
     }
 
     uploadPost() async {
-      String firstCaption = listOfCreatingPost.first['caption'];
-      listOfCreatingPost.forEach((element) {
-        String picture = element['picture'];
-        String caption = element['caption'];
-        if (picture.isEmpty && caption.isEmpty) {
-          List<String> tags = element['tags'];
-          setState(() {
-            canTheUploadBeDone = false;
-          });
-        }
-      });
-      if (canTheUploadBeDone == false) {
+      if (listOfCreatingPost.isEmpty) {
+        setState(() {
+          isUploading = false;
+        });
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: Colors.black,
             content: Row(
@@ -270,6 +234,21 @@ class CreateScreenState extends State<CreateScreen> {
               ],
             )));
       } else {
+        setState(() {
+          isUploading = true;
+        });
+
+        String firstCaption = listOfCreatingPost.first['caption'];
+        listOfCreatingPost.forEach((element) {
+          String picture = element['picture'];
+          String caption = element['caption'];
+          if (picture.isEmpty && caption.isEmpty) {
+            List<String> tags = element['tags'];
+            setState(() {
+              canTheUploadBeDone = false;
+            });
+          }
+        });
         listOfCreatingPost.forEach((element) async {
           String postId = Uuid().v1();
           firstCaption = listOfCreatingPost.first['caption'];
@@ -284,6 +263,10 @@ class CreateScreenState extends State<CreateScreen> {
           await postCollection.set(element);
         });
 
+        setState(() {
+          isUploading = false;
+        });
+
         Navigator.push(context, PageRouteBuilder(pageBuilder: (context, _, __) {
           debugPrint('posted');
 
@@ -292,43 +275,68 @@ class CreateScreenState extends State<CreateScreen> {
       }
     }
 
+    Widget addMoreImage() {
+      return GestureDetector(
+        // onTap: () async => kIsWeb ? getWebImages() : getFilePics(),
+        onTap: kIsWeb ? getWebImages : getFilePics,
+
+        child: Center(
+          child: Container(
+              padding: EdgeInsets.all(10),
+              width: 270,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      colors: [Colors.blue, Colors.purple, Colors.red])),
+              child: Center(
+                child: Text('click to add images',
+                    maxLines: 5,
+                    style: TextStyle(
+                        fontSize: 70,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900)),
+              )),
+        ),
+      );
+    }
+
+    Widget imageWidget() {
+      return Center(child: Container(color: Colors.red));
+    }
+
     return Scaffold(
-        body: Column(
-      children: [
-        Expanded(
-          child: listOfCreatingPost.isEmpty
-              ? Center(
-                  child: Text('click   +   to start editing'),
-                )
-              : Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ListView.builder(
-                    itemCount: listOfCreatingPost.length,
+      appBar: AppBar(
+        actions: [
+          isUploading
+              ? CircleAvatar(child: Loading())
+              : TextButton(onPressed: uploadPost, child: Text('upload'))
+        ],
+      ),
+      floatingActionButton: listOfCreatingPost.isNotEmpty
+          ? FloatingActionButton(
+              backgroundColor: Colors.black87,
+              onPressed: kIsWeb ? getWebImages : getFilePics,
+              child: Icon(
+                Icons.add,
+                color: Colors.white60,
+              ),
+            )
+          : SizedBox(),
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: listOfCreatingPost.isEmpty
+            ? Center(child: addMoreImage())
+            : SizedBox(
+                height: 800,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: listOfCreatingPost.length + 1,
                     itemBuilder: (context, index) {
-                      var post = listOfCreatingPost[index];
-                      if (currentEditingItem == index) {
-                        return OfflineItem(
-                          onCancel: () {
-                            setState(() {
-                              listOfCreatingPost.removeAt(index);
-                            });
-                          },
-                          onTap: () {
-                            setState(() {
-                              textController.clear();
-
-                              currentEditingItem = index;
-
-                              textController.text =
-                                  listOfCreatingPost[currentEditingItem]
-                                      ['caption'];
-                            });
-                          },
-                          borderActiveColor: Colors.blue,
-                          picture: post['picture'],
-                          caption: post['caption'],
-                        );
+                      if (index == listOfCreatingPost.length) {
+                        return addMoreImage();
                       } else {
+                        Map<String, dynamic> post = listOfCreatingPost[index];
                         return OfflineItem(
                           onCancel: () {
                             setState(() {
@@ -350,89 +358,9 @@ class CreateScreenState extends State<CreateScreen> {
                           caption: post['caption'],
                         );
                       }
-                    },
-                  ),
-                ),
-        ),
-        Container(
-          decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15), topRight: Radius.circular(15))),
-          child: Column(
-            children: [
-              ListTile(
-                  leading: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          listOfCreatingPost.add(onePost);
-                        });
-                      },
-                      icon: Icon(
-                        Icons.add,
-                        color: Colors.white60,
-                      )),
-                  title: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        IconButton(
-                            onPressed: () {
-                              setState(() {
-                                currentActiveButton = 0;
-                              });
-                            },
-                            icon: Icon(Icons.abc, color: Colors.white60)),
-                        IconButton(
-                            onPressed: () async {
-                              String url =
-                                  await addSingleImage(ImageSource.camera);
-                              setState(() {
-                                listOfCreatingPost[currentEditingItem]
-                                    ['picture'] = url;
-                              });
-                            },
-                            icon: Icon(
-                               Icons.camera,
-                              color: Colors.white60,
-                            )),
-                        IconButton(
-                            onPressed: kIsWeb ? getWebImages : getFilePics,
-                            //  () async {
-                            //   String url = await addSingleImage(ImageSource.gallery);
-                            //   setState(() {
-                            //     listOfCreatingPost[currentEditingItem]['picture'] = url;
-                            //   });
-                            // },
-                            icon: Icon(Icons.file_copy, color: Colors.white60))
-                      ]),
-                  trailing: CircleAvatar(
-                    child: IconButton(
-                        onPressed: uploadPost,
-                        icon: Icon(Icons.file_upload_outlined)),
-                  )),
-            ],
-          ),
-        ),
-        Container(
-            color: Colors.black,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: TextField(
-                  controller: textController,
-                  onChanged: (text) {
-                    setState(() {
-                      listOfCreatingPost[currentEditingItem]['caption'] = text;
-                    });
-                  },
-                  cursorColor: Colors.white60,
-                  style: TextStyle(color: Colors.white60),
-                  decoration: InputDecoration(
-                      hintText: 'write caption',
-                      hintStyle: TextStyle(color: Colors.white60),
-                      fillColor: Colors.white60,
-                      focusColor: Colors.white)),
-            )),
-      ],
-    ));
+                    }),
+              ),
+      ),
+    );
   }
 }

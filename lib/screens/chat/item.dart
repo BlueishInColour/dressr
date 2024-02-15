@@ -103,7 +103,7 @@ class ChatItemState extends State<ChatItem> {
           foregroundColor: Colors.black,
           leadingWidth: 30,
           automaticallyImplyLeading: true,
-          title: UserDetailsBar(uid: widget.uid),
+          title: UserDetailsBar(uid: widget.uid, textColor: Colors.black),
           actions: [
             // FollowButton(
             //   userUid: widget.uid,

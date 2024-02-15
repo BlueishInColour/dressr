@@ -3,6 +3,7 @@ import 'package:dressr/screens/tv/one_movie_coming_up.dart';
 import 'package:dressr/screens/tv/set_programmes.dart';
 import 'package:dressr/utils/loading.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class MoviesComingUp extends StatefulWidget {
@@ -28,7 +29,14 @@ class PartnershipScreenState extends State<MoviesComingUp> {
                       return SetProgramme();
                     }));
                   },
-                  icon: Icon(Icons.add))
+                  icon: Icon(Icons.add)),
+              kIsWeb
+                  ? Text(
+                      'showing on Mobile App, install to watch!',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w900),
+                    )
+                  : SizedBox()
             ],
           ),
           Expanded(
@@ -40,8 +48,8 @@ class PartnershipScreenState extends State<MoviesComingUp> {
                     .collection('tv')
                     .doc('movies')
                     .collection('youtube')
-                    .where('startTime', isGreaterThan: Timestamp.now()),
-                // .orderBy('startTime', descending: false),
+                    .where('stopTime', isGreaterThan: Timestamp.now())
+                    .orderBy('stopTime', descending: false),
                 separatorBuilder: (context, index) {
                   return Divider();
                 },

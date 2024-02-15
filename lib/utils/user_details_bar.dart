@@ -6,14 +6,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class UserDetailsBar extends StatefulWidget {
-  const UserDetailsBar({super.key, required this.uid});
+  const UserDetailsBar({super.key, required this.uid, required this.textColor});
   final String uid;
+  final Color textColor;
 
   @override
-  State<UserDetailsBar> createState() => PartnershipScreenState();
+  State<UserDetailsBar> createState() => UserDetailsBarState();
 }
 
-class PartnershipScreenState extends State<UserDetailsBar> {
+class UserDetailsBarState extends State<UserDetailsBar> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -22,9 +23,17 @@ class PartnershipScreenState extends State<UserDetailsBar> {
             .doc(widget.uid)
             .get(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Row(
-              children: [CircleAvatar()],
+          if (snapshot.connectionState == ConnectionState.waiting ||
+              !snapshot.data!.exists) {
+            return SizedBox(
+              height: 60,
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    child: Loading(),
+                  )
+                ],
+              ),
             );
           }
           if (snapshot.hasData) {
@@ -36,23 +45,25 @@ class PartnershipScreenState extends State<UserDetailsBar> {
                   return ProfileScreen(userUid: details['uid']);
                 }));
               },
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundImage:
-                      CachedNetworkImageProvider(details['profilePicture']),
-                ),
-                title: Text(
-                  details['displayName'],
-                  style: TextStyle(color: Colors.black87),
-                ),
-                subtitle: Text(
-               '@${details['userName']}',
-                  style: TextStyle(color: Colors.black54),
+              child: Container(
+                child: ListTile(
+                  leading: CircleAvatar(
+                    backgroundImage:
+                        CachedNetworkImageProvider(details['profilePicture']),
+                  ),
+                  title: Text(
+                    details['displayName'],
+                    style: TextStyle(color: widget.textColor),
+                  ),
+                  subtitle: Text(
+                    '@${details['userName']}',
+                    style: TextStyle(color: widget.textColor),
+                  ),
                 ),
               ),
             );
           } else {
-            return Loading();
+            return ListTile(leading: Loading());
           }
         });
   }

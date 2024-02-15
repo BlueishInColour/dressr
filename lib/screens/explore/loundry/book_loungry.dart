@@ -8,6 +8,7 @@ import 'package:dressr/utils/loading.dart';
 import 'package:dressr/utils/utils_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterwave_standard/core/flutterwave.dart';
 import 'package:flutterwave_standard/models/requests/customer.dart';
@@ -16,6 +17,7 @@ import 'package:flutterwave_standard/models/responses/charge_response.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:imagekit_io/imagekit_io.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutterwave_web_client/flutterwave_web_client.dart';
 
 class BookLoungry extends StatefulWidget {
   const BookLoungry({super.key});
@@ -45,15 +47,13 @@ class BookLoungryState extends State<BookLoungry> {
 
   @override
   Widget build(BuildContext context) {
-    String notUrgentPrice = (notUPX * smallSizeValue +
-            notUPM * mediumSizeValue +
-            notUPL * LargeSizeValue)
-        .toString();
-    String urgentPrice =
-        (uPX * smallSizeValue + uPM * mediumSizeValue + uPL * LargeSizeValue)
-            .toString();
+    int notUrgentPrice = (notUPX * smallSizeValue +
+        notUPM * mediumSizeValue +
+        notUPL * LargeSizeValue);
+    int urgentPrice =
+        (uPX * smallSizeValue + uPM * mediumSizeValue + uPL * LargeSizeValue);
 
-    String pricing() {
+    int pricing() {
       if (isItUrgent) {
         return urgentPrice;
       } else {
@@ -61,7 +61,7 @@ class BookLoungryState extends State<BookLoungry> {
       }
     }
 
-    upload() async {
+    onPaymentCompleted() async {
       print(listOfPicture);
       setState(() {
         isUploading = true;
@@ -124,7 +124,7 @@ class BookLoungryState extends State<BookLoungry> {
     countClothes() {
       return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         Container(
-          height: 20,
+          height: 40,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
           child: Row(
             children: [
@@ -151,6 +151,8 @@ class BookLoungryState extends State<BookLoungry> {
                 ),
                 child: DropdownButton(
                     elevation: 0,
+                    padding: EdgeInsets.only(left: 10),
+                    icon: Icon(Icons.keyboard_arrow_down_outlined),
                     underline: SizedBox(),
                     value: smallSizeValue,
                     onChanged: <int>(newValue) {
@@ -167,7 +169,7 @@ class BookLoungryState extends State<BookLoungry> {
           ),
         ),
         Container(
-          height: 20,
+          height: 40,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
           child: Row(
             children: [
@@ -194,6 +196,8 @@ class BookLoungryState extends State<BookLoungry> {
                 ),
                 child: DropdownButton(
                     elevation: 0,
+                    padding: EdgeInsets.only(left: 10),
+                    icon: Icon(Icons.keyboard_arrow_down_outlined),
                     underline: SizedBox(),
                     value: mediumSizeValue,
                     onChanged: <int>(newValue) {
@@ -210,7 +214,7 @@ class BookLoungryState extends State<BookLoungry> {
           ),
         ),
         Container(
-          height: 20,
+          height: 40,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
           child: Row(
             children: [
@@ -239,6 +243,8 @@ class BookLoungryState extends State<BookLoungry> {
                     elevation: 0,
                     underline: SizedBox(),
                     value: LargeSizeValue,
+                    padding: EdgeInsets.only(left: 10),
+                    icon: Icon(Icons.keyboard_arrow_down_outlined),
                     onChanged: <int>(newValue) {
                       setState(() {
                         LargeSizeValue = newValue;
@@ -289,14 +295,14 @@ class BookLoungryState extends State<BookLoungry> {
                     children: [addImageWidget()],
                   )
                 : SizedBox(
-                    height: 400,
+                    height: 350,
                     child: ListView.builder(
-                        itemCount: listOfPicture.length,
+                        itemCount: listOfPicture.length + 1,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: ((context, index) {
-                          // if (index == listOfPicture.length + 1) {
-                          //   return addImageWidget();
-                          // }
+                          if (index == listOfPicture.length) {
+                            return addImageWidget();
+                          }
                           return imageWidget(
                               url: listOfPicture[index], index: index);
                         })),
@@ -376,7 +382,7 @@ class BookLoungryState extends State<BookLoungry> {
                               color: Color.fromARGB(255, 1, 52, 93),
                               fontSize: 30,
                               fontWeight: FontWeight.w900)),
-                      Text(pricing(),
+                      Text(pricing().toString(),
                           style: GoogleFonts.montserratAlternates(
                               color: Color.fromARGB(255, 1, 52, 93),
                               fontSize: 30,
@@ -387,33 +393,59 @@ class BookLoungryState extends State<BookLoungry> {
                 //button
                 GestureDetector(
                   onTap: () async {
-                    final Customer customer =
-                        Customer(email: "customer@customer.com");
+                    if (kIsWeb) {
+                      final customer = FlutterwaveCustomer(
+                          FirebaseAuth.instance.currentUser!.email!,
+                          FirebaseAuth.instance.currentUser!.phoneNumber!,
+                          FirebaseAuth.instance.currentUser!.displayName!);
+                      final charge = new Charge()
+                        ..amount = pricing()
+                        ..reference = 'test'
+                        ..currency = 'NGN'
+                        ..country = 'NG'
+                        ..customer = customer;
 
-                    final Flutterwave flutterwave = Flutterwave(
-                        context: context,
-                        publicKey:
-                            'FLWPUBK_TEST-ef4d818fa96ee72db01e180edd283079-X',
-                        currency: 'NGN',
-                        redirectUrl: 'https://dress-mate.web.app',
-                        txRef: Uuid().v1(),
-                        amount: pricing(),
-                        customer: customer,
-                        paymentOptions:
-                            "card, payattitude, barter, bank transfer, ussd",
-                        customization: Customization(title: "Test Payment"),
-                        isTestMode: true);
-                    final ChargeResponse response = await flutterwave.charge();
-                    if (response.success != null) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(response.toString()),
-                      ));
-                      // showLoading(response.toString());
-                      print("${response.toJson()}");
+                      final response =
+                          await FlutterwaveWebClient.checkout(charge: charge);
+                      if (response.status) {
+                        print('Successful, Transaction ref ${response.tx_ref}');
+                      } else {
+                        print('Transaction failed');
+                      }
                     } else {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text('no response'),
-                      ));
+                      if (pricing() == 0) {
+                      } else {
+                        final Customer customer = Customer(
+                            email: FirebaseAuth.instance.currentUser!.email!);
+
+                        final Flutterwave flutterwave = Flutterwave(
+                            context: context,
+                            publicKey:
+                                'FLWPUBK_TEST-ef4d818fa96ee72db01e180edd283079-X',
+                            currency: 'NGN',
+                            redirectUrl: 'https://dress-mate.web.app',
+                            txRef: Uuid().v1(),
+                            amount: pricing().toString(),
+                            customer: customer,
+                            paymentOptions:
+                                "card, payattitude, barter, bank transfer, ussd",
+                            customization: Customization(title: "Test Payment"),
+                            isTestMode: true);
+
+                        final ChargeResponse response =
+                            await flutterwave.charge();
+                        if (response.success != null) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(response.toString()),
+                          ));
+                          // showLoading(response.toString());
+                          print("${response.toJson()}");
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text('no response'),
+                          ));
+                        }
+                      }
                     }
                   },
                   child: Container(

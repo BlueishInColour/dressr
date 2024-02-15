@@ -75,17 +75,20 @@ class ShareButtonState extends State<ShareButton> {
           }
         },
         icon: isSharing
-            ? SizedBox(width: 14, height: 14, child: Loading())
+            ? SizedBox(child: Loading(size: 20))
             : ShaderMask(
-                blendMode: BlendMode.srcIn,
-                shaderCallback: (Rect bounds) => RadialGradient(
-                      center: Alignment.topLeft,
-                      stops: [.5, 1],
-                      colors: [Colors.blue, Colors.purple, Colors.red],
-                    ).createShader(bounds),
-                child: Icon(
+                shaderCallback: (Rect bounds) {
+                  return LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [Colors.blue, Colors.purple, Colors.red])
+                      .createShader(bounds);
+                },
+                child: Center(
+                    child: Icon(
                   Icons.share_rounded,
-                  size: 40,
-                )));
+                  size: 23,
+                )),
+              ));
   }
 }
