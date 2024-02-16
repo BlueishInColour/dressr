@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dressr/screens/management/install_app_function.dart';
+import 'package:dressr/utils/loading.dart';
 import 'package:dressr/utils/subscripe.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterwave_standard/core/flutterwave.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:imagekit_io/imagekit_io.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
 import '../../models/stories.dart';
 import 'package:http/http.dart' as http;
@@ -219,5 +221,39 @@ Future callOnlySubScription(context, {String warning = ''}) async {
             return Subscripe();
           });
     }
+  }
+}
+
+callToInstall(context) {
+  if (kIsWeb) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: ListTile(
+      leading: Icon(Icons.warning, color: Colors.red),
+      title: Text(
+          'this feature is only available on the mobile app, click to download and install'),
+      trailing: FutureBuilder(
+          future: FirebaseFirestore.instance
+              .collection('app')
+              .doc('url-link')
+              .get(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting ||
+                !snapshot.hasData ||
+                !snapshot.data!.exists) {
+              return Center(child: Loading());
+            } else {
+              String urlLink = snapshot.data?['url'];
+              return GestureDetector(
+                  onTap: () async {
+                    debugPrint('installit');
+                    // http.get(Uri.parse(widget.installLink));
+                    await launchUrl(Uri.parse(urlLink),
+                        mode: LaunchMode.inAppBrowserView,
+                        webOnlyWindowName: 'download dressr');
+                  },
+                  child: Icon(Icons.download, color: Colors.green));
+            }
+          }),
+    )));
   }
 }

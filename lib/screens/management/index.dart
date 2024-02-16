@@ -1,3 +1,4 @@
+import 'package:dressr/screens/management/all_posts.dart';
 import 'package:dressr/screens/management/install_app_function.dart';
 import 'package:dressr/screens/management/set_programmes.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ class ManagementState extends State<Management> {
       children: [
         goto('set app url', InstallApp()),
         goto('set programmes', SetProgramme()),
+        goto('manage post and content', AllPost())
 
         ///
       ],

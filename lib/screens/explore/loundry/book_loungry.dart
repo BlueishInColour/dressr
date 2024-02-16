@@ -405,24 +405,7 @@ class BookLoungryState extends State<BookLoungry> {
                 GestureDetector(
                   onTap: () async {
                     if (kIsWeb) {
-                      final customer = FlutterwaveCustomer(
-                          FirebaseAuth.instance.currentUser!.email!,
-                          FirebaseAuth.instance.currentUser!.phoneNumber!,
-                          FirebaseAuth.instance.currentUser!.displayName!);
-                      final charge = new Charge()
-                        ..amount = pricing()
-                        ..reference = 'test'
-                        ..currency = 'NGN'
-                        ..country = 'NG'
-                        ..customer = customer;
-
-                      final response =
-                          await FlutterwaveWebClient.checkout(charge: charge);
-                      if (response.status) {
-                        print('Successful, Transaction ref ${response.tx_ref}');
-                      } else {
-                        print('Transaction failed');
-                      }
+                      callToInstall(context);
                     } else {
                       if (pricing() == 0) {
                       } else {

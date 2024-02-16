@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dressr/screens/management/install_app_function.dart';
 import 'package:dressr/utils/loading.dart';
+import 'package:dressr/utils/utils_functions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
@@ -24,6 +25,7 @@ class ShareButtonState extends State<ShareButton> {
     return IconButton(
         onPressed: () async {
           setState(() {
+            callToInstall(context);
             isSharing = true;
           });
           final bytes = await widget.controller.capture();

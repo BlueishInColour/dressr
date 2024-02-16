@@ -15,7 +15,6 @@ class DefaultPostSearch extends StatefulWidget {
 }
 
 class DefaultPostSearchState extends State<DefaultPostSearch> {
-  List<dynamic> listOfSnapshots = [];
   @override
   Widget build(BuildContext context) {
     return Middle(
@@ -46,45 +45,7 @@ class DefaultPostSearchState extends State<DefaultPostSearch> {
                   postId: item['postId'],
                   creatorUid: item['creatorUid'],
                 );
-              })
-
-          // StreamBuilder(
-          //   stream: FirebaseFirestore.instance
-          //       .collection('posts')
-          //       .orderBy('timestamp', descending: true)
-          //       .snapshots(),
-          //   builder: (context, snapshot) {
-          //     //if we have data, get all dic
-
-          //     if (snapshot.hasData) {
-          //       if (snapshot.data!.docs.isEmpty) {
-          //         return Center(
-          //           child: Text(' no content yet'),
-          //         );
-          //       }
-          //       return ListView(
-          //         children: [
-          //           MasonryView(
-          //               itemPadding: 3,
-          //               listOfItem: snapshot.data!.docs,
-          //               numberOfColumn: 4,
-          //               itemBuilder: (item) {
-          //                 return Item(
-          //                   caption: item['caption'],
-          //                   picture: item['picture'],
-          //                   ancestorId: item['ancestorId'],
-          //                   postId: item['postId'],
-          //                   creatorUid: item['creatorUid'],
-          //                 );
-          //               }),
-          //         ],
-          //       );
-          //     }
-
-          //     return Center(child:Loading());
-          //   },
-          // ),
-          ),
+              })),
     );
   }
 }

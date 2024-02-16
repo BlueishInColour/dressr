@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dressr/screens/management/install_app_function.dart';
 import 'package:dressr/utils/loading.dart';
+import 'package:dressr/utils/utils_functions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -21,47 +22,25 @@ class DownloadButtonState extends State<DownloadButton> {
   Widget build(BuildContext context) {
     return IconButton(
         onPressed: () async {
-          if (kIsWeb) {
-            showModalBottomSheet(
-                context: context,
-                builder: (context) {
-                  return InstallApp();
-                });
-          }
-          //  else if (!kIsWeb) {
-          //   var res = await FirebaseFirestore.instance
-          //       .collection('users')
-          //       .doc(FirebaseAuth.instance.currentUser!.uid)
-          //       .get();
-          //   String currentSubscription = res['currentSubscription'];
-          //   bool isBlack = currentSubscription == 'black';
-          //   if (isBlack) {
-          //     showModalBottomSheet(
-          //         context: context,
-          //         builder: (context) {
-          //           return Subscripe();
-          //         });
-          //   }
-          // }
-          else {
-            setState(() {
-              isDownloading = true;
-            });
-            final directory = await getDownloadsDirectory();
-            String fileName = Uuid().v1();
-            String path = '${directory?.path}';
-            String savedPath = '$path' '/$fileName.png';
+          callToInstall(context);
 
-            final bytes = await widget.controller.capture();
+          setState(() {
+            isDownloading = true;
+          });
+          final directory = await getDownloadsDirectory();
+          String fileName = Uuid().v1();
+          String path = '${directory?.path}';
+          String savedPath = '$path' '/$fileName.png';
 
-            print(bytes);
-            print(path);
-            final imagePath = await File(savedPath).create();
-            await imagePath.writeAsBytes(bytes!.toList());
-            Navigator.pop(context);
-            ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('your image have been downloaded')));
-          }
+          final bytes = await widget.controller.capture();
+
+          print(bytes);
+          print(path);
+          final imagePath = await File(savedPath).create();
+          await imagePath.writeAsBytes(bytes!.toList());
+          Navigator.pop(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('your image have been downloaded')));
         },
         icon: isDownloading
             ? SizedBox(child: Loading(size: 20))

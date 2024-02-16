@@ -1,3 +1,4 @@
+import 'package:dressr/screens/create_post/create.dart';
 import 'package:dressr/screens/create_post/index.dart';
 // import 'package:dressr/screens/store/add_item.dart';
 import 'package:dressr/screens/explore/more_item_in.dart';
@@ -95,11 +96,9 @@ class SteezeSectionState extends State<SteezeSection> {
                               onPressed: () {
                                 Navigator.push(context, PageRouteBuilder(
                                     pageBuilder: (context, _, __) {
-                                  return kIsWeb
-                                      ? InstallApp()
-                                      : CreateScreen(
-                                          ancestorId: widget.ancestorId,
-                                        );
+                                  return Create(
+                                    ancestorId: data['ancestorId'],
+                                  );
                                 }));
                               },
                               icon: Icon(LineIcons.retweet,

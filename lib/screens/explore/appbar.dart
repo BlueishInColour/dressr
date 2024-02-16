@@ -1,5 +1,6 @@
 import 'package:dressr/screens/chat/item.dart';
 import 'package:dressr/screens/explore/loundry/book_loungry.dart';
+import 'package:dressr/screens/management/index.dart';
 import 'package:dressr/utils/chat_screen_button.dart';
 // import 'package:dressr/utils/fluttter_pay.dart';
 import 'package:dressr/utils/loading.dart';
@@ -129,6 +130,16 @@ class OrderrState extends State<Orderr> {
             icon: Icon(Icons.logout)),
         // ChatScreenButton(),
         // SizedBox(width: 7),
+
+        IconButton(
+          onPressed: () {
+            Navigator.push(context,
+                PageRouteBuilder(pageBuilder: (context, _, __) {
+              return Management();
+            }));
+          },
+          icon: Icon(Icons.explore),
+        ),
         MyProfileButton(),
         SizedBox(width: 7)
       ]),

@@ -1,3 +1,4 @@
+import 'package:dressr/screens/create_post/create.dart';
 import 'package:dressr/screens/create_post/index.dart';
 // import 'package:dressr/screens/store/add_item.dart';
 import 'package:dressr/screens/explore/index.dart';
@@ -109,11 +110,9 @@ class MoreItemInState extends State<MoreItemIn> {
                           onPressed: () {
                             Navigator.push(context,
                                 PageRouteBuilder(pageBuilder: (context, _, __) {
-                              return kIsWeb
-                                  ? InstallApp()
-                                  : CreateScreen(
-                                      ancestorId: widget.ancestorId,
-                                    );
+                              return Create(
+                                ancestorId: widget.ancestorId,
+                              );
                             }));
                           },
                           icon: Icon(Icons.add, color: Colors.white60),
