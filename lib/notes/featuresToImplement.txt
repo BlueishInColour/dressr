@@ -164,3 +164,12 @@ done - find better design for the blog page and remove appbar
 > make bookings for loundry better and tv screen
 > then all is set to go 
 
+16th feb,2024
+main thing  needed now before  release are
+> flutter web payment
+> download, share and install non web features
+> controll secton in the app for managemant only
+> order screen
+>  differentiate angents from normal people , special discounts for agents 
+> signuo agent screen
+

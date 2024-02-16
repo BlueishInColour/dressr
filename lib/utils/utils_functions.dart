@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dressr/utils/install_app_function.dart';
+import 'package:dressr/screens/management/install_app_function.dart';
 import 'package:dressr/utils/subscripe.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';

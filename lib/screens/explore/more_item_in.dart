@@ -2,7 +2,7 @@ import 'package:dressr/screens/create_post/index.dart';
 // import 'package:dressr/screens/store/add_item.dart';
 import 'package:dressr/screens/explore/index.dart';
 import 'package:dressr/screens/explore/more_item_out.dart';
-import 'package:dressr/utils/install_app_function.dart';
+import 'package:dressr/screens/management/install_app_function.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dressr/utils/loading.dart';
 import 'package:dressr/utils/repost_button.dart';

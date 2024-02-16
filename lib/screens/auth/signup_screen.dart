@@ -28,6 +28,7 @@ class SignupScreenState extends State<SignupScreen> {
   final List<String> userTags = [];
   final displayNameController = TextEditingController();
   final userNameController = TextEditingController();
+  final phoneNumberController = TextEditingController();
   final captionController = TextEditingController();
   final referralNameController = TextEditingController();
   // final userTagsController = TextEditingController();
@@ -71,8 +72,7 @@ class SignupScreenState extends State<SignupScreen> {
             SnackBar(content: Text('both passwords don`t match')));
       } else {
         try {
-          await AuthService()
-              .signup(emailController.text, passwordController.text);
+          AuthService().signup(emailController.text, passwordController.text);
         } catch (e) {
           setState(() {
             isLoading = false;
@@ -102,6 +102,7 @@ class SignupScreenState extends State<SignupScreen> {
         'caption': captionController.text,
         'displayName': displayNameController.text,
         'email': emailController.text,
+        'phoneNumber': phoneNumberController.text,
         'listOfLikers': [],
         'listOfLikedPosts': [],
         'listOfShowlist': ['for later'],
@@ -361,9 +362,9 @@ class SignupScreenState extends State<SignupScreen> {
 
                       SizedBox(height: 15),
                       TextField(
-                          controller: referralNameController,
+                          controller: phoneNumberController,
                           decoration: InputDecoration(
-                              hintText: 'referer name',
+                              hintText: 'phone number',
                               prefixIcon: Icon(Icons.alternate_email_rounded))),
                       SizedBox(height: 15),
 

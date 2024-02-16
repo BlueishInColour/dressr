@@ -16,7 +16,7 @@ import 'package:dressr/screens/search/post_search.dart';
 // import 'package:dressr/screens/store/add_item.dart';
 import 'package:dressr/screens/explore/index.dart';
 import 'package:dressr/screens/tv/index.dart';
-import 'package:dressr/utils/install_app_function.dart';
+import 'package:dressr/screens/management/install_app_function.dart';
 import 'package:dressr/utils/loading.dart';
 import 'package:dressr/utils/shared_pref.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';

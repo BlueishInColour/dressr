@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dressr/utils/install_app_function.dart';
+import 'package:dressr/screens/management/install_app_function.dart';
 import 'package:dressr/utils/loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

@@ -1,7 +1,7 @@
 import 'package:dressr/screens/create_post/index.dart';
 // import 'package:dressr/screens/store/add_item.dart';
 import 'package:dressr/screens/explore/more_item_in.dart';
-import 'package:dressr/utils/install_app_function.dart';
+import 'package:dressr/screens/management/install_app_function.dart';
 import 'package:dressr/utils/loading.dart';
 import 'package:dressr/utils/utils_functions.dart';
 import 'package:cached_network_image/cached_network_image.dart';

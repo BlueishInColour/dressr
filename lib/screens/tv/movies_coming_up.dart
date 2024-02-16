@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dressr/screens/tv/one_movie_coming_up.dart';
-import 'package:dressr/screens/tv/set_programmes.dart';
+import 'package:dressr/screens/management/set_programmes.dart';
 import 'package:dressr/utils/loading.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/foundation.dart';
@@ -22,14 +22,6 @@ class PartnershipScreenState extends State<MoviesComingUp> {
         children: [
           Row(
             children: [
-              IconButton(
-                  onPressed: () async {
-                    Navigator.push(context,
-                        PageRouteBuilder(pageBuilder: (context, _, __) {
-                      return SetProgramme();
-                    }));
-                  },
-                  icon: Icon(Icons.add)),
               kIsWeb
                   ? Text(
                       'showing on Mobile App, install to watch!',
