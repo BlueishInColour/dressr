@@ -123,9 +123,38 @@ class BookLoungryState extends State<BookLoungry> {
 
     countClothes() {
       return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        //is urgent?
+        Container(
+            height: 40,
+            padding: EdgeInsets.only(left: 5),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.purple.shade900,
+            ),
+            child: Center(
+                child: Row(
+              children: [
+                Icon(Icons.speed, color: Colors.white),
+                Checkbox(
+                    // fillColor: MaterialStatePropertyAll(Colors.purple.shade100),
+                    value: isItUrgent,
+                    // activeColor: Colors.white,
+                    checkColor: Colors.green,
+                    shape: CircleBorder(side: BorderSide(color: Colors.white)),
+                    onChanged: (v) {
+                      setState(() {
+                        isItUrgent = !isItUrgent;
+                      });
+                    }),
+              ],
+            ))),
+
         Container(
           height: 40,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.purple.shade900,
+          ),
           child: Row(
             children: [
               Container(
@@ -134,7 +163,7 @@ class BookLoungryState extends State<BookLoungry> {
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(5),
                         bottomLeft: Radius.circular(5))),
-                width: 30,
+                width: 20,
                 child: Center(
                     child: Text(
                   'X',
@@ -151,7 +180,7 @@ class BookLoungryState extends State<BookLoungry> {
                 ),
                 child: DropdownButton(
                     elevation: 0,
-                    padding: EdgeInsets.only(left: 10),
+                    padding: EdgeInsets.only(left: 3),
                     icon: Icon(Icons.keyboard_arrow_down_outlined),
                     underline: SizedBox(),
                     value: smallSizeValue,
@@ -179,7 +208,7 @@ class BookLoungryState extends State<BookLoungry> {
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(5),
                         bottomLeft: Radius.circular(5))),
-                width: 30,
+                width: 20,
                 child: Center(
                     child: Text(
                   'M',
@@ -196,7 +225,7 @@ class BookLoungryState extends State<BookLoungry> {
                 ),
                 child: DropdownButton(
                     elevation: 0,
-                    padding: EdgeInsets.only(left: 10),
+                    padding: EdgeInsets.only(left: 3),
                     icon: Icon(Icons.keyboard_arrow_down_outlined),
                     underline: SizedBox(),
                     value: mediumSizeValue,
@@ -224,7 +253,7 @@ class BookLoungryState extends State<BookLoungry> {
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(5),
                         bottomLeft: Radius.circular(5))),
-                width: 30,
+                width: 20,
                 child: Center(
                     child: Text(
                   'L',
@@ -243,7 +272,7 @@ class BookLoungryState extends State<BookLoungry> {
                     elevation: 0,
                     underline: SizedBox(),
                     value: LargeSizeValue,
-                    padding: EdgeInsets.only(left: 10),
+                    padding: EdgeInsets.only(left: 3),
                     icon: Icon(Icons.keyboard_arrow_down_outlined),
                     onChanged: <int>(newValue) {
                       setState(() {
@@ -311,25 +340,7 @@ class BookLoungryState extends State<BookLoungry> {
             Row(
               children: [
                 Text(
-                  'Is it urgent?',
-                  style: TextStyle(
-                      fontSize: 10,
-                      color: const Color.fromARGB(255, 105, 0, 124),
-                      fontWeight: FontWeight.w500),
-                ),
-                Switch.adaptive(
-                    value: isItUrgent,
-                    onChanged: (v) {
-                      setState(() {
-                        isItUrgent = v;
-                      });
-                    })
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  'count',
+                  'speed and counts',
                   style: TextStyle(
                       fontSize: 10,
                       color: const Color.fromARGB(255, 105, 0, 124),

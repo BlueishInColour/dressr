@@ -163,3 +163,4 @@ done - find better design for the blog page and remove appbar
 > find implementation ,download and share button
 > make bookings for loundry better and tv screen
 > then all is set to go 
+

@@ -8,6 +8,7 @@ import 'package:flutter_share/flutter_share.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:widgets_to_image/widgets_to_image.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ShareButton extends StatefulWidget {
   const ShareButton({super.key, required this.controller});
@@ -22,56 +23,21 @@ class ShareButtonState extends State<ShareButton> {
   Widget build(BuildContext context) {
     return IconButton(
         onPressed: () async {
-          if (kIsWeb) {
-            showModalBottomSheet(
-                context: context,
-                builder: (context) {
-                  return InstallApp();
-                });
-          }
-          // else if (!kIsWeb) {
-          //   var res = await FirebaseFirestore.instance
-          //       .collection('users')
-          //       .doc(FirebaseAuth.instance.currentUser!.uid)
-          //       .get();
-          //   String currentSubscription = res['currentSubscription'];
-          //   bool isBlack = currentSubscription == 'black';
-          //   if (isBlack) {
-          //     showModalBottomSheet(
-          //         context: context,
-          //         builder: (context) {
-          //           return Subscripe();
-          //         });
-          //   }
-          // }
-          else {
-            setState(() {
-              isSharing = true;
-            });
-            final directory = await getDownloadsDirectory();
-            String fileName = Uuid().v1();
-            String path = '${directory?.path}';
-            String savedPath = '$path' '/$fileName.png';
+          setState(() {
+            isSharing = true;
+          });
+          final bytes = await widget.controller.capture();
 
-            final bytes = await widget.controller.capture();
-
-            print(bytes);
-            print(path);
-            final imagePath = await File(savedPath).create();
-            await imagePath.writeAsBytes(bytes!.toList());
-            // final result = await Share.shareXFiles([XFile(savedPath)],
-            //     text: 'Great picture');
-
-            final result = await FlutterShare.shareFile(
-              title: 'share from dressmate',
-              filePath: savedPath,
-            );
-            if (result == true) {
-              print('Thank you for sharing the picture!');
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('your image have been shared')));
-            }
+          final result = await Share.shareXFiles([
+            XFile.fromData(bytes!,
+                mimeType: 'image/jpeg', length: bytes!.length),
+          ], text: 'Great picture');
+          print(Directory.current.path);
+          if (result == true) {
+            print('Thank you for sharing the picture!');
+            Navigator.pop(context);
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('your image have been shared')));
           }
         },
         icon: isSharing
