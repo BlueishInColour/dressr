@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dressr/middle.dart';
 import 'package:dressr/utils/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -93,74 +94,77 @@ class SubscripeState extends State<Subscripe> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Stack(
-          children: [
-            //picture
-            CachedNetworkImage(
-              imageUrl: '',
-              errorWidget: (context, url, error) {
-                return Container(
-                  height: 500,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    gradient:
-                        LinearGradient(colors: [Colors.purple, Colors.blue]),
-                  ),
-                );
-              },
-              placeholder: ((context, url) {
-                return Container(
-                  height: 300,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.purple[500],
-                  ),
-                );
-              }),
-            ),
-            Positioned(
-                child: Container(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('access more features on dressmate', style: bigStyle),
-                  Text('for #1000/month ', style: bigStyle),
-                  Text('- enabled monerization', style: smallStyle),
-                  Text('- more reactions', style: smallStyle),
-                  Text('- enabled shares', style: smallStyle),
-                  Text('- enabled downloads', style: smallStyle),
-                  Text('- and many more ...', style: smallStyle)
-                ],
+    return Middle(
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Stack(
+            children: [
+              //picture
+              CachedNetworkImage(
+                imageUrl: '',
+                errorWidget: (context, url, error) {
+                  return Container(
+                    height: 500,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      gradient:
+                          LinearGradient(colors: [Colors.purple, Colors.blue]),
+                    ),
+                  );
+                },
+                placeholder: ((context, url) {
+                  return Container(
+                    height: 300,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.purple[500],
+                    ),
+                  );
+                }),
               ),
-            )),
-            Positioned(
-              bottom: 100,
-              right: 5,
-              child: GooglePayButton(
-                // paymentConfigurationAsset: 'assets/google_pay_config.json',
-                paymentConfiguration: PaymentConfiguration.fromJsonString(json),
-                paymentItems: _paymentItems,
-                type: GooglePayButtonType.pay,
-                margin: const EdgeInsets.only(top: 15.0),
-                onPaymentResult: onGooglePayResult,
-                loadingIndicator: const Center(
-                  child: Loading(),
+              Positioned(
+                  child: Container(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('access more features on dressmate', style: bigStyle),
+                    Text('for #1000/month ', style: bigStyle),
+                    Text('- enabled monerization', style: smallStyle),
+                    Text('- more reactions', style: smallStyle),
+                    Text('- enabled shares', style: smallStyle),
+                    Text('- enabled downloads', style: smallStyle),
+                    Text('- and many more ...', style: smallStyle)
+                  ],
+                ),
+              )),
+              Positioned(
+                bottom: 100,
+                right: 5,
+                child: GooglePayButton(
+                  // paymentConfigurationAsset: 'assets/google_pay_config.json',
+                  paymentConfiguration:
+                      PaymentConfiguration.fromJsonString(json),
+                  paymentItems: _paymentItems,
+                  type: GooglePayButtonType.pay,
+                  margin: const EdgeInsets.only(top: 15.0),
+                  onPaymentResult: onGooglePayResult,
+                  loadingIndicator: const Center(
+                    child: Loading(),
+                  ),
                 ),
               ),
-            ),
-            Positioned(
-                bottom: 76,
-                right: 40,
-                child: Text('or better still',
-                    style: GoogleFonts.montserrat(
-                        fontWeight: FontWeight.w800, fontSize: 12))),
-            Positioned(bottom: 5, right: 5, child: referButton(context)),
-          ],
+              Positioned(
+                  bottom: 76,
+                  right: 40,
+                  child: Text('or better still',
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w800, fontSize: 12))),
+              Positioned(bottom: 5, right: 5, child: referButton(context)),
+            ],
+          ),
         ),
       ),
     );

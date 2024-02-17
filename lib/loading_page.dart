@@ -33,8 +33,8 @@ class LoadingPageState extends State<LoadingPage> {
       );
     }
 
-    ;
-
+    //blueishincolour@gmail.com
+    //Oluwapelumide631$
     return Scaffold(
       body: Center(
           child: SizedBox(

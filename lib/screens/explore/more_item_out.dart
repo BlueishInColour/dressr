@@ -4,6 +4,7 @@ import 'package:dressr/screens/create_post/index.dart';
 import 'package:dressr/screens/explore/more_item_in.dart';
 import 'package:dressr/screens/management/install_app_function.dart';
 import 'package:dressr/utils/loading.dart';
+import 'package:dressr/utils/repost_button.dart';
 import 'package:dressr/utils/utils_functions.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_bubbles/message_bars/message_bar.dart';
@@ -90,20 +91,11 @@ class SteezeSectionState extends State<SteezeSection> {
                         leading: BackButton(
                           color: Colors.white60,
                         ),
-                        trailing: CircleAvatar(
-                            backgroundColor: Colors.blue,
-                            child: IconButton(
-                              onPressed: () {
-                                Navigator.push(context, PageRouteBuilder(
-                                    pageBuilder: (context, _, __) {
-                                  return Create(
-                                    ancestorId: data['ancestorId'],
-                                  );
-                                }));
-                              },
-                              icon: Icon(LineIcons.retweet,
-                                  color: Colors.white60),
-                            )),
+                        trailing: RepostButton(
+                          ancestorId: data['ancestorId'],
+                          creatorUid: data['creatorUid'],
+                          postId: data['postId'],
+                        ),
                         title: Text(
                           'view original post',
                           style: TextStyle(color: Colors.white60, fontSize: 14),
@@ -131,7 +123,7 @@ class CommentSection extends StatefulWidget {
 }
 
 class CommentSectionState extends State<CommentSection> {
-  var userDetails = {};
+  Map<dynamic, String> userDetails = {};
 
   getTheUserDetails() async {
     var details = await getUserDetails(FirebaseAuth.instance.currentUser!.uid);
@@ -149,86 +141,70 @@ class CommentSectionState extends State<CommentSection> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15),
-            topRight: Radius.circular(15),
-          ),
-        ),
-        child: StreamBuilder(
-          stream: FirebaseFirestore.instance
-              .collection('comments')
-              .where('postId', isEqualTo: widget.postId)
-              .snapshots(),
-          builder: (context, snapshot) {
-            //if we have data, get all dic
-            if (snapshot.data!.docs.isEmpty) {
-              return (Center(
-                child: Text('be the first to comment on this'),
-              ));
-            }
-            if (snapshot.hasData) {
-              return ListView.builder(
-                  itemCount: snapshot.data?.docs.length,
-                  itemBuilder: ((context, index) {
-                    //get indicidual doc
-                    DocumentSnapshot documentSnapshot =
-                        snapshot.data!.docs[index];
-
-                    return ListTile(
-                      titleTextStyle:
-                          TextStyle(color: Colors.black, fontSize: 11),
-                      subtitleTextStyle: TextStyle(fontSize: 13),
-                      leading: CircleAvatar(
-                        backgroundImage: CachedNetworkImageProvider(
-                            documentSnapshot['creatorProfilePicture']),
-                      ),
-                      title: Text('${documentSnapshot['creatorDisplayName']}'
-                          '| @'
-                          '${documentSnapshot['creatorUserName']}'),
-                      subtitle: Text(documentSnapshot['text']),
-                    );
-                  }));
-            }
-
-            return Center(child: Loading());
-          },
-        ),
-      ),
-      bottomSheet: SizedBox(
-        height: 70,
-        child: MessageBar(
-          messageBarHitText: 'write a comment',
-          onSend: (text) async {
-            debugPrint('about to send message');
-            await FirebaseFirestore.instance.collection('comments').add({
-              'commentId': Uuid().v1(),
-              'text': text,
-              'creatorProfilePicture': userDetails['profilePicture'],
-              'creatorDisplayName': userDetails['displayName'],
-              'creatorUserName': userDetails['userName'],
-              'postId': widget.postId
-            });
-
-            debugPrint('message sent');
-          },
-          sendButtonColor: Colors.black,
-          actions: [
-            Padding(
-              padding: EdgeInsets.only(left: 8, right: 8),
-              child: InkWell(
-                child: Icon(
-                  Icons.camera_alt,
-                  color: Colors.black,
-                  size: 24,
-                ),
-                onTap: () {},
+    return Middle(
+      child: Container(
+        height: 500,
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          body: FirestorePagination(
+              isLive: true,
+              bottomLoader: Loading(),
+              initialLoader: Loading(),
+              onEmpty: Center(
+                child: Text('be the first to comment'),
               ),
+              query: FirebaseFirestore.instance
+                  .collection('comments')
+                  .where('postId', isEqualTo: widget.postId),
+              itemBuilder: (context, snap, index) {
+                String displayName = snap['creatorDisplayName'] ?? 'guest';
+                String userName = snap['creatorUserName'] ?? '';
+                String profilePicture =
+                    snap['creatorProfilePicture'] ?? 'anonymous';
+                String textMessage = snap['text'];
+                return ListTile(
+                  titleTextStyle: TextStyle(color: Colors.black, fontSize: 11),
+                  subtitleTextStyle: TextStyle(fontSize: 13),
+                  leading: CircleAvatar(
+                    backgroundImage: CachedNetworkImageProvider(profilePicture),
+                  ),
+                  title: Text('$displayName'
+                      ' | @'
+                      '$userName'),
+                  subtitle:
+                      Text(textMessage, style: TextStyle(color: Colors.black)),
+                );
+              }),
+          bottomSheet: SizedBox(
+            height: 70,
+            child: MessageBar(
+              messageBarHitText: 'write a comment',
+              onSend: (text) async {
+                debugPrint('about to send message');
+                await FirebaseFirestore.instance.collection('comments').add({
+                  'commentId': Uuid().v1(),
+                  'text': text,
+                  'creatorProfilePicture': userDetails['profilePicture'],
+                  'creatorDisplayName': userDetails['displayName'],
+                  'creatorUserName': userDetails['userName'],
+                  'postId': widget.postId
+                });
+
+                debugPrint('message sent');
+              },
+              sendButtonColor: Colors.black,
+              actions: [
+                InkWell(
+                  child: Icon(
+                    Icons.camera_alt,
+                    color: Colors.black,
+                    size: 24,
+                  ),
+                  onTap: () {},
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

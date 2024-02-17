@@ -71,7 +71,7 @@ class LikeButtonState extends State<LikeButton> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 20,
+      width: 30,
       height: 45,
       child: StreamBuilder(
           stream: FirebaseFirestore.instance

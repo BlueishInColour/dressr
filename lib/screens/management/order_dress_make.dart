@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dressr/middle.dart';
 import 'package:dressr/utils/loading.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
@@ -14,17 +15,19 @@ class OrderDressMake extends StatefulWidget {
 class OrderDressMakeState extends State<OrderDressMake> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(),
-        body: FirestorePagination(
-          bottomLoader: Loading(),
-          initialLoader: Loading(),
-          onEmpty: Loading(size: 60),
-          query: FirebaseFirestore.instance.collection('order'),
-          itemBuilder: (context, snap, index) {
-            return OrderItem(snap: snap);
-          },
-        ));
+    return Middle(
+      child: Scaffold(
+          appBar: AppBar(),
+          body: FirestorePagination(
+            bottomLoader: Loading(),
+            initialLoader: Loading(),
+            onEmpty: Loading(size: 60),
+            query: FirebaseFirestore.instance.collection('order'),
+            itemBuilder: (context, snap, index) {
+              return OrderItem(snap: snap);
+            },
+          )),
+    );
   }
 }
 

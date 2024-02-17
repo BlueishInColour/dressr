@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dressr/middle.dart';
 import 'package:dressr/screens/profile/item.dart';
 import 'package:dressr/screens/explore/loundry/loundry_item.dart';
 import 'package:dressr/utils/loading.dart';
@@ -31,6 +32,7 @@ class BookLoungryState extends State<BookLoungry> {
   final listOfInt = List<int>.generate(100, (index) => index, growable: true);
   bool isItUrgent = false;
 
+  int expectedDay = 4;
   int smallSizeValue = 0;
   int mediumSizeValue = 0;
   int LargeSizeValue = 0;
@@ -122,47 +124,84 @@ class BookLoungryState extends State<BookLoungry> {
     }
 
     countClothes() {
+      final deco = BoxDecoration(
+          color: Colors.purple.shade900,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(5), bottomLeft: Radius.circular(5)));
+      final ration = BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(5),
+          bottomRight: Radius.circular(5),
+        ),
+        color: Colors.purple.shade100,
+      );
       return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         //is urgent?
-        Container(
-            height: 40,
-            padding: EdgeInsets.only(left: 5),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              color: Colors.purple.shade900,
-            ),
-            child: Center(
-                child: Row(
-              children: [
-                Icon(Icons.speed, color: Colors.white),
-                Checkbox(
-                    // fillColor: MaterialStatePropertyAll(Colors.purple.shade100),
-                    value: isItUrgent,
-                    // activeColor: Colors.white,
-                    checkColor: Colors.green,
-                    shape: CircleBorder(side: BorderSide(color: Colors.white)),
-                    onChanged: (v) {
-                      setState(() {
-                        isItUrgent = !isItUrgent;
-                      });
-                    }),
-              ],
-            ))),
-
+        // Container(
+        //     height: 40,
+        //     padding: EdgeInsets.only(left: 5),
+        //     decoration: BoxDecoration(
+        //       borderRadius: BorderRadius.circular(5),
+        //       color: Colors.purple.shade900,
+        //     ),
+        //     child: Center(
+        //         child: Row(
+        //       children: [
+        //         Icon(Icons.speed, color: Colors.white),
+        //         Checkbox(
+        //             // fillColor: MaterialStatePropertyAll(Colors.purple.shade100),
+        //             value: isItUrgent,
+        //             // activeColor: Colors.white,
+        //             checkColor: Colors.green,
+        //             shape: CircleBorder(side: BorderSide(color: Colors.white)),
+        //             onChanged: (v) {
+        //               setState(() {
+        //                 isItUrgent = !isItUrgent;
+        //               });
+        //             }),
+        //       ],
+        //     ))),
         Container(
           height: 40,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.purple.shade900,
-          ),
           child: Row(
             children: [
               Container(
-                decoration: BoxDecoration(
-                    color: Colors.purple.shade900,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(5),
-                        bottomLeft: Radius.circular(5))),
+                  decoration: deco,
+                  width: 32,
+                  child: Center(
+                      child: Icon(Icons.watch_later_outlined,
+                          color: Colors.white))),
+              Container(
+                decoration: ration,
+                width: 70,
+                child: DropdownButton(
+                    elevation: 0,
+                    underline: SizedBox(),
+                    value: expectedDay,
+                    padding: EdgeInsets.only(left: 1.5),
+                    icon: Icon(Icons.keyboard_arrow_down_outlined),
+                    onChanged: <int>(newValue) {
+                      setState(() {
+                        expectedDay = newValue;
+                      });
+                    },
+                    items: listOfInt.map<DropdownMenuItem<int>>((e) {
+                      return DropdownMenuItem(
+                          child: Text('${e.toString()}' 'day',
+                              style:
+                                  TextStyle(overflow: TextOverflow.ellipsis)),
+                          value: e);
+                    }).toList()),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: 40,
+          child: Row(
+            children: [
+              Container(
+                decoration: deco,
                 width: 20,
                 child: Center(
                     child: Text(
@@ -171,13 +210,7 @@ class BookLoungryState extends State<BookLoungry> {
                 )),
               ),
               Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(5),
-                    bottomRight: Radius.circular(5),
-                  ),
-                  color: Colors.purple.shade100,
-                ),
+                decoration: ration,
                 child: DropdownButton(
                     elevation: 0,
                     padding: EdgeInsets.only(left: 3),
@@ -199,15 +232,10 @@ class BookLoungryState extends State<BookLoungry> {
         ),
         Container(
           height: 40,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
           child: Row(
             children: [
               Container(
-                decoration: BoxDecoration(
-                    color: Colors.purple.shade900,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(5),
-                        bottomLeft: Radius.circular(5))),
+                decoration: deco,
                 width: 20,
                 child: Center(
                     child: Text(
@@ -216,13 +244,7 @@ class BookLoungryState extends State<BookLoungry> {
                 )),
               ),
               Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(5),
-                    bottomRight: Radius.circular(5),
-                  ),
-                  color: Colors.purple.shade100,
-                ),
+                decoration: ration,
                 child: DropdownButton(
                     elevation: 0,
                     padding: EdgeInsets.only(left: 3),
@@ -244,15 +266,10 @@ class BookLoungryState extends State<BookLoungry> {
         ),
         Container(
           height: 40,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
           child: Row(
             children: [
               Container(
-                decoration: BoxDecoration(
-                    color: Colors.purple.shade900,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(5),
-                        bottomLeft: Radius.circular(5))),
+                decoration: deco,
                 width: 20,
                 child: Center(
                     child: Text(
@@ -261,13 +278,7 @@ class BookLoungryState extends State<BookLoungry> {
                 )),
               ),
               Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(5),
-                    bottomRight: Radius.circular(5),
-                  ),
-                  color: Colors.purple.shade100,
-                ),
+                decoration: ration,
                 child: DropdownButton(
                     elevation: 0,
                     underline: SizedBox(),
@@ -290,183 +301,191 @@ class BookLoungryState extends State<BookLoungry> {
       ]);
     }
 
-    return Container(
-      height: MediaQuery.of(context).size.height - 80,
-      color: Colors.white70,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView(
-          children: [
-            Row(
+    return Middle(
+      child: Scaffold(
+        body: Container(
+          color: Colors.white70,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
               children: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(Icons.cancel)),
-                Expanded(child: SizedBox()),
-                TextButton(
-                    onPressed: () {
-                      showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          showDragHandle: true,
-                          builder: (context) {
-                            return LoundryHistory();
-                          });
-                    },
-                    child: Text('history'))
-              ],
-            ),
-            //add image
-            listOfPicture.isEmpty
-                ? Row(
-                    children: [addImageWidget()],
-                  )
-                : SizedBox(
-                    height: 350,
-                    child: ListView.builder(
-                        itemCount: listOfPicture.length + 1,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: ((context, index) {
-                          if (index == listOfPicture.length) {
-                            return addImageWidget();
-                          }
-                          return imageWidget(
-                              url: listOfPicture[index], index: index);
-                        })),
-                  ), //is it urgent
-
-            Row(
-              children: [
-                Text(
-                  'speed and counts',
-                  style: TextStyle(
-                      fontSize: 10,
-                      color: const Color.fromARGB(255, 105, 0, 124),
-                      fontWeight: FontWeight.w500),
+                Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(Icons.cancel)),
+                    Expanded(child: SizedBox()),
+                    TextButton(
+                        onPressed: () {
+                          showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              showDragHandle: true,
+                              builder: (context) {
+                                return LoundryHistory();
+                              });
+                        },
+                        child: Text('history'))
+                  ],
                 ),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  'note: shirt and trouser of same fabric is counted as two pieces',
-                  style: TextStyle(
-                      fontSize: 8,
-                      color: Color.fromARGB(255, 230, 127, 248),
-                      fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
+                //add image
+                listOfPicture.isEmpty
+                    ? Row(
+                        children: [addImageWidget()],
+                      )
+                    : SizedBox(
+                        height: 350,
+                        child: ListView.builder(
+                            itemCount: listOfPicture.length + 1,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: ((context, index) {
+                              if (index == listOfPicture.length) {
+                                return addImageWidget();
+                              }
+                              return imageWidget(
+                                  url: listOfPicture[index], index: index);
+                            })),
+                      ), //is it urgent
 
-            SizedBox(height: 10),
-
-            countClothes(),
-            SizedBox(height: 10),
-
-            Row(
-              children: [
-                Text(
-                  'a dispatch rider will be on his way once checkout is completed',
-                  style: TextStyle(
-                      fontSize: 8,
-                      color: Color.fromARGB(255, 230, 127, 248),
-                      fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                //total cost
-                Expanded(
-                    child: Container(
-                  // height: 70,
-
-                  // padding: EdgeInsets.all(10),
-
-                  child: Row(
-                    children: [
-                      Text('#',
-                          style: GoogleFonts.montserratAlternates(
-                              color: Color.fromARGB(255, 1, 52, 93),
-                              fontSize: 30,
-                              fontWeight: FontWeight.w900)),
-                      Text(pricing().toString(),
-                          style: GoogleFonts.montserratAlternates(
-                              color: Color.fromARGB(255, 1, 52, 93),
-                              fontSize: 30,
-                              fontWeight: FontWeight.w900)),
-                    ],
-                  ),
-                )),
-                //button
-                GestureDetector(
-                  onTap: () async {
-                    if (kIsWeb) {
-                      callToInstall(context);
-                    } else {
-                      if (pricing() == 0) {
-                      } else {
-                        final Customer customer = Customer(
-                            email: FirebaseAuth.instance.currentUser!.email!);
-
-                        final Flutterwave flutterwave = Flutterwave(
-                            context: context,
-                            publicKey:
-                                'FLWPUBK_TEST-ef4d818fa96ee72db01e180edd283079-X',
-                            currency: 'NGN',
-                            redirectUrl: 'https://dress-mate.web.app',
-                            txRef: Uuid().v1(),
-                            amount: pricing().toString(),
-                            customer: customer,
-                            paymentOptions:
-                                "card, payattitude, barter, bank transfer, ussd",
-                            customization: Customization(title: "Test Payment"),
-                            isTestMode: true);
-
-                        final ChargeResponse response =
-                            await flutterwave.charge();
-                        if (response.success != null) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text(response.toString()),
-                          ));
-                          // showLoading(response.toString());
-                          print("${response.toJson()}");
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text('no response'),
-                          ));
-                        }
-                      }
-                    }
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(7),
-                    margin: EdgeInsets.all(7),
-                    decoration: BoxDecoration(
-                        gradient:
-                            LinearGradient(begin: Alignment.topLeft, colors: [
-                          // Colors.white,
-                          Colors.blue,
-                          Colors.purple,
-                        ]),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Center(
-                        child: Text(
-                      ' checkout ',
-                      style: GoogleFonts.montserrat(
-                          color: Colors.white60,
+                Row(
+                  children: [
+                    Text(
+                      'speed and counts',
+                      style: TextStyle(
                           fontSize: 10,
-                          fontWeight: FontWeight.w900),
+                          color: const Color.fromARGB(255, 105, 0, 124),
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text(
+                      'note: shirt and trouser of same fabric is counted as two pieces',
+                      style: TextStyle(
+                          fontSize: 8,
+                          color: Color.fromARGB(255, 230, 127, 248),
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 10),
+
+                countClothes(),
+                SizedBox(height: 10),
+
+                Row(
+                  children: [
+                    Text(
+                      'a dispatch rider will be on his way once checkout is completed',
+                      style: TextStyle(
+                          fontSize: 8,
+                          color: Color.fromARGB(255, 230, 127, 248),
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+                Expanded(child: SizedBox()),
+                Row(
+                  children: [
+                    //total cost
+                    Expanded(
+                        child: Container(
+                      // height: 70,
+
+                      // padding: EdgeInsets.all(10),
+
+                      child: Row(
+                        children: [
+                          Text('#',
+                              style: GoogleFonts.montserratAlternates(
+                                  color: Color.fromARGB(255, 1, 52, 93),
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w900)),
+                          Text(pricing().toString(),
+                              style: GoogleFonts.montserratAlternates(
+                                  color: Color.fromARGB(255, 1, 52, 93),
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w900)),
+                        ],
+                      ),
                     )),
-                  ),
+                    //button
+                    GestureDetector(
+                      onTap: () async {
+                        if (kIsWeb) {
+                          callToInstall(context);
+                        } else {
+                          if (pricing() == 0) {
+                          } else {
+                            final Customer customer = Customer(
+                                email:
+                                    FirebaseAuth.instance.currentUser!.email!);
+
+                            final Flutterwave flutterwave = Flutterwave(
+                                context: context,
+                                publicKey:
+                                    'FLWPUBK_TEST-ef4d818fa96ee72db01e180edd283079-X',
+                                currency: 'NGN',
+                                redirectUrl: 'https://dress-mate.web.app',
+                                txRef: Uuid().v1(),
+                                amount: pricing().toString(),
+                                customer: customer,
+                                paymentOptions:
+                                    "card, payattitude, barter, bank transfer, ussd",
+                                customization:
+                                    Customization(title: "Test Payment"),
+                                isTestMode: true);
+
+                            final ChargeResponse response =
+                                await flutterwave.charge();
+                            if (response.success != null) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text(response.toString()),
+                              ));
+                              // showLoading(response.toString());
+                              print("${response.toJson()}");
+                            } else {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text('no response'),
+                              ));
+                            }
+                          }
+                        }
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(7),
+                        margin: EdgeInsets.all(7),
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                colors: [
+                                  // Colors.white,
+                                  Colors.blue,
+                                  Colors.purple,
+                                ]),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Center(
+                            child: Text(
+                          ' checkout ',
+                          style: GoogleFonts.montserrat(
+                              color: Colors.white60,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w900),
+                        )),
+                      ),
+                    )
+                  ],
                 )
+                //
               ],
-            )
-            //
-          ],
+            ),
+          ),
         ),
       ),
     );
@@ -594,46 +613,48 @@ class LoundryHistory extends StatefulWidget {
 class LoundryHistoryState extends State<LoundryHistory> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: MediaQuery.of(context).size.height - 100,
-        child: Scaffold(
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              title: Text('history',
-                  style:
-                      TextStyle(fontSize: 12, color: Colors.purple.shade900)),
-            ),
-            body: FirestorePagination(
-                // isLive: true,
-                limit: 20,
-                bottomLoader: Loading(),
-                viewType: ViewType.grid,
-                initialLoader: Loading(),
-                onEmpty: Text('thats all for now'),
-                query: FirebaseFirestore.instance
-                    .collection('loundry')
-                    .doc(FirebaseAuth.instance.currentUser!.uid)
-                    .collection('active')
-                    .orderBy('timestamp', descending: true),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
-                    crossAxisSpacing: 5,
-                    mainAxisSpacing: 5,
-                    childAspectRatio: 0.7),
-                isLive: true,
-                itemBuilder: (context, item, snapshot) {
-                  // if we have data, get all dic
-                  // if (snapshot == 0) {
-                  //   return Orderr();
-                  // }
+    return Middle(
+      child: Container(
+          height: MediaQuery.of(context).size.height - 100,
+          child: Scaffold(
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+                title: Text('history',
+                    style:
+                        TextStyle(fontSize: 12, color: Colors.purple.shade900)),
+              ),
+              body: FirestorePagination(
+                  // isLive: true,
+                  limit: 20,
+                  bottomLoader: Loading(),
+                  viewType: ViewType.grid,
+                  initialLoader: Loading(),
+                  onEmpty: Text('thats all for now'),
+                  query: FirebaseFirestore.instance
+                      .collection('loundry')
+                      .doc(FirebaseAuth.instance.currentUser!.uid)
+                      .collection('active')
+                      .orderBy('timestamp', descending: true),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4,
+                      crossAxisSpacing: 5,
+                      mainAxisSpacing: 5,
+                      childAspectRatio: 0.7),
+                  isLive: true,
+                  itemBuilder: (context, item, snapshot) {
+                    // if we have data, get all dic
+                    // if (snapshot == 0) {
+                    //   return Orderr();
+                    // }
 
-                  return Item(
-                    caption: item['caption'],
-                    picture: item['picture'],
-                    ancestorId: item['ancestorId'],
-                    postId: item['postId'],
-                    creatorUid: item['creatorUid'],
-                  );
-                })));
+                    return Item(
+                      caption: item['caption'],
+                      picture: item['picture'],
+                      ancestorId: item['ancestorId'],
+                      postId: item['postId'],
+                      creatorUid: item['creatorUid'],
+                    );
+                  }))),
+    );
   }
 }

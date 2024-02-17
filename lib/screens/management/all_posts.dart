@@ -13,11 +13,12 @@ class AllPost extends StatefulWidget {
 }
 
 class AllPostState extends State<AllPost> {
-  @override
+  bool isDeleting = false;
   @override
   Widget build(BuildContext context) {
     return Middle(
       child: Scaffold(
+          appBar: AppBar(title: Text('manage content and post')),
           body: FirestorePagination(
               bottomLoader: Loading(),
               initialLoader: Loading(),
@@ -49,15 +50,20 @@ class AllPostState extends State<AllPost> {
                     Positioned(
                         child: IconButton(
                           onPressed: () async {
+                            setState(() {
+                              isDeleting = true;
+                            });
                             await FirebaseFirestore.instance
                                 .collection('posts')
                                 .doc(item['postId'])
                                 .delete();
                           },
-                          icon: Icon(Icons.delete),
+                          icon: isDeleting
+                              ? Loading()
+                              : Icon(Icons.delete, color: Colors.red),
                         ),
-                        top: 5,
-                        right: 5)
+                        top: 1,
+                        right: 1)
                   ],
                 );
               })),

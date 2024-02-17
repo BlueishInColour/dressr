@@ -138,6 +138,7 @@ class ItemHeaderState extends State<ItemHeader> {
                           ),
                           Expanded(child: SizedBox()),
                           RepostButton(
+                            creatorUid: widget.creatorUid,
                             ancestorId: widget.ancestorId,
                             postId: widget.postId,
                           ),

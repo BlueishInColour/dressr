@@ -37,6 +37,7 @@ class MoreItemInState extends State<MoreItemIn> {
   showBottomSheet() {
     debugPrint('clicked');
     showModalBottomSheet(
+        isScrollControlled: true,
         shape:
             ContinuousRectangleBorder(borderRadius: BorderRadius.circular(30)),
         enableDrag: true,
@@ -102,23 +103,10 @@ class MoreItemInState extends State<MoreItemIn> {
                 leading: BackButton(
                   color: Colors.white60,
                 ),
-                trailing: widget.creatorUid ==
-                        FirebaseAuth.instance.currentUser!.uid
-                    ? CircleAvatar(
-                        backgroundColor: Colors.blue,
-                        child: IconButton(
-                          onPressed: () {
-                            Navigator.push(context,
-                                PageRouteBuilder(pageBuilder: (context, _, __) {
-                              return Create(
-                                ancestorId: widget.ancestorId,
-                              );
-                            }));
-                          },
-                          icon: Icon(Icons.add, color: Colors.white60),
-                        ))
-                    : RepostButton(
-                        ancestorId: widget.ancestorId, postId: widget.postId),
+                trailing: RepostButton(
+                    creatorUid: widget.creatorUid,
+                    ancestorId: widget.ancestorId,
+                    postId: widget.postId),
                 title: Text(
                   'view comments',
                   style: TextStyle(color: Colors.white60, fontSize: 14),

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dressr/middle.dart';
 import 'package:dressr/screens/explore/item/item.dart';
 import 'package:dressr/utils/chat_button.dart';
 import 'package:dressr/utils/check_sub_and_isweb.dart';
@@ -53,29 +54,31 @@ class ItemActionsState extends State<ItemActions> {
   Uint8List? bytes;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.black,
-        appBar: AppBar(
-            automaticallyImplyLeading: false,
-            foregroundColor: Colors.white,
-            title: Row(children: [
-              //download button
-              DownloadButton(controller: widget.controller),
-              //  sharebutton
-              ShareButton(controller: widget.controller),
-              //chat creator
-              // ChatButton(uid: widget.creatorUid),
-              //use button should be here
+    return Middle(
+      child: Scaffold(
+          backgroundColor: Colors.black,
+          appBar: AppBar(
+              automaticallyImplyLeading: false,
+              foregroundColor: Colors.white,
+              title: Row(children: [
+                //download button
+                DownloadButton(controller: widget.controller),
+                //  sharebutton
+                ShareButton(controller: widget.controller),
+                //chat creator
+                // ChatButton(uid: widget.creatorUid),
+                //use button should be here
 
-              //
-              Expanded(child: SizedBox()),
-              //delete post else report
-              DeletePostButton(
-                  postId: widget.postId, creatorUid: widget.creatorUid),
-            ])),
-        body: ListView(children: [
-          WidgetsToImage(controller: widget.controller, child: cardWidget()),
-        ]));
+                //
+                Expanded(child: SizedBox()),
+                //delete post else report
+                DeletePostButton(
+                    postId: widget.postId, creatorUid: widget.creatorUid),
+              ])),
+          body: ListView(children: [
+            WidgetsToImage(controller: widget.controller, child: cardWidget()),
+          ])),
+    );
   }
 
   Widget cardWidget() {

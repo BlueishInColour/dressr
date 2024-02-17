@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dressr/main.dart';
+import 'package:dressr/middle.dart';
 import 'package:dressr/utils/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -239,16 +240,16 @@ class CreateState extends State<Create> {
         });
 
         String firstCaption = listOfCreatingPost.first['caption'];
-        listOfCreatingPost.forEach((element) {
-          String picture = element['picture'];
-          String caption = element['caption'];
-          if (picture.isEmpty && caption.isEmpty) {
-            List<String> tags = element['tags'];
-            setState(() {
-              canTheUploadBeDone = false;
-            });
-          }
-        });
+        // listOfCreatingPost.forEach((element) {
+        //   String picture = element['picture'];
+        //   String caption = element['caption'];
+        //   if (picture.isEmpty && caption.isEmpty) {
+        //     List<String> tags = element['tags'];
+        //     setState(() {
+        //       canTheUploadBeDone = false;
+        //     });
+        //   }
+        // });
         listOfCreatingPost.forEach((element) async {
           String postId = Uuid().v1();
           firstCaption = listOfCreatingPost.first['caption'];
@@ -305,61 +306,63 @@ class CreateState extends State<Create> {
       return Center(child: Container(color: Colors.red));
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          isUploading
-              ? CircleAvatar(child: Loading())
-              : TextButton(onPressed: uploadPost, child: Text('upload'))
-        ],
-      ),
-      floatingActionButton: listOfCreatingPost.isNotEmpty
-          ? FloatingActionButton(
-              backgroundColor: Colors.black87,
-              onPressed: kIsWeb ? getWebImages : getFilePics,
-              child: Icon(
-                Icons.add,
-                color: Colors.white60,
-              ),
-            )
-          : SizedBox(),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: listOfCreatingPost.isEmpty
-            ? Center(child: addMoreImage())
-            : SizedBox(
-                height: 800,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: listOfCreatingPost.length + 1,
-                    itemBuilder: (context, index) {
-                      if (index == listOfCreatingPost.length) {
-                        return addMoreImage();
-                      } else {
-                        Map<String, dynamic> post = listOfCreatingPost[index];
-                        return OfflineItem(
-                          onCancel: () {
-                            setState(() {
-                              listOfCreatingPost.removeAt(index);
-                            });
-                          },
-                          onTap: () {
-                            setState(() {
-                              textController.clear();
+    return Middle(
+      child: Scaffold(
+        appBar: AppBar(
+          actions: [
+            isUploading
+                ? CircleAvatar(child: Loading())
+                : TextButton(onPressed: uploadPost, child: Text('upload'))
+          ],
+        ),
+        floatingActionButton: listOfCreatingPost.isNotEmpty
+            ? FloatingActionButton(
+                backgroundColor: Colors.black87,
+                onPressed: kIsWeb ? getWebImages : getFilePics,
+                child: Icon(
+                  Icons.add,
+                  color: Colors.white60,
+                ),
+              )
+            : SizedBox(),
+        body: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: listOfCreatingPost.isEmpty
+              ? Center(child: addMoreImage())
+              : SizedBox(
+                  height: 800,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: listOfCreatingPost.length + 1,
+                      itemBuilder: (context, index) {
+                        if (index == listOfCreatingPost.length) {
+                          return addMoreImage();
+                        } else {
+                          Map<String, dynamic> post = listOfCreatingPost[index];
+                          return OfflineItem(
+                            onCancel: () {
+                              setState(() {
+                                listOfCreatingPost.removeAt(index);
+                              });
+                            },
+                            onTap: () {
+                              setState(() {
+                                textController.clear();
 
-                              currentEditingItem = index;
+                                currentEditingItem = index;
 
-                              textController.text =
-                                  listOfCreatingPost[currentEditingItem]
-                                      ['caption'];
-                            });
-                          },
-                          picture: post['picture'],
-                          caption: post['caption'],
-                        );
-                      }
-                    }),
-              ),
+                                textController.text =
+                                    listOfCreatingPost[currentEditingItem]
+                                        ['caption'];
+                              });
+                            },
+                            picture: post['picture'],
+                            caption: post['caption'],
+                          );
+                        }
+                      }),
+                ),
+        ),
       ),
     );
   }
