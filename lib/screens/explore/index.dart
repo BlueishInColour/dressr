@@ -44,9 +44,9 @@ class StoreScreenState extends State<StoreScreen>
             bottomLoader: Loading(),
             initialLoader: Loading(),
             onEmpty: Text('thats all for now'),
-            // separatorBuilder: (context, index) {
-            //   return MyBannerAdWidget();
-            // },
+            separatorBuilder: (context, index) {
+              return MyBannerAdWidget();
+            },
             query: FirebaseFirestore.instance
                 .collection('posts')
                 .orderBy('timestamp', descending: true),

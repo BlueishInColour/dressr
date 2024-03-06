@@ -51,7 +51,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   // Admob.initialize();
-  // unawaited(MobileAds.instance.initialize());
+  unawaited(MobileAds.instance.initialize());
   // if (kIsWeb) {
   //   FlutterwaveWebClient.initialize(
   //       'FLWPUBK_TEST-ef4d818fa96ee72db01e180edd283079-X');
