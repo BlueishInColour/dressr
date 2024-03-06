@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dressr/ad_helper.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -60,7 +61,7 @@ class _MyBannerAdWidgetState extends State<MyBannerAdWidget> {
   void _loadAd() {
     final bannerAd = BannerAd(
       size: widget.adSize,
-      adUnitId: widget.adUnitId,
+      adUnitId: AdHelper.bannerAdUnitId,
       request: const AdRequest(),
       listener: BannerAdListener(
         // Called when an ad is successfully received.
