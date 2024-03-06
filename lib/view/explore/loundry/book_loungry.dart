@@ -354,7 +354,7 @@ class BookLoungryState extends State<BookLoungry> {
                                     color: Color.fromARGB(255, 1, 52, 93),
                                     fontSize: 30,
                                     fontWeight: FontWeight.w900)),
-                            Text(value.price.toString(),
+                            Text(value.totalPrice.toString(),
                                 style: GoogleFonts.montserratAlternates(
                                     color: Color.fromARGB(255, 1, 52, 93),
                                     fontSize: 30,
