@@ -1,7 +1,7 @@
 im working on this petty project hoping it will help me connect to my customers more
 dressr is or will be a suit making brand, and will want to fully operate online 
 from order to delevery, 
-4 screens; main shop, cart, blog, profile(wardrope) 
+4 view; main shop, cart, blog, profile(wardrope) 
 
 
 main = renders all document 
@@ -172,4 +172,32 @@ main thing  needed now before  release are
 > order screen
 >  differentiate angents from normal people , special discounts for agents 
 > signuo agent screen
+
+
+
+6th march,2024
+> work onn search screen
+> users should save images and video on firebase not imagkit
+
+//note on how getting prcing will work per clothes
+
+
+urgent ads 200 while starched  ads 50
+
+
+not urgent  | not starched
+> x = 150
+> M = 250
+> L = 350
+
+not urgent  | not   starched
+
+
+
+urgent  | starched
+
+
+
+urgent  |  not starched
+
 

@@ -1,24 +1,24 @@
 import 'dart:async';
 
-// import 'package:dressr/screens/auth/auth_gate.dart';
-import 'package:dressr/loading_page.dart';
-import 'package:dressr/middle.dart';
-import 'package:dressr/screens/auth/auth_gate_two.dart';
-import 'package:dressr/screens/auth/login_or_signup.dart';
-import 'package:dressr/screens/auth/signup_screen.dart';
-import 'package:dressr/screens/create_post/create.dart';
-import 'package:dressr/screens/save/index.dart';
-import 'package:dressr/screens/chat/index.dart';
-import 'package:dressr/screens/create_post/index.dart';
-import 'package:dressr/screens/profile/index.dart';
-import 'package:dressr/screens/search/index.dart';
-import 'package:dressr/screens/search/post_search.dart';
-// import 'package:dressr/screens/store/add_item.dart';
-import 'package:dressr/screens/explore/index.dart';
-import 'package:dressr/screens/tv/index.dart';
-import 'package:dressr/screens/management/install_app_function.dart';
-import 'package:dressr/utils/loading.dart';
-import 'package:dressr/utils/shared_pref.dart';
+// import 'package:dressr/view/auth/auth_gate.dart';
+import 'package:dressr/controller/laundry_controller.dart';
+import 'package:dressr/view/utils/loading_page.dart';
+import 'package:dressr/view/utils/middle.dart';
+import 'package:dressr/view/auth/auth_gate_two.dart';
+import 'package:dressr/view/auth/login_or_signup.dart';
+import 'package:dressr/view/auth/signup_screen.dart';
+import 'package:dressr/view/create_post/create.dart';
+import 'package:dressr/view/save/index.dart';
+import 'package:dressr/view/chat/index.dart';
+import 'package:dressr/view/create_post/index.dart';
+import 'package:dressr/view/profile/index.dart';
+import 'package:dressr/view/search/index.dart';
+import 'package:dressr/view/search/post_search.dart';
+import 'package:dressr/view/explore/index.dart';
+import 'package:dressr/view/tv/index.dart';
+import 'package:dressr/view/management/install_app_function.dart';
+import 'package:dressr/view/utils/loading.dart';
+import 'package:dressr/view/utils/shared_pref.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -32,15 +32,16 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
-import 'screens/auth/login_screen.dart';
+import 'view/auth/login_screen.dart';
 // import 'package:window_manager/window_manager.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 
 import 'package:flutterwave_web_client/flutterwave_web_client.dart';
 // import 'package:admob_flutter/admob_flutter.dart';
 
-//to prevent screenshots in app
+//to prevent viewhots in app
 Future<void> secureScreen() async {
   await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
 }
@@ -70,7 +71,8 @@ void main() async {
   await SharedPrefs().init();
 
   runApp(
-    const MyApp(),
+    ChangeNotifierProvider(
+        create: (_) => LaundryController(), child: const MyApp()),
   );
 }
 
@@ -85,6 +87,11 @@ class MyApp extends StatelessWidget {
               AppBarTheme(backgroundColor: Colors.transparent, elevation: 0),
           outlinedButtonTheme: OutlinedButtonThemeData(
               style: ButtonStyle(
+            elevation: MaterialStatePropertyAll(5),
+            foregroundColor: MaterialStatePropertyAll(Colors.blue),
+            padding:
+                MaterialStatePropertyAll(EdgeInsets.symmetric(horizontal: 5)),
+            side: MaterialStatePropertyAll(BorderSide(color: Colors.blue)),
             shape: MaterialStatePropertyAll(
                 StadiumBorder(side: BorderSide(color: Colors.blue.shade600))),
           )),
@@ -188,7 +195,7 @@ class MainIndexState extends State<MainIndex> {
           Tv(),
           PostSearch(),
           LikeScreen(),
-          Create(ancestorId: '')
+          CreatePost(ancestorId: '')
           // AddItem(headPostId: ''),
           // ProfileScreen(userUid: FirebaseAuth.instance.currentUser!.uid),
           // EditProfile()
