@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "574027646152",
+    "project_id": "dress-mate",
+    "storage_bucket": "dress-mate.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:574027646152:android:a8e8e3d611be15dba891fd",
+        "android_client_info": {
+          "package_name": "com.example.dressr"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBdMcUnpYu9FUVLfdoO2wKYY8RxXI5gvk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
