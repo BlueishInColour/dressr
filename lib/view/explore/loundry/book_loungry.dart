@@ -355,55 +355,59 @@ class BookLoungryState extends State<BookLoungry> {
               ),
             ),
           ),
-          bottomSheet: Row(
-            children: [
-              //total cost
-              Expanded(
-                  child: Container(
-                // padding: EdgeInsets.all(10),
+          bottomSheet: SizedBox(
+            height: 70,
+            child: Row(
+              children: [
+                //total cost
+                Expanded(
+                    child: Container(
+                  // padding: EdgeInsets.all(10),
 
-                child: Row(
-                  children: [
-                    Text('#',
-                        style: GoogleFonts.montserratAlternates(
-                            color: Color.fromARGB(255, 1, 52, 93),
-                            fontSize: 30,
-                            fontWeight: FontWeight.w900)),
-                    Text(value.totalPrice.toString(),
-                        style: GoogleFonts.montserratAlternates(
-                            color: Color.fromARGB(255, 1, 52, 93),
-                            fontSize: 30,
-                            fontWeight: FontWeight.w900)),
-                  ],
-                ),
-              )),
-              //button
-              GestureDetector(
-                onTap: () async =>
-                    await Provider.of<LaundryController>(context, listen: false)
-                        .checkout(context),
-                child: Container(
-                  padding: EdgeInsets.all(7),
-                  margin: EdgeInsets.all(7),
-                  decoration: BoxDecoration(
-                      gradient:
-                          LinearGradient(begin: Alignment.topLeft, colors: [
-                        // Colors.white,
-                        Colors.blue,
-                        Colors.black,
-                      ]),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Center(
-                      child: Text(
-                    ' checkout ',
-                    style: GoogleFonts.montserrat(
-                        color: Colors.white70,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w500),
-                  )),
-                ),
-              )
-            ],
+                  child: Row(
+                    children: [
+                      Text('#',
+                          style: GoogleFonts.montserratAlternates(
+                              color: Color.fromARGB(255, 1, 52, 93),
+                              fontSize: 30,
+                              fontWeight: FontWeight.w900)),
+                      Text(value.totalPrice.toString(),
+                          style: GoogleFonts.montserratAlternates(
+                              color: Color.fromARGB(255, 1, 52, 93),
+                              fontSize: 30,
+                              fontWeight: FontWeight.w900)),
+                    ],
+                  ),
+                )),
+                //button
+                GestureDetector(
+                  onTap: () async => await Provider.of<LaundryController>(
+                          context,
+                          listen: false)
+                      .checkout(context),
+                  child: Container(
+                    padding: EdgeInsets.all(7),
+                    margin: EdgeInsets.all(7),
+                    decoration: BoxDecoration(
+                        gradient:
+                            LinearGradient(begin: Alignment.topLeft, colors: [
+                          // Colors.white,
+                          Colors.blue,
+                          Colors.black,
+                        ]),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Center(
+                        child: Text(
+                      ' checkout ',
+                      style: GoogleFonts.montserrat(
+                          color: Colors.white70,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500),
+                    )),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
