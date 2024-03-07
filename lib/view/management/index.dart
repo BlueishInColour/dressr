@@ -4,6 +4,9 @@ import 'package:dressr/view/management/all_posts.dart';
 import 'package:dressr/view/management/install_app_function.dart';
 import 'package:dressr/view/management/order_dress_make.dart';
 import 'package:dressr/view/management/set_programmes.dart';
+
+import 'package:dressr/view/management/all_laundry_order.dart';
+
 import 'package:dressr/view/management/test_fullscreen_ads.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -48,7 +51,9 @@ class ManagementState extends State<Management> {
               goto('manage post and content', AllPost()),
               goto('orders and make dresses', OrderDressMake()),
               // goto('test full screen ads', TestFullScreenAds()),
-              goto('set pricing', SetPricing())
+              goto('set pricing', SetPricing()),
+
+              goto('all loundry orders', AllLaundryOrder())
 
               ///
             ],

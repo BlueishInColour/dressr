@@ -13,25 +13,25 @@ import 'package:imagekit_io/imagekit_io.dart';
 import 'package:uuid/uuid.dart';
 
 class LaundryController extends ChangeNotifier {
-  bool isItUrgent = false;
   List listOfPicture = [];
 
   int expectedDay = 3;
   int smallSizeValue = 0;
   int mediumSizeValue = 0;
-  int LargeSizeValue = 0;
-
+  int largeSizeValue = 0;
+  bool isItUrgent = false;
   bool isStarch = true;
+
   bool isUploading = false;
 
   int smallSizePrice = 0;
-
   int mediumSizePrice = 0;
   int largeSizePrice = 0;
   int urgentPrice = 0;
   int starchPrice = 0;
 
   int totalPrice = 0;
+  String phoneNumber = ' ';
 
   setPrices(QueryDocumentSnapshot result) {
     smallSizePrice = int.parse(result['smallSizeLaundry']);
@@ -46,13 +46,18 @@ class LaundryController extends ChangeNotifier {
     notifyListeners();
   }
 
+  setPhoneNumber(String num) {
+    phoneNumber = num;
+    notifyListeners();
+  }
+
   pricing() {
     int notUrgentPrice = (smallSizePrice * smallSizeValue +
         mediumSizePrice * mediumSizeValue +
-        largeSizePrice * LargeSizeValue);
+        largeSizePrice * largeSizeValue);
     int urgentPric = ((smallSizePrice + urgentPrice) * smallSizeValue +
             (mediumSizePrice + urgentPrice) * mediumSizeValue +
-            (largeSizePrice + urgentPrice) * LargeSizeValue)
+            (largeSizePrice + urgentPrice) * largeSizeValue)
         .toInt();
 
     if (isItUrgent) {
@@ -72,39 +77,29 @@ class LaundryController extends ChangeNotifier {
     String ancestorUid = Uuid().v1();
 
     String caption =
-        'counts are S $smallSizeValue , M $mediumSizeValue, L $LargeSizeValue and total cost is $pricing';
+        'counts are S $smallSizeValue , M $mediumSizeValue, L $largeSizeValue and total cost is $pricing';
     if (listOfPicture.isNotEmpty) {
       debugPrint('upoladingg');
       listOfPicture.forEach((element) async {
         debugPrint('upoladingg');
 
-        String postUid = Uuid().v1();
+        String orderId = Uuid().v1();
         var data = {
-          //id
-          'postId': postUid,
-          // 'headPostId': widget.headPostId,
-          'ancestorId': ancestorUid,
-
-          //content
-          'caption': caption,
-          'picture': element,
-          'audio': '',
-          'video': '',
-          'tags': [],
-
-          //creator
-          'creatorUid': FirebaseAuth.instance.currentUser!.uid,
-
-          //metadata
-
-          'timestamp': Timestamp.now(), 'status': '',
+          'orderId': orderId,
+          'phone number': '',
+          'title': 'order successfully booked',
+          'description':
+              'your order ($orderId) have been recieved and being processed by an handler, we will keep in touch with you ($phoneNumber)',
+          'details':
+              'x:$smallSizeValue  m:$mediumSizeValue  l:$largeSizeValue   urgent:$isItUrgent   starched:$isStarch   price:$totalPrice',
+          'timestamp': Timestamp.now()
         };
 
         await FirebaseFirestore.instance
             .collection('loundry')
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .collection('active')
-            .doc(postUid)
+            .doc(orderId)
             .set(data);
       });
 
@@ -224,8 +219,8 @@ class LaundryController extends ChangeNotifier {
     notifyListeners();
   }
 
-  setLargeSizeValue(int value) {
-    LargeSizeValue = value;
+  setlargeSizeValue(int value) {
+    largeSizeValue = value;
 
     notifyListeners();
   }

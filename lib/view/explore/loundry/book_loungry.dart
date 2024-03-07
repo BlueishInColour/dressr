@@ -17,7 +17,7 @@ class BookLoungry extends StatefulWidget {
 
 class BookLoungryState extends State<BookLoungry> {
   final listOfInt = List<int>.generate(100, (index) => index, growable: true);
-
+  final phoneNumberController = TextEditingController();
   getLatestPrices() async {
     QuerySnapshot<Map<String, dynamic>> res = await FirebaseFirestore.instance
         .collection('app')
@@ -223,11 +223,11 @@ class BookLoungryState extends State<BookLoungry> {
                         child: DropdownButton(
                             elevation: 0,
                             underline: SizedBox(),
-                            value: value.LargeSizeValue,
+                            value: value.largeSizeValue,
                             padding: EdgeInsets.only(left: 3),
                             icon: Icon(Icons.keyboard_arrow_down_outlined),
                             onChanged: <int>(newValue) {
-                              value.setLargeSizeValue(newValue);
+                              value.setlargeSizeValue(newValue);
                             },
                             items: listOfInt.map<DropdownMenuItem<int>>((e) {
                               return DropdownMenuItem(
@@ -245,6 +245,7 @@ class BookLoungryState extends State<BookLoungry> {
     return Consumer<LaundryController>(
       builder: (context, value, child) => Middle(
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(automaticallyImplyLeading: true, actions: [
             SizedBox(
               height: 25,
@@ -276,7 +277,7 @@ class BookLoungryState extends State<BookLoungry> {
             color: Colors.white70,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(
+              child: ListView(
                 children: [
                   //add image
                   value.listOfPicture.isEmpty
@@ -337,65 +338,72 @@ class BookLoungryState extends State<BookLoungry> {
                         color: Colors.black54,
                         fontWeight: FontWeight.w500),
                   ),
-                  Expanded(child: SizedBox()),
-                  Row(
-                    children: [
-                      //total cost
-                      Expanded(
-                          child: Container(
-                        // height: 70,
 
-                        // padding: EdgeInsets.all(10),
+                  SizedBox(height: 20),
 
-                        child: Row(
-                          children: [
-                            Text('#',
-                                style: GoogleFonts.montserratAlternates(
-                                    color: Color.fromARGB(255, 1, 52, 93),
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.w900)),
-                            Text(value.totalPrice.toString(),
-                                style: GoogleFonts.montserratAlternates(
-                                    color: Color.fromARGB(255, 1, 52, 93),
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.w900)),
-                          ],
-                        ),
-                      )),
-                      //button
-                      GestureDetector(
-                        onTap: () async => await Provider.of<LaundryController>(
-                                context,
-                                listen: false)
-                            .checkout(context),
-                        child: Container(
-                          padding: EdgeInsets.all(7),
-                          margin: EdgeInsets.all(7),
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  colors: [
-                                    // Colors.white,
-                                    Colors.blue,
-                                    Colors.black,
-                                  ]),
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Center(
-                              child: Text(
-                            ' checkout ',
-                            style: GoogleFonts.montserrat(
-                                color: Colors.white70,
-                                fontSize: 10,
-                                fontWeight: FontWeight.w500),
-                          )),
-                        ),
-                      )
-                    ],
-                  )
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: TextField(
+                      controller: phoneNumberController,
+                      decoration: InputDecoration(labelText: 'phone number'),
+                    ),
+                  ),
+                  SizedBox(height: 500),
+
                   //
                 ],
               ),
             ),
+          ),
+          bottomSheet: Row(
+            children: [
+              //total cost
+              Expanded(
+                  child: Container(
+                // padding: EdgeInsets.all(10),
+
+                child: Row(
+                  children: [
+                    Text('#',
+                        style: GoogleFonts.montserratAlternates(
+                            color: Color.fromARGB(255, 1, 52, 93),
+                            fontSize: 30,
+                            fontWeight: FontWeight.w900)),
+                    Text(value.totalPrice.toString(),
+                        style: GoogleFonts.montserratAlternates(
+                            color: Color.fromARGB(255, 1, 52, 93),
+                            fontSize: 30,
+                            fontWeight: FontWeight.w900)),
+                  ],
+                ),
+              )),
+              //button
+              GestureDetector(
+                onTap: () async =>
+                    await Provider.of<LaundryController>(context, listen: false)
+                        .checkout(context),
+                child: Container(
+                  padding: EdgeInsets.all(7),
+                  margin: EdgeInsets.all(7),
+                  decoration: BoxDecoration(
+                      gradient:
+                          LinearGradient(begin: Alignment.topLeft, colors: [
+                        // Colors.white,
+                        Colors.blue,
+                        Colors.black,
+                      ]),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Center(
+                      child: Text(
+                    ' checkout ',
+                    style: GoogleFonts.montserrat(
+                        color: Colors.white70,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w500),
+                  )),
+                ),
+              )
+            ],
           ),
         ),
       ),

@@ -81,6 +81,7 @@ dependencies:
   chat_bubbles: ^1.5.0
 # d
   dot_navigation_bar: ^1.0.2
+  lit_relative_date_time: ^1.2.0
 
 # e
   easy_load_more: ^1.1.0
