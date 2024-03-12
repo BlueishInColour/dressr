@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dressr/controller/laundry_controller.dart';
-import 'package:dressr/view/explore/loundry/laundry_history.dart';
-import 'package:dressr/view/utils/middle.dart';
+import 'package:fashion_dragon/view/explore/loundry/laundry_controller/laundry_controller.dart';
+import 'package:fashion_dragon/view/explore/loundry/laundry_history.dart';
+import 'package:fashion_dragon/view/utils/middle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,23 +18,12 @@ class BookLoungry extends StatefulWidget {
 class BookLoungryState extends State<BookLoungry> {
   final listOfInt = List<int>.generate(100, (index) => index, growable: true);
   final phoneNumberController = TextEditingController();
-  getLatestPrices() async {
-    QuerySnapshot<Map<String, dynamic>> res = await FirebaseFirestore.instance
-        .collection('app')
-        .doc('pricing')
-        .collection('price')
-        .orderBy('timestamp', descending: true)
-        .get();
-
-    QueryDocumentSnapshot result = res.docs.first;
-
-    LaundryController().setPrices(result);
-  }
+  final addressController = TextEditingController();
 
   @override
   initState() {
     super.initState();
-    getLatestPrices();
+    // getLatestPrices();
   }
 
   @override
@@ -68,7 +57,7 @@ class BookLoungryState extends State<BookLoungry> {
                 Container(
                   decoration: ration,
                   width: 70,
-                  child: DropdownButton(
+                  child: DropdownButton<int>(
                       elevation: 0,
                       underline: SizedBox(),
                       value: value.expectedDay,
@@ -97,7 +86,7 @@ class BookLoungryState extends State<BookLoungry> {
               Container(
                 decoration: ration,
                 width: 60,
-                child: DropdownButton(
+                child: DropdownButton<bool>(
                     elevation: 0,
                     underline: SizedBox(),
                     value: value.isStarch,
@@ -156,7 +145,7 @@ class BookLoungryState extends State<BookLoungry> {
                       ),
                       Container(
                         decoration: ration,
-                        child: DropdownButton(
+                        child: DropdownButton<int>(
                             elevation: 0,
                             padding: EdgeInsets.only(left: 3),
                             icon: Icon(Icons.keyboard_arrow_down_outlined),
@@ -227,7 +216,7 @@ class BookLoungryState extends State<BookLoungry> {
                             padding: EdgeInsets.only(left: 3),
                             icon: Icon(Icons.keyboard_arrow_down_outlined),
                             onChanged: <int>(newValue) {
-                              value.setlargeSizeValue(newValue);
+                              value.setLargeSizeValue(newValue);
                             },
                             items: listOfInt.map<DropdownMenuItem<int>>((e) {
                               return DropdownMenuItem(
@@ -246,33 +235,36 @@ class BookLoungryState extends State<BookLoungry> {
       builder: (context, value, child) => Middle(
         child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: AppBar(automaticallyImplyLeading: true, actions: [
-            SizedBox(
-              height: 25,
-              child: OutlinedButton(
-                  onPressed: () async => await Provider.of<LaundryController>(
-                          context,
-                          listen: false)
-                      .selectImagesFromPhone(),
-                  child: Text('add images')),
-            ),
-            SizedBox(width: 20),
-            SizedBox(
-              height: 25,
-              child: OutlinedButton(
-                  onPressed: () {
-                    showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        showDragHandle: true,
-                        builder: (context) {
-                          return LoundryHistory();
-                        });
-                  },
-                  child: Text('history')),
-            ),
-            SizedBox(width: 10)
-          ]),
+          appBar: AppBar(
+              automaticallyImplyLeading: true,
+              title: Text('book laundry'),
+              actions: [
+                SizedBox(
+                  height: 25,
+                  child: OutlinedButton(
+                      onPressed: () async =>
+                          await Provider.of<LaundryController>(context,
+                                  listen: false)
+                              .selectImagesFromPhone(),
+                      child: Text('add images')),
+                ),
+                SizedBox(width: 20),
+                SizedBox(
+                  height: 25,
+                  child: OutlinedButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            showDragHandle: true,
+                            builder: (context) {
+                              return LoundryHistory();
+                            });
+                      },
+                      child: Text('history')),
+                ),
+                SizedBox(width: 10)
+              ]),
           body: Container(
             color: Colors.white70,
             child: Padding(
@@ -296,12 +288,17 @@ class BookLoungryState extends State<BookLoungry> {
                         ),
 
                   SizedBox(height: 50),
-                  Text(
-                    'speed                |                starch',
-                    style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.black87,
-                        fontWeight: FontWeight.w900),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'speed                |                starch',
+                        style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.black87,
+                            fontWeight: FontWeight.w900),
+                      ),
+                    ],
                   ),
 
                   SizedBox(height: 10),
@@ -310,20 +307,30 @@ class BookLoungryState extends State<BookLoungry> {
 
                   SizedBox(height: 15),
 
-                  Text(
-                    'count',
-                    style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.black87,
-                        fontWeight: FontWeight.w900),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'count',
+                        style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.black87,
+                            fontWeight: FontWeight.w900),
+                      ),
+                    ],
                   ),
 
-                  Text(
-                    'note: shirt and trouser of same fabric is counted as two pieces',
-                    style: TextStyle(
-                        fontSize: 10,
-                        color: Colors.black54,
-                        fontWeight: FontWeight.w500),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'note: shirt and trouser of same fabric is counted as two pieces',
+                        style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ],
                   ),
 
                   SizedBox(height: 10),
@@ -331,23 +338,52 @@ class BookLoungryState extends State<BookLoungry> {
                   countClothes(),
                   SizedBox(height: 10),
 
-                  Text(
-                    'an handler will get in touch with you once booking is completed',
-                    style: TextStyle(
-                        fontSize: 10,
-                        color: Colors.black54,
-                        fontWeight: FontWeight.w500),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'an handler will get in touch with you once booking is completed',
+                        style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ],
                   ),
 
                   SizedBox(height: 20),
 
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: TextField(
-                      controller: phoneNumberController,
-                      decoration: InputDecoration(labelText: 'phone number'),
-                    ),
-                  ),
+                  FutureBuilder<String>(
+                      future: value.getPhoneNumber(),
+                      builder: (context, snapshot) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: TextField(
+                            controller: phoneNumberController,
+                            onChanged: (v) => value.setPhoneNumber(v),
+                            decoration: InputDecoration(
+                                hintText: snapshot.hasData ? snapshot.data : '',
+                                labelText: 'phone number'),
+                          ),
+                        );
+                      }),
+
+                  SizedBox(height: 20),
+
+                  FutureBuilder<String>(
+                      future: value.getAddress(),
+                      builder: (context, snapshot) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: TextField(
+                            controller: addressController,
+                            onChanged: (v) => value.setAdress(v),
+                            decoration: InputDecoration(
+                                hintText: snapshot.hasData ? snapshot.data : '',
+                                labelText: 'address'),
+                          ),
+                        );
+                      }),
                   SizedBox(height: 500),
 
                   //
@@ -355,13 +391,13 @@ class BookLoungryState extends State<BookLoungry> {
               ),
             ),
           ),
-          bottomSheet: SizedBox(
-            height: 70,
+          bottomSheet: Container(
+            color: Colors.transparent,
+            height: 50,
             child: Row(
               children: [
                 //total cost
-                Expanded(
-                    child: Container(
+                Container(
                   // padding: EdgeInsets.all(10),
 
                   child: Row(
@@ -371,14 +407,22 @@ class BookLoungryState extends State<BookLoungry> {
                               color: Color.fromARGB(255, 1, 52, 93),
                               fontSize: 30,
                               fontWeight: FontWeight.w900)),
-                      Text(value.totalPrice.toString(),
-                          style: GoogleFonts.montserratAlternates(
-                              color: Color.fromARGB(255, 1, 52, 93),
-                              fontSize: 30,
-                              fontWeight: FontWeight.w900)),
+                      FutureBuilder<int>(
+                          future: value.pricing(),
+                          builder: (context, snapshot) {
+                            return Text(
+                                snapshot.hasData
+                                    ? snapshot.data.toString()
+                                    : "0",
+                                style: GoogleFonts.montserratAlternates(
+                                    color: Color.fromARGB(255, 1, 52, 93),
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w900));
+                          })
                     ],
                   ),
-                )),
+                ),
+                SizedBox(width: 200),
                 //button
                 GestureDetector(
                   onTap: () async => await Provider.of<LaundryController>(
@@ -449,24 +493,27 @@ class BookLoungryState extends State<BookLoungry> {
 
   addImageWidget() {
     return Consumer<LaundryController>(
-      builder: (context, value, child) => GestureDetector(
-        onTap: () async => await value.selectImagesFromPhone(),
-        child: Container(
-            padding: EdgeInsets.all(20),
-            height: 200,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  colors: [Colors.blue, Colors.black]),
-            ),
-            child: Center(
-              child: Text('click to add images of clothes for loundry **MUST**',
-                  style: GoogleFonts.montserrat(
-                      color: Colors.white,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w900)),
-            )),
-      ),
-    );
+        builder: (context, value, child) => GestureDetector(
+            onTap: () async => await value.selectImagesFromPhone(),
+            child: Container(
+              padding: EdgeInsets.all(20),
+              height: 200,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    colors: [Colors.blue, Colors.black]),
+              ),
+              child: Center(
+                  child: CircleAvatar(
+                      radius: 40, child: Icon(Icons.camera_alt, size: 50))),
+            )));
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+
+    context.dependOnInheritedWidgetOfExactType();
   }
 }

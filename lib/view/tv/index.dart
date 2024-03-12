@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dressr/view/utils/middle.dart';
-import 'package:dressr/view/tv/movies_coming_up.dart';
-import 'package:dressr/view/utils/loading.dart';
+import 'package:fashion_dragon/view/utils/middle.dart';
+import 'package:fashion_dragon/view/tv/movies_coming_up.dart';
+import 'package:fashion_dragon/view/utils/loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:youtube_player_iframe_plus/youtube_player_iframe_plus.dart';
@@ -94,7 +94,9 @@ class TvState extends State<Tv> {
                                 ConnectionState.waiting ||
                             snapshot.data!.docs.isEmpty ||
                             !snapshot.hasData) {
-                          return Loading();
+                          return Center(
+                              child: Icon(Icons.star_half_rounded,
+                                  color: Colors.white38, size: 150));
                         }
                         if (snapshot.hasData) {
                           // if()

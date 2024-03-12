@@ -1,5 +1,5 @@
 im working on this petty project hoping it will help me connect to my customers more
-dressr is or will be a suit making brand, and will want to fully operate online 
+fashion_dragon is or will be a suit making brand, and will want to fully operate online 
 from order to delevery, 
 4 view; main shop, cart, blog, profile(wardrope) 
 
@@ -127,7 +127,7 @@ done - find better design for the blog page and remove appbar
 > in chat, pod like status should show to help view post from friends only
 > chat section most be veru good, request messaged should be grouped
 > login section is to be refined
-> switch everything to dressr
+> switch everything to fashion_dragon
 
 5th feb 2024
 > implement download feature and share immidiately

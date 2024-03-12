@@ -1,4 +1,4 @@
-import 'package:dressr/view/explore/more_item_in.dart';
+import 'package:fashion_dragon/view/explore/more_item_in.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 

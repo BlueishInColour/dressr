@@ -1,6 +1,6 @@
-import 'package:dressr/view/explore/item/item_caption.dart';
-import 'package:dressr/view/explore/item/item_header.dart';
-import 'package:dressr/view/explore/item/item_picture.dart';
+import 'package:fashion_dragon/view/explore/item/item_caption.dart';
+import 'package:fashion_dragon/view/explore/item/item_header.dart';
+import 'package:fashion_dragon/view/explore/item/item_picture.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

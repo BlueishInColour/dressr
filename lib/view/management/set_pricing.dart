@@ -49,7 +49,10 @@ class SetPricingState extends State<SetPricing> {
         .doc('pricing')
         .collection('price')
         .add(data)
-        .then((value) => debugPrint('doneee'));
+        .then((value) {
+      debugPrint('doneee');
+      Navigator.pop(context);
+    });
   }
 
   @override

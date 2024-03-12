@@ -1,13 +1,13 @@
-import 'package:dressr/view/management/set_pricing.dart';
-import 'package:dressr/view/utils/middle.dart';
-import 'package:dressr/view/management/all_posts.dart';
-import 'package:dressr/view/management/install_app_function.dart';
-import 'package:dressr/view/management/order_dress_make.dart';
-import 'package:dressr/view/management/set_programmes.dart';
+import 'package:fashion_dragon/view/management/set_pricing.dart';
+import 'package:fashion_dragon/view/utils/middle.dart';
+import 'package:fashion_dragon/view/management/all_posts.dart';
+import 'package:fashion_dragon/view/management/install_app_function.dart';
+import 'package:fashion_dragon/view/management/order_dress_make.dart';
+import 'package:fashion_dragon/view/management/set_programmes.dart';
 
-import 'package:dressr/view/management/all_laundry_order.dart';
+import 'package:fashion_dragon/view/management/all_laundry_order.dart';
 
-import 'package:dressr/view/management/test_fullscreen_ads.dart';
+import 'package:fashion_dragon/view/management/test_fullscreen_ads.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

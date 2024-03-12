@@ -1,4 +1,4 @@
-name: dressr
+name: fashion_dragon
 description: find fashion, dressups, cosplay, models
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -224,7 +224,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/icon.png
+    - assets/icon.jpeg
     - assets/sample_payment_configuration.json
     - assets/google_pay_config.json
     # - images/a_dot_ham.jpeg
@@ -257,8 +257,8 @@ flutter:
 flutter_launcher_icons:
 # launchwith ---  dart run flutter_launcher_icons
   android: "launcher_icon"
-  image_path: "assets/icon.png"
+  image_path: "assets/icon.jpeg"
   min_sdk_android: 21 # android min sdk min:16, default 21
   web:
     generate: true
-    image_path: "assets/icon.png"
+    image_path: "assets/icon.jpeg"

@@ -1,9 +1,9 @@
-import 'package:dressr/view/utils/middle.dart';
-import 'package:dressr/view/explore/ads_widget.dart';
-import 'package:dressr/view/explore/appbar.dart';
-import 'package:dressr/view/utils/chat_screen_button.dart';
-import 'package:dressr/view/utils/loading.dart';
-import 'package:dressr/view/utils/my_profile_button.dart';
+import 'package:fashion_dragon/view/utils/middle.dart';
+import 'package:fashion_dragon/view/explore/ads_widget.dart';
+import 'package:fashion_dragon/view/explore/appbar.dart';
+import 'package:fashion_dragon/view/utils/chat_screen_button.dart';
+import 'package:fashion_dragon/view/utils/loading.dart';
+import 'package:fashion_dragon/view/utils/my_profile_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
@@ -43,7 +43,9 @@ class StoreScreenState extends State<StoreScreen>
             limit: 20,
             bottomLoader: Loading(),
             initialLoader: Loading(),
-            onEmpty: Text('thats all for now'),
+            onEmpty: Center(
+                child: Icon(Icons.star_half_rounded,
+                    color: Colors.black26, size: 150)),
             separatorBuilder: (context, index) {
               return MyBannerAdWidget();
             },

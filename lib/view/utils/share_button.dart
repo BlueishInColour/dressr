@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:dressr/view/management/install_app_function.dart';
-import 'package:dressr/view/utils/loading.dart';
-import 'package:dressr/view/utils/utils_functions.dart';
+import 'package:fashion_dragon/view/management/install_app_function.dart';
+import 'package:fashion_dragon/view/utils/loading.dart';
+import 'package:fashion_dragon/view/utils/utils_functions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';

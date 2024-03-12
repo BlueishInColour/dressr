@@ -1,8 +1,8 @@
-import 'package:dressr/view/utils/middle.dart';
-import 'package:dressr/view/auth/auth_service.dart';
+import 'package:fashion_dragon/view/utils/middle.dart';
+import 'package:fashion_dragon/view/auth/auth_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dressr/view/utils/loading.dart';
+import 'package:fashion_dragon/view/utils/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -151,6 +151,7 @@ class SignupScreenState extends State<SignupScreen> {
     });
   }
 
+//bobby@gmail.com
   @override
   Widget build(BuildContext context) {
     return !setProfile
@@ -159,11 +160,12 @@ class SignupScreenState extends State<SignupScreen> {
               body: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Center(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                    child: ListView(
+                        // mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                       Row(
                         children: [
+                          SizedBox(height: 70),
                           Text(
                             'signup',
                             style: GoogleFonts.montserrat(

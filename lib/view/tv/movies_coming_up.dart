@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dressr/view/tv/one_movie_coming_up.dart';
-import 'package:dressr/view/management/set_programmes.dart';
-import 'package:dressr/view/utils/loading.dart';
+import 'package:fashion_dragon/view/tv/one_movie_coming_up.dart';
+import 'package:fashion_dragon/view/management/set_programmes.dart';
+import 'package:fashion_dragon/view/utils/loading.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +51,8 @@ class PartnershipScreenState extends State<MoviesComingUp> {
                                       // http.get(Uri.parse(widget.installLink));
                                       await launchUrl(Uri.parse(urlLink),
                                           mode: LaunchMode.inAppBrowserView,
-                                          webOnlyWindowName: 'download dressr');
+                                          webOnlyWindowName:
+                                              'download fashion_dragon');
                                     },
                                     child: Icon(Icons.download,
                                         color: Colors.green));

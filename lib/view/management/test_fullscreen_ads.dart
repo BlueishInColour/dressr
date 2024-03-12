@@ -1,5 +1,5 @@
-// import 'package:dressr/view/utils/ad_helper.dart';
-// import 'package:dressr/main.dart';
+// import 'package:fashion_dragon/view/utils/ad_helper.dart';
+// import 'package:fashion_dragon/main.dart';
 // import 'package:flutter/material.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
 // import 'package:provider/provider.dart';

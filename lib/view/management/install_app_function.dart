@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dressr/view/utils/middle.dart';
-import 'package:dressr/view/utils/loading.dart';
+import 'package:fashion_dragon/view/utils/middle.dart';
+import 'package:fashion_dragon/view/utils/loading.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:flutter/material.dart';
@@ -46,7 +45,7 @@ class InstallAppState extends State<InstallApp> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('do more on dressr,  install for android'),
+              Text('do more on fashion_dragon,  install for android'),
               SizedBox(
                 height: 15,
               ),
@@ -84,7 +83,7 @@ class InstallAppState extends State<InstallApp> {
                             // http.get(Uri.parse(widget.installLink));
                             await launchUrl(Uri.parse(urlLink),
                                 mode: LaunchMode.inAppBrowserView,
-                                webOnlyWindowName: 'download dressr');
+                                webOnlyWindowName: 'download fashion_dragon');
                           },
                           child: Container(
                             decoration: BoxDecoration(

@@ -1,8 +1,8 @@
-import 'package:dressr/view/utils/middle.dart';
-import 'package:dressr/view/explore/item/item.dart';
+import 'package:fashion_dragon/view/utils/middle.dart';
+import 'package:fashion_dragon/view/explore/item/item.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dressr/view/utils/loading.dart';
-import 'package:dressr/view/utils/utils_functions.dart';
+import 'package:fashion_dragon/view/utils/loading.dart';
+import 'package:fashion_dragon/view/utils/utils_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +24,11 @@ class LikeScreenState extends State<LikeScreen> {
           isLive: true,
           bottomLoader: Loading(),
           initialLoader: Loading(),
+          onEmpty: Center(
+              child: Icon(Icons.star_half_rounded,
+                  color: Colors.black26, size: 150)),
           limit: 15,
           controller: likeController,
-          onEmpty: Center(child: Text('save items appear here')),
           query: FirebaseFirestore.instance
               .collection('likes')
               .doc(FirebaseAuth.instance.currentUser!.uid)

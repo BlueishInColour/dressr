@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "dressr" "\0"
+            VALUE "FileDescription", "fashion_dragon" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "dressr" "\0"
+            VALUE "InternalName", "fashion_dragon" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "dressr.exe" "\0"
-            VALUE "ProductName", "dressr" "\0"
+            VALUE "OriginalFilename", "fashion_dragon.exe" "\0"
+            VALUE "ProductName", "fashion_dragon" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

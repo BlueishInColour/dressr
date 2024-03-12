@@ -1,11 +1,11 @@
-import 'package:dressr/view/chat/item.dart';
-import 'package:dressr/view/explore/loundry/book_loungry.dart';
-import 'package:dressr/view/management/index.dart';
-import 'package:dressr/view/utils/chat_screen_button.dart';
-// import 'package:dressr/utils/fluttter_pay.dart';
-import 'package:dressr/view/utils/loading.dart';
-import 'package:dressr/view/utils/my_profile_button.dart';
-import 'package:dressr/view/utils/utils_functions.dart';
+import 'package:fashion_dragon/view/chat/item.dart';
+import 'package:fashion_dragon/view/explore/loundry/book_loungry.dart';
+import 'package:fashion_dragon/view/management/index.dart';
+import 'package:fashion_dragon/view/utils/chat_screen_button.dart';
+// import 'package:fashion_dragon/utils/fluttter_pay.dart';
+import 'package:fashion_dragon/view/utils/loading.dart';
+import 'package:fashion_dragon/view/utils/my_profile_button.dart';
+import 'package:fashion_dragon/view/utils/utils_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -79,15 +79,11 @@ class OrderrState extends State<Orderr> {
           ),
         ),
 
-        Expanded(
-            child: SizedBox(
-          height: 25,
-          width: 100,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
+        SizedBox(
+          child: Row(
             children: [
               SizedBox(width: 10),
-//drycleaner button
+              //drycleaner button
               GestureDetector(
                 onTap: () {
                   Navigator.push(context,
@@ -111,7 +107,6 @@ class OrderrState extends State<Orderr> {
                   ),
                 ),
               ),
-              Expanded(child: SizedBox()),
 
               // ChatScreenButton(),
               // SizedBox(width: 7),
@@ -129,7 +124,7 @@ class OrderrState extends State<Orderr> {
               SizedBox(width: 7),
             ],
           ),
-        ))
+        )
       ]),
     );
   }

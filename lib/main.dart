@@ -1,32 +1,33 @@
 import 'dart:async';
 
-// import 'package:dressr/view/auth/auth_gate.dart';
-import 'package:dressr/controller/laundry_controller.dart';
-import 'package:dressr/view/utils/loading_page.dart';
-import 'package:dressr/view/utils/middle.dart';
-import 'package:dressr/view/auth/auth_gate_two.dart';
-import 'package:dressr/view/auth/login_or_signup.dart';
-import 'package:dressr/view/auth/signup_screen.dart';
-import 'package:dressr/view/create_post/create.dart';
-import 'package:dressr/view/save/index.dart';
-import 'package:dressr/view/chat/index.dart';
-import 'package:dressr/view/create_post/index.dart';
-import 'package:dressr/view/profile/index.dart';
-import 'package:dressr/view/search/index.dart';
-import 'package:dressr/view/search/post_search.dart';
-import 'package:dressr/view/explore/index.dart';
-import 'package:dressr/view/tv/index.dart';
-import 'package:dressr/view/management/install_app_function.dart';
-import 'package:dressr/view/utils/loading.dart';
-import 'package:dressr/view/utils/shared_pref.dart';
+// import 'package:fashion_dragon/view/auth/auth_gate.dart';
+import 'package:fashion_dragon/view/explore/loundry/laundry_controller/laundry_controller.dart';
+import 'package:fashion_dragon/view/utils/loading_page.dart';
+import 'package:fashion_dragon/view/utils/middle.dart';
+import 'package:fashion_dragon/view/auth/auth_gate_two.dart';
+import 'package:fashion_dragon/view/auth/login_or_signup.dart';
+import 'package:fashion_dragon/view/auth/signup_screen.dart';
+import 'package:fashion_dragon/view/create_post/create.dart';
+import 'package:fashion_dragon/view/save/index.dart';
+import 'package:fashion_dragon/view/chat/index.dart';
+import 'package:fashion_dragon/view/create_post/index.dart';
+import 'package:fashion_dragon/view/profile/index.dart';
+import 'package:fashion_dragon/view/search/index.dart';
+import 'package:fashion_dragon/view/search/post_search.dart';
+import 'package:fashion_dragon/view/explore/index.dart';
+import 'package:fashion_dragon/view/tv/index.dart';
+import 'package:fashion_dragon/view/management/install_app_function.dart';
+import 'package:fashion_dragon/view/utils/loading.dart';
+import 'package:fashion_dragon/view/utils/shared_pref.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:hidable/hidable.dart';
-import 'package:ionicons/ionicons.dart';
-// dressr@gmail.com
+// import 'package:ionicons/ionicons.dart
+//
+// ';
+// fashion_dragon@gmail.com
 // Oluwapelumide631$
 import 'package:google_fonts/google_fonts.dart';
 
@@ -60,11 +61,11 @@ void main() async {
   if (!kIsWeb) {
     secureScreen();
   }
-  // await FirebaseAppCheck.instance.activate(
-  //   // androidProvider: AndroidProvider.playIntegrity,
-  //   webProvider:
-  //       ReCaptchaV3Provider('6LfPKFIpAAAAAGPzlYpoSWP6keZI1ikn8aSLXj0H'),
-  // );
+  await FirebaseAppCheck.instance.activate(
+    androidProvider: AndroidProvider.playIntegrity,
+    //   webProvider:
+    //       ReCaptchaV3Provider('6LfPKFIpAAAAAGPzlYpoSWP6keZI1ikn8aSLXj0H'),
+  );
 
   // olami@gmail.com
 
@@ -302,7 +303,5 @@ class MainIndexState extends State<MainIndex> {
     );
   }
 }
-
-
 
 // boxy@gmail.com

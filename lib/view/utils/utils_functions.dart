@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dressr/view/management/install_app_function.dart';
-import 'package:dressr/view/utils/loading.dart';
-import 'package:dressr/view/utils/subscripe.dart';
+import 'package:fashion_dragon/view/management/install_app_function.dart';
+import 'package:fashion_dragon/view/utils/loading.dart';
+import 'package:fashion_dragon/view/utils/subscripe.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -249,7 +249,7 @@ callToInstall(context) {
                     // http.get(Uri.parse(widget.installLink));
                     await launchUrl(Uri.parse(urlLink),
                         mode: LaunchMode.inAppBrowserView,
-                        webOnlyWindowName: 'download dressr');
+                        webOnlyWindowName: 'download fashion_dragon');
                   },
                   child: Icon(Icons.download, color: Colors.green));
             }

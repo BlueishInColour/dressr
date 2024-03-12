@@ -1,4 +1,4 @@
-# dressr
+# fashion_dragon
 
 A new Flutter project.
 

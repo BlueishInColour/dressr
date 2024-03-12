@@ -1,4 +1,4 @@
-import 'package:dressr/view/utils/utils_functions.dart';
+import 'package:fashion_dragon/view/utils/utils_functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

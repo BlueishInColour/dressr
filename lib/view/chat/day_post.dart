@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dressr/view/chat/day_post_item.dart';
-import 'package:dressr/view/utils/loading.dart';
+import 'package:fashion_dragon/view/chat/day_post_item.dart';
+import 'package:fashion_dragon/view/utils/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';

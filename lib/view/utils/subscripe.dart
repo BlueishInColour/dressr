@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dressr/view/utils/middle.dart';
-import 'package:dressr/view/utils/loading.dart';
+import 'package:fashion_dragon/view/utils/middle.dart';
+import 'package:fashion_dragon/view/utils/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -194,7 +194,7 @@ String json = '''{
         "parameters": {
           "allowedCardNetworks": ["VISA", "MASTERCARD"],
           "allowedAuthMethods": ["PAN_ONLY", "CRYPTOGRAM_3DS"],
-          "billingAddressRequired": true,
+          "billingAdfashion_dragonequired": true,
           "billingAddressParameters": {
             "format": "FULL",
             "phoneNumberRequired": true

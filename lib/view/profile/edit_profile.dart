@@ -1,4 +1,4 @@
-import 'package:dressr/view/utils/middle.dart';
+import 'package:fashion_dragon/view/utils/middle.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:flutter/material.dart';

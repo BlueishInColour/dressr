@@ -1,10 +1,10 @@
 // import 'dart:html';
 
-import 'package:dressr/view/utils/middle.dart';
-import 'package:dressr/view/chat/day_post.dart';
-import 'package:dressr/view/utils/loading.dart';
-import 'package:dressr/view/utils/shared_pref.dart';
-import 'package:dressr/view/utils/utils_functions.dart';
+import 'package:fashion_dragon/view/utils/middle.dart';
+import 'package:fashion_dragon/view/chat/day_post.dart';
+import 'package:fashion_dragon/view/utils/loading.dart';
+import 'package:fashion_dragon/view/utils/shared_pref.dart';
+import 'package:fashion_dragon/view/utils/utils_functions.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

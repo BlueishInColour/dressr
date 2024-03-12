@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dressr/view/utils/middle.dart';
-import 'package:dressr/view/profile/item.dart';
-import 'package:dressr/view/utils/loading.dart';
+import 'package:fashion_dragon/view/utils/middle.dart';
+import 'package:fashion_dragon/view/profile/item.dart';
+import 'package:fashion_dragon/view/utils/loading.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
 

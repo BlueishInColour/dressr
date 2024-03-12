@@ -1,8 +1,8 @@
-import 'package:dressr/view/utils/middle.dart';
-import 'package:dressr/view/profile/index.dart';
-import 'package:dressr/view/search/post_search.dart';
-import 'package:dressr/view/search/user_search.dart';
-import 'package:dressr/view/explore/item/item.dart';
+import 'package:fashion_dragon/view/utils/middle.dart';
+import 'package:fashion_dragon/view/profile/index.dart';
+import 'package:fashion_dragon/view/search/post_search.dart';
+import 'package:fashion_dragon/view/search/user_search.dart';
+import 'package:fashion_dragon/view/explore/item/item.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

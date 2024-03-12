@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dressr/view/profile/index.dart';
-import 'package:dressr/view/explore/more_item_in.dart';
+import 'package:fashion_dragon/view/profile/index.dart';
+import 'package:fashion_dragon/view/explore/more_item_in.dart';
 import 'package:flutter/material.dart';
 
 class DayPostItem extends StatefulWidget {

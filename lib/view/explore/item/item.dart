@@ -1,14 +1,13 @@
 import 'dart:typed_data';
 
-import 'package:dressr/view/explore/item/item.dart';
-import 'package:dressr/view/explore/item/item_caption.dart';
-import 'package:dressr/view/explore/item/item_header.dart';
-import 'package:dressr/view/explore/item/item_picture.dart';
-import 'package:dressr/view/explore/more_item_in.dart';
+import 'package:fashion_dragon/view/explore/item/item.dart';
+import 'package:fashion_dragon/view/explore/item/item_caption.dart';
+import 'package:fashion_dragon/view/explore/item/item_header.dart';
+import 'package:fashion_dragon/view/explore/item/item_picture.dart';
+import 'package:fashion_dragon/view/explore/more_item_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dressr/view/utils/loading.dart';
+import 'package:fashion_dragon/view/utils/loading.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:widgets_to_image/widgets_to_image.dart';
 
 class Item extends StatefulWidget {

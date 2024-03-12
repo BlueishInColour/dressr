@@ -1,6 +1,6 @@
-import 'package:dressr/view/utils/middle.dart';
+import 'package:fashion_dragon/view/utils/middle.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dressr/view/utils/loading.dart';
+import 'package:fashion_dragon/view/utils/loading.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masonry_view/flutter_masonry_view.dart';
@@ -22,6 +22,9 @@ class DefaultPostSearchState extends State<DefaultPostSearch> {
           body: FirestorePagination(
               bottomLoader: Loading(),
               initialLoader: Loading(),
+              onEmpty: Center(
+                  child: Icon(Icons.star_half_rounded,
+                      color: Colors.black26, size: 150)),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
                   crossAxisSpacing: 5,

@@ -1,4 +1,4 @@
-package com.example.dressr
+package com.example.fashion_dragon
 
 import io.flutter.embedding.android.FlutterActivity
 

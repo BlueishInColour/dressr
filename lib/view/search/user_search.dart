@@ -1,11 +1,11 @@
-import 'package:dressr/view/utils/middle.dart';
-import 'package:dressr/view/profile/index.dart';
-import 'package:dressr/view/search/index.dart';
-import 'package:dressr/view/search/post_search.dart';
-import 'package:dressr/view/explore/item/item.dart';
+import 'package:fashion_dragon/view/utils/middle.dart';
+import 'package:fashion_dragon/view/profile/index.dart';
+import 'package:fashion_dragon/view/search/index.dart';
+import 'package:fashion_dragon/view/search/post_search.dart';
+import 'package:fashion_dragon/view/explore/item/item.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dressr/view/utils/loading.dart';
+import 'package:fashion_dragon/view/utils/loading.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

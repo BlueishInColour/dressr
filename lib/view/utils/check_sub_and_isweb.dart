@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dressr/view/management/install_app_function.dart';
-import 'package:dressr/view/utils/loading.dart';
-import 'package:dressr/view/utils/subscripe.dart';
-import 'package:dressr/view/utils/utils_functions.dart';
+import 'package:fashion_dragon/view/management/install_app_function.dart';
+import 'package:fashion_dragon/view/utils/loading.dart';
+import 'package:fashion_dragon/view/utils/subscripe.dart';
+import 'package:fashion_dragon/view/utils/utils_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

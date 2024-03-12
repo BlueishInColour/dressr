@@ -1,10 +1,10 @@
 import 'dart:typed_data';
 
-import 'package:dressr/view/profile/index.dart';
-import 'package:dressr/view/explore/item/item_actions.dart';
-import 'package:dressr/view/explore/item/item_caption.dart';
-import 'package:dressr/view/utils/like_button.dart';
-import 'package:dressr/view/utils/repost_button.dart';
+import 'package:fashion_dragon/view/profile/index.dart';
+import 'package:fashion_dragon/view/explore/item/item_actions.dart';
+import 'package:fashion_dragon/view/explore/item/item_caption.dart';
+import 'package:fashion_dragon/view/utils/like_button.dart';
+import 'package:fashion_dragon/view/utils/repost_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

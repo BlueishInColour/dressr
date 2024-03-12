@@ -1,21 +1,40 @@
 {
   "project_info": {
-    "project_number": "574027646152",
-    "project_id": "dress-mate",
-    "storage_bucket": "dress-mate.appspot.com"
+    "project_number": "462432763880",
+    "project_id": "fashion-dragon",
+    "storage_bucket": "fashion-dragon.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:574027646152:android:a8e8e3d611be15dba891fd",
+        "mobilesdk_app_id": "1:462432763880:android:39b057596698b7f2bfae5d",
         "android_client_info": {
-          "package_name": "com.example.dressr"
+          "package_name": "com.company.fashiondragon"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCBdMcUnpYu9FUVLfdoO2wKYY8RxXI5gvk"
+          "current_key": "AIzaSyBW3VUZk7Wt4NPHula0sh3QQNnSm-9H5I0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462432763880:android:3d6e0e456a122cbebfae5d",
+        "android_client_info": {
+          "package_name": "com.example.fashion_dragon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBW3VUZk7Wt4NPHula0sh3QQNnSm-9H5I0"
         }
       ],
       "services": {

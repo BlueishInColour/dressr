@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dressr/view/utils/middle.dart';
-import 'package:dressr/view/tv/one_movie_coming_up.dart';
-import 'package:dressr/view/utils/loading.dart';
+import 'package:fashion_dragon/view/utils/middle.dart';
+import 'package:fashion_dragon/view/tv/one_movie_coming_up.dart';
+import 'package:fashion_dragon/view/utils/loading.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';

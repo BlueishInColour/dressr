@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -49,21 +52,11 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCJkThG9rI7xlBc0LSay9nRmDM9p3xCPTE',
-    appId: '1:574027646152:web:d05937676730a4b4a891fd',
-    messagingSenderId: '574027646152',
-    projectId: 'dress-mate',
-    authDomain: 'dress-mate.firebaseapp.com',
-    storageBucket: 'dress-mate.appspot.com',
-    measurementId: 'G-EFGL0305EC',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCBdMcUnpYu9FUVLfdoO2wKYY8RxXI5gvk',
-    appId: '1:574027646152:android:a8e8e3d611be15dba891fd',
-    messagingSenderId: '574027646152',
-    projectId: 'dress-mate',
-    storageBucket: 'dress-mate.appspot.com',
+    apiKey: 'AIzaSyBW3VUZk7Wt4NPHula0sh3QQNnSm-9H5I0',
+    appId: '1:462432763880:android:3d6e0e456a122cbebfae5d',
+    messagingSenderId: '462432763880',
+    projectId: 'fashion-dragon',
+    storageBucket: 'fashion-dragon.appspot.com',
   );
 }

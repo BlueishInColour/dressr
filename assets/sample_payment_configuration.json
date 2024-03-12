@@ -16,7 +16,7 @@
         "parameters": {
           "allowedCardNetworks": ["VISA", "MASTERCARD"],
           "allowedAuthMethods": ["PAN_ONLY", "CRYPTOGRAM_3DS"],
-          "billingAddressRequired": true,
+          "billingAdfashion_dragonequired": true,
           "billingAddressParameters": {
             "format": "FULL",
             "phoneNumberRequired": true

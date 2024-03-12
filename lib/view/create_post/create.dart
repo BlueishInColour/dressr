@@ -1,16 +1,16 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dressr/main.dart';
-import 'package:dressr/view/utils/middle.dart';
-import 'package:dressr/view/utils/loading.dart';
+import 'package:fashion_dragon/main.dart';
+import 'package:fashion_dragon/view/utils/middle.dart';
+import 'package:fashion_dragon/view/utils/loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:imagekit_io/imagekit_io.dart';
 import 'package:uuid/uuid.dart';
-import 'package:dressr/view/utils/utils_functions.dart';
+import 'package:fashion_dragon/view/utils/utils_functions.dart';
 import './offline_item.dart';
 
 class CreatePost extends StatefulWidget {
@@ -277,29 +277,32 @@ class CreatePostState extends State<CreatePost> {
     }
 
     Widget addMoreImage() {
-      return GestureDetector(
-        // onTap: () async => kIsWeb ? getWebImages() : getFilePics(),
-        onTap: kIsWeb ? getWebImages : getFilePics,
-
-        child: Center(
-          child: Container(
-              padding: EdgeInsets.all(10),
-              width: 270,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      colors: [Colors.blue, Colors.purple, Colors.red])),
-              child: Center(
-                child: Text('click to add images',
-                    maxLines: 5,
-                    style: TextStyle(
-                        fontSize: 70,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w900)),
-              )),
+      return Center(
+          child: ShaderMask(
+        shaderCallback: (Rect bounds) {
+          return LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.blue, Colors.purple, Colors.red])
+              .createShader(bounds);
+        },
+        child: Stack(
+          children: [
+            IconButton(
+              icon: Icon(
+                Icons.camera_alt,
+                color: Colors.white,
+                size: 150,
+              ),
+              onPressed: kIsWeb ? getWebImages : getFilePics,
+            ),
+            Positioned(
+                top: 0,
+                right: 0,
+                child: Icon(Icons.add_rounded, size: 70, color: Colors.purple))
+          ],
         ),
-      );
+      ));
     }
 
     Widget imageWidget() {
@@ -328,7 +331,7 @@ class CreatePostState extends State<CreatePost> {
         body: Padding(
           padding: const EdgeInsets.all(10.0),
           child: listOfCreatingPost.isEmpty
-              ? Center(child: addMoreImage())
+              ? addMoreImage()
               : SizedBox(
                   height: 800,
                   child: ListView.builder(

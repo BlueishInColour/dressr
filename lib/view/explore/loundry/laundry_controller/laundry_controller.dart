@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dressr/view/utils/utils_functions.dart';
+import 'package:fashion_dragon/view/utils/utils_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -11,64 +11,91 @@ import 'package:flutterwave_standard/models/requests/customizations.dart';
 import 'package:flutterwave_standard/models/responses/charge_response.dart';
 import 'package:imagekit_io/imagekit_io.dart';
 import 'package:uuid/uuid.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LaundryController extends ChangeNotifier {
   List listOfPicture = [];
 
-  int expectedDay = 3;
-  int smallSizeValue = 0;
-  int mediumSizeValue = 0;
-  int largeSizeValue = 0;
-  bool isItUrgent = false;
-  bool isStarch = true;
+  int _expectedDay = 3;
+  int _smallSizeValue = 0;
+  int _mediumSizeValue = 0;
+  int _largeSizeValue = 0;
+  bool _isStarch = true;
 
   bool isUploading = false;
 
-  int smallSizePrice = 0;
-  int mediumSizePrice = 0;
-  int largeSizePrice = 0;
+  int smallSizePrice = 150;
+  int mediumSizePrice = 250;
+  int largeSizePrice = 350;
   int urgentPrice = 0;
   int starchPrice = 0;
 
-  int totalPrice = 0;
-  String phoneNumber = ' ';
+  int _totalPrice = 0;
+  String _phoneNumber = ' ';
+  String _address = ' ';
 
-  setPrices(QueryDocumentSnapshot result) {
+  get totalPrice => _totalPrice;
+
+  get smallSizeValue => _smallSizeValue;
+  get mediumSizeValue => _mediumSizeValue;
+  get largeSizeValue => _largeSizeValue;
+  get isStarch => _isStarch;
+  get expectedDay => _expectedDay;
+
+  setPrices() async {
+    QuerySnapshot<Map<String, dynamic>> res = await FirebaseFirestore.instance
+        .collection('app')
+        .doc('pricing')
+        .collection('price')
+        .orderBy('timestamp', descending: true)
+        .get();
+
+    QueryDocumentSnapshot result = res.docs.first;
+
     smallSizePrice = int.parse(result['smallSizeLaundry']);
     mediumSizePrice = int.parse(result['meduimSizeLaundry']);
     largeSizePrice = int.parse(result['largeSizeLaundry']);
     urgentPrice = int.parse(result['urgentLaundry']);
     starchPrice = int.parse(result['starchLaundry']);
     debugPrint(smallSizePrice.toString());
-    debugPrint(mediumSizePrice.toString());
-    debugPrint(largeSizePrice.toString());
-    debugPrint(result['urgentLaundry']);
+
     notifyListeners();
   }
 
-  setPhoneNumber(String num) {
-    phoneNumber = num;
+  Future<void> setPhoneNumber(String num) async {
+    _phoneNumber = num;
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString('phoneNumber', _phoneNumber);
     notifyListeners();
   }
 
-  pricing() {
-    int notUrgentPrice = (smallSizePrice * smallSizeValue +
-        mediumSizePrice * mediumSizeValue +
-        largeSizePrice * largeSizeValue);
-    int urgentPric = ((smallSizePrice + urgentPrice) * smallSizeValue +
-            (mediumSizePrice + urgentPrice) * mediumSizeValue +
-            (largeSizePrice + urgentPrice) * largeSizeValue)
-        .toInt();
+  Future<String> getPhoneNumber() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    return pref.getString('phoneNumber') ?? '';
+  }
 
-    if (isItUrgent) {
-      totalPrice = urgentPric;
+//address
 
-      notifyListeners();
-    } else {
-      totalPrice = notUrgentPrice;
+  Future<void> setAdress(String adres) async {
+    _address = adres;
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString('address', _address);
+    notifyListeners();
+  }
 
-      notifyListeners();
-    }
+  Future<String> getAddress() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    return pref.getString('address') ?? '';
+  }
+
+  Future<int> pricing() async {
+    await setPrices();
+    int price = smallSizePrice * _smallSizeValue +
+        mediumSizePrice * _mediumSizeValue +
+        largeSizePrice * _largeSizeValue;
+    _totalPrice = price;
+    notifyListeners();
+    return _totalPrice;
   }
 
   Future<dynamic> onPaymentCompleted(BuildContext context) async {
@@ -77,8 +104,8 @@ class LaundryController extends ChangeNotifier {
     String ancestorUid = Uuid().v1();
 
     String caption =
-        'counts are S $smallSizeValue , M $mediumSizeValue, L $largeSizeValue and total cost is $pricing';
-    if (listOfPicture.isNotEmpty) {
+        'counts are S $_smallSizeValue , M $_mediumSizeValue, L $_largeSizeValue and total cost is $pricing';
+    if (true == true) {
       debugPrint('upoladingg');
       listOfPicture.forEach((element) async {
         debugPrint('upoladingg');
@@ -86,21 +113,32 @@ class LaundryController extends ChangeNotifier {
         String orderId = Uuid().v1();
         var data = {
           'orderId': orderId,
-          'phone number': '',
+          'userId': FirebaseAuth.instance.currentUser!.uid,
+          'status': 'requested', //requested , completted, confirmed
+          'phone number': _phoneNumber,
+          'address': _address,
+          'pictures': listOfPicture,
           'title': 'order successfully booked',
           'description':
-              'your order ($orderId) have been recieved and being processed by an handler, we will keep in touch with you ($phoneNumber)',
+              'your order ($orderId) have been recieved and being processed by an handler, we will keep in touch with you ($_phoneNumber)',
           'details':
-              'x:$smallSizeValue  m:$mediumSizeValue  l:$largeSizeValue   urgent:$isItUrgent   starched:$isStarch   price:$totalPrice',
+              'x:$_smallSizeValue  m:$_mediumSizeValue  l:$_largeSizeValue   urgent:$_expectedDay   starched:$_isStarch   price:$_totalPrice',
           'timestamp': Timestamp.now()
         };
 
         await FirebaseFirestore.instance
             .collection('loundry')
             .doc(FirebaseAuth.instance.currentUser!.uid)
-            .collection('active')
+            .collection('request')
             .doc(orderId)
-            .set(data);
+            .set(data)
+            .then((value) {
+          debugPrint('doneeee');
+
+          debugPrint('doneeee');
+          debugPrint('doneeee');
+          debugPrint('doneeee');
+        });
       });
 
       Navigator.pop(context);
@@ -159,6 +197,7 @@ class LaundryController extends ChangeNotifier {
     notifyListeners();
   }
 
+// redirection url back to flutter app how to
   Future<dynamic> checkout(context) async {
     if (kIsWeb) {
       callToInstall(context);
@@ -174,18 +213,15 @@ class LaundryController extends ChangeNotifier {
             currency: 'NGN',
             redirectUrl: 'https://dress-mate.web.app',
             txRef: Uuid().v1(),
-            amount: pricing().toString(),
+            amount: _totalPrice.toString(),
             customer: customer,
             paymentOptions: "card, payattitude, barter, bank transfer, ussd",
             customization: Customization(title: "Test Payment"),
             isTestMode: true);
 
         final ChargeResponse response = await flutterwave.charge();
-        if (response.success != null) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(response.toString()),
-          ));
-          // showLoading(response.toString());
+        if (response.success == true) {
+          await onPaymentCompleted(context);
           print("${response.toJson()}");
         } else {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -199,28 +235,28 @@ class LaundryController extends ChangeNotifier {
   }
 
   setStarchValue(bool value) {
-    isStarch = value;
+    _isStarch = value;
     notifyListeners();
   }
 
   setExpectedDayValue(int day) {
-    expectedDay = day;
+    _expectedDay = day;
 
     notifyListeners();
   }
 
   setSmallSizeValue(int value) {
-    smallSizeValue = value;
+    _smallSizeValue = value;
     notifyListeners();
   }
 
   setMediumSizeValue(value) {
-    mediumSizeValue = value;
+    _mediumSizeValue = value;
     notifyListeners();
   }
 
-  setlargeSizeValue(int value) {
-    largeSizeValue = value;
+  setLargeSizeValue(int value) {
+    _largeSizeValue = value;
 
     notifyListeners();
   }

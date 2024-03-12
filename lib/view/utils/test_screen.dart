@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dressr/view/utils/loading.dart';
+import 'package:fashion_dragon/view/utils/loading.dart';
 import 'package:flutter/material.dart';
 
 class TestScreen extends StatefulWidget {

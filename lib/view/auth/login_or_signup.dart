@@ -1,5 +1,5 @@
-import 'package:dressr/view/auth/login_screen.dart';
-import 'package:dressr/view/auth/signup_screen.dart';
+import 'package:fashion_dragon/view/auth/login_screen.dart';
+import 'package:fashion_dragon/view/auth/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginOrSignupScreen extends StatefulWidget {
